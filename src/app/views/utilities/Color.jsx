@@ -1,5 +1,13 @@
 import React from "react";
 import { Breadcrumb, SimpleCard } from "matx";
+import ClientTableCard from "./components/clients/ClientTableCard";
+import AddClientDiag from "./components/clients/AddClientDiag";
+import {
+  Card,
+  CardActions,
+  CardContent
+} from "@material-ui/core";
+
 
 const Color = () => {
   return (
@@ -12,7 +20,20 @@ const Color = () => {
           ]}
         />
       </div>
-      <SimpleCard title="Background Color Class">
+      <Card elevation={6} className="px-24 py-20 h-100">
+                  {/* <div className="card-title">Clients</div> */}
+                  {/* <div className="card-subtitle mb-24">Client_1</div> */}
+                <CardContent>
+                        <ClientTableCard />
+                </CardContent>
+                  <CardActions>
+                      <AddClientDiag />
+                  </CardActions>
+                
+     
+    </Card> 
+
+      {/* <SimpleCard title="Background Color Class">
         <div className="bg-white text-center py-24 w-100">.bg-white</div>
         <div className="bg-default text-center py-24 w-100">.bg-default</div>
         <div className="bg-paper text-center py-24 w-100">.bg-paper</div>
@@ -44,8 +65,8 @@ const Color = () => {
           .bg-light-dark
         </div>
         <div className="bg-dark text-center py-24 w-100">.bg-dark</div>
-      </SimpleCard>
-      <div className="py-12" />
+      </SimpleCard> */}
+      {/* <div className="py-12" />
       <SimpleCard title="Text Color Class">
         <div className=" text-center text-gray py-24 w-100">.text-gray</div>
         <div className=" text-center text-muted py-24 w-100">.text-muted</div>
@@ -66,7 +87,8 @@ const Color = () => {
           .text-muted-white
         </div>
       </SimpleCard>
-    </div>
+     */}
+     </div>
   );
 };
 

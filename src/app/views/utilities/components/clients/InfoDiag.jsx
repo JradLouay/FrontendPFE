@@ -14,8 +14,11 @@ import {
   Select,
   Switch,
   Icon,
+  Fab,
   IconButton,
 } from "@material-ui/core";
+import { SimpleCard } from "matx";
+import  ClientExpansionPanels  from "./ClientExpansionPanels";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -33,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MaxWidthDialog() {
+export default function InfoDiag() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -57,12 +60,22 @@ export default function MaxWidthDialog() {
 
   return (
     <React.Fragment>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open max-width dialog
-      </Button> */}
-      <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+      
+      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
                 <Icon>more_vert</Icon>
-      </IconButton>
+      </IconButton> */}
+                  <IconButton>
+                    <Icon color="primary" onClick={handleClickOpen}>info</Icon>
+                  </IconButton>
+      {/* <Fab
+          size="medium"
+          color="secondary"
+          aria-label="Add"
+          className={classes.button}
+          onClick={handleClickOpen}
+        >
+          <Icon>add</Icon>
+        </Fab> */}
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
@@ -70,10 +83,12 @@ export default function MaxWidthDialog() {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+        <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Module description ..... DockerFile !!
+             <SimpleCard >
+                  <ClientExpansionPanels  />
+             </SimpleCard>
           </DialogContentText>
           {/* <form className={classes.form} noValidate>
             <FormControl className={classes.formControl}>
