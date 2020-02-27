@@ -37,7 +37,7 @@ const ClientTableCard = () => {
     {
       name: "Client_4",
       version: 1.3,
-      lastUpdate: '14/02/2017' 
+      lastUpdate: '14/02/2017'
       
     }
   ];
@@ -67,31 +67,31 @@ const ClientTableCard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Modules.map((product, index) => (
+            {Modules.map((m, index) => (
               <TableRow key={index}>
                 <TableCell className="px-0 capitalize" colSpan={1} align="left">
                   <div className="flex flex-middle">
-                    {/* <img
+                    <img
                       className="circular-image-small"
-                      src={product.imgUrl}
-                      alt="user"
-                    /> */}
-                    <p className="m-0 ml-8">{product.name}</p>
+                      src="/assets/images/logos/react.png"
+                      alt="client"
+                    />
+                    <p className="m-0 ml-8">{m.name}</p>
                   </div>
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  $
-                  {product.version > 999
-                    ? (product.version / 1000).toFixed(1) + "k"
-                    : product.version}
+                
+                  {m.version > 999
+                    ? (m.version / 1000).toFixed(1) + "k"
+                    : m.version}
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  {product.lastUpdate}
+                  {m.lastUpdate}
                 </TableCell>
 
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {product.state ? (
-                    product.state === "deployed" ? (
+                  {m.state ? (
+                    m.state === "deployed" ? (
                       <small className="border-radius-4 bg-green text-white px-8 py-1 ">
                          Deployed
                       </small>

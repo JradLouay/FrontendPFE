@@ -1,12 +1,12 @@
 import React from "react";
 import clsx from 'clsx';
 import { Breadcrumb } from "matx";
-import RowCards from './components/RowCards';
+import ModuleRowCards from './components/Modules/ModuleRowCards';
 import {
-  Icon,
+  // Icon,
   Button,
   CircularProgress,
-  IconButton,
+  // IconButton,
   Fab,
   Card,
   CardActions,
@@ -15,7 +15,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
+// import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles(theme => ({
   
@@ -96,7 +96,7 @@ const Spacing = () => {
                   <div className="card-title">Modules</div>
                   <div className="card-subtitle mb-24">Client_1</div>
                 <CardContent>
-                        <RowCards type="module" />
+                        <ModuleRowCards />
                 </CardContent>
                   <CardActions>
                         <div className={classes.wrapper}>
@@ -106,7 +106,7 @@ const Spacing = () => {
                               className={buttonClassname}
                               onClick={handleButtonClick}
                             >
-                              {success ? <CheckIcon /> : <p>2</p> }
+                              {success ? <CheckIcon /> : 2 }
                             </Fab>
                           {loading && <CircularProgress size={68} className={classes.fabProgress} />}
                         </div>

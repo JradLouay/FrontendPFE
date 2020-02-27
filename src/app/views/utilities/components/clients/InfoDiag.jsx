@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -59,23 +59,12 @@ export default function InfoDiag() {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       
-      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Icon>more_vert</Icon>
-      </IconButton> */}
                   <IconButton>
                     <Icon color="primary" onClick={handleClickOpen}>info</Icon>
                   </IconButton>
-      {/* <Fab
-          size="medium"
-          color="secondary"
-          aria-label="Add"
-          className={classes.button}
-          onClick={handleClickOpen}
-        >
-          <Icon>add</Icon>
-        </Fab> */}
+      
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
@@ -83,51 +72,51 @@ export default function InfoDiag() {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title"></DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-             <SimpleCard >
-                  <ClientExpansionPanels  />
-             </SimpleCard>
-          </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
+            <DialogTitle id="max-width-dialog-title"></DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <SimpleCard title="Client info" >
+                      <ClientExpansionPanels  />
+                </SimpleCard>
+              </DialogContentText>
+              {/* <form className={classes.form} noValidate>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="max-width">maxWidth</InputLabel>
+                  <Select
+                    value={maxWidth}
+                    onChange={handleMaxWidthChange}
+                    inputProps={{
+                      name: "max-width",
+                      id: "max-width"
+                    }}
+                  >
+                    <MenuItem value={false}>false</MenuItem>
+                    <MenuItem value="xs">xs</MenuItem>
+                    <MenuItem value="sm">sm</MenuItem>
+                    <MenuItem value="md">md</MenuItem>
+                    <MenuItem value="lg">lg</MenuItem>
+                    <MenuItem value="xl">xl</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControlLabel
+                  className={classes.formControlLabel}
+                  control={
+                    <Switch
+                      checked={fullWidth}
+                      onChange={handleFullWidthChange}
+                      value="fullWidth"
+                    />
+                  }
+                  label="Full width"
                 />
-              }
-              label="Full width"
-            />
-          </form> */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
+              </form> */}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Close
+                </Button>
+            </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Fragment>
   );
 }

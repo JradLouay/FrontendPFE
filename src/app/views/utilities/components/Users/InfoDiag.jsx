@@ -86,7 +86,7 @@ export default function InfoDiag() {
         <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-             <SimpleCard >
+             <SimpleCard title="User Info" >
                   <UserExpansionPanels  />
              </SimpleCard>
           </DialogContentText>

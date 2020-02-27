@@ -18,7 +18,7 @@ import {
   // IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import SimpleAddForm from './SimpleAddForm';
+import SimpleForm from './SimpleForm';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddUserDiag() {
+export default function ScheduleDialog() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -60,6 +60,10 @@ export default function AddUserDiag() {
 
   return (
     <React.Fragment>
+      
+      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+                <Icon>more_vert</Icon>
+      </IconButton> */}
       <Fab
           size="medium"
           color="secondary"
@@ -79,9 +83,9 @@ export default function AddUserDiag() {
         <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <SimpleCard title="Add user" >
-                <SimpleAddForm  />
-          </SimpleCard>
+          <SimpleCard title="Schedule a Deployment">
+                <SimpleForm />
+            </SimpleCard>
           </DialogContentText>
           {/* <form className={classes.form} noValidate>
             <FormControl className={classes.formControl}>

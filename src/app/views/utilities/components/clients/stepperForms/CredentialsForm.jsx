@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import { withStyles } from "@material-ui/styles";
 import {
   Button,
   Icon,
@@ -10,41 +9,28 @@ import {
   FormControlLabel,
   Checkbox
 } from "@material-ui/core";
-// import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardDatePicker,
-//   KeyboardTimePicker
-// } from "@material-ui/pickers";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+  KeyboardTimePicker
+} from "@material-ui/pickers";
 import "date-fns";
-// import DateFnsUtils from "@date-io/date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 
-const styles = theme => ({
-  root: {
-    width: 500,
-    "& > * + *": {
-      marginTop: theme.spacing(3)
-    }
-  }
-});
-
-class SimpleAddForm extends Component {
-  
+class CredentialsForm extends Component {
   state = {
     username: "",
     firstName: "",
     email: "",
-    // date: new Date(),
-    // creditCard: "",
-    // mobile: "",
+    date: new Date(),
+    creditCard: "",
+    mobile: "",
     password: "",
     confirmPassword: "",
-    // selectedDate: "",
-    // agreement: "",
-    role:""
+    selectedDate: "",
+    agreement: "",
+    gender:""
   };
- 
 
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
@@ -71,34 +57,21 @@ class SimpleAddForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  // handleDateChange = date => {
-  //   console.log(date);
+  handleDateChange = date => {
+    console.log(date);
 
-  //   this.setState({ date });
-  // };
+    this.setState({ date });
+  };
 
   render() {
-
-    const { classes } = this.props;
     let {
-      username,
-      firstName,
-      // creditCard,
-      // mobile,
-      password,
-      confirmPassword,
-      // selectedDate,
-      // date,
+      Host,
+      Port,
+      mobile,
+      // password,
+      // confirmPassword,
       email,
-      role
     } = this.state;
-    let Films = [
-      { title: "The Shawshank Redemption", year: 1994 },
-      { title: "The Godfather", year: 1972 },
-      { title: "The Godfather: Part II", year: 1974 },
-      { title: "The Dark Knight", year: 2008 },
-      { title: "12 Angry Men", year: 1957 },
-      { title: "Schindler's List", year: 1993 }];
     return (
       <div>
         <ValidatorForm
@@ -186,7 +159,7 @@ class SimpleAddForm extends Component {
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              {/* <TextValidator
+              <TextValidator
                 className="mb-16 w-100"
                 label="Mobile Nubmer"
                 onChange={this.handleChange}
@@ -195,7 +168,7 @@ class SimpleAddForm extends Component {
                 value={mobile}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
-              /> */}
+              />
               <TextValidator
                 className="mb-16 w-100"
                 label="Password"
@@ -220,54 +193,41 @@ class SimpleAddForm extends Component {
                 ]}
               />
               
-              <RadioGroup
+              {/* <RadioGroup
                 className="mb-16"
-                value={role}
-                name="role"
+                value={gender}
+                name="gender"
                 onChange={this.handleChange}
                 row
               >
                 <FormControlLabel
-                  value="Admin"
+                  value="Male"
                   control={<Radio color="secondary" />}
-                  label="admin"
+                  label="Male"
                   labelPlacement="end"
                 />
                 <FormControlLabel
-                  value="developer"
+                  value="Female"
                   control={<Radio color="secondary" />}
-                  label="Developer"
+                  label="Female"
                   labelPlacement="end"
                 />
                 <FormControlLabel
-                  value="intern"
+                  value="Others"
                   control={<Radio color="secondary" />}
-                  label="Intern"
+                  label="Others"
                   labelPlacement="end"
                 />
               </RadioGroup>
-              <div className={classes.root}>
-              {/* <Autocomplete
-                  multiple
-                  id="tags-standard"
-                  options={topFilms}
-                  getOptionLabel={option => option.title}
-                  defaultValue={[Films[13]]}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label="Multiple values"
-                      placeholder="Favorites"
-                    />
-                  )}
-                /> */}
-                </div>
+              <FormControlLabel
+                control={<Checkbox />}
+                label="I have read and agree to the terms of service."
+              /> */}
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">
             <Icon>send</Icon>
-            <span className="pl-8 capitalize">add</span>
+            <span className="pl-8 capitalize">Next</span>
           </Button>
         </ValidatorForm>
       </div>
@@ -275,4 +235,4 @@ class SimpleAddForm extends Component {
   }
 }
 
-export default withStyles(styles)(SimpleAddForm);
+export default CredentialsForm;

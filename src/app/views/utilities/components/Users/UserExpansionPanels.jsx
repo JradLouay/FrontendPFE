@@ -5,10 +5,22 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
+  },
+  paper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: theme.spacing(0.5),
+  },
+  chip: {
+    margin: theme.spacing(0.5),
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -22,12 +34,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserExpansionPanels() {
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [chipData, setChipData] = React.useState([
+    { key: 0, label: 'Angular' },
+    { key: 1, label: 'jQuery' },
+    { key: 2, label: 'Polymer' },
+    { key: 3, label: 'React' },
+    { key: 4, label: 'Vue.js' },
+  ]);
 
+  const handleDelete = chipToDelete => () => {
+    setChipData(chips => chips.filter(chip => chip.key !== chipToDelete.key));
+  };
+  //ExpansionPanel 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  
 
   return (
     <div className={classes.root}>
@@ -61,17 +87,32 @@ export default function UserExpansionPanels() {
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
-          <Typography className={classes.heading}>Roles</Typography>
+          <Typography className={classes.heading}>Clients</Typography>
           <Typography className={classes.secondaryHeading}>
-            You are currently not an owner
+            
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
-            Donec placerat, lectus sed mattis semper, neque lectus feugiat
-            lectus, varius pulvinar diam eros in elit. Pellentesque convallis
-            laoreet laoreet.
-          </Typography>
+        <Paper className={classes.paper}>
+              {chipData.map(data => {
+                let icon;
+
+                if (data.label === 'React') {
+                  icon = <TagFacesIcon />;
+                }
+
+                return (
+                  <Chip
+                    key={data.key}
+                    icon={icon}
+                    label={data.label}
+                    onDelete={data.label === 'React' ? undefined : handleDelete(data)}
+                    className={classes.chip}
+                  />
+                );
+              })}
+        </Paper>
+        
         </ExpansionPanelDetails>
       </ExpansionPanel>
      

@@ -1,8 +1,8 @@
 import React from "react";
 import { Breadcrumb, SimpleCard } from "matx";
 import Highlight from "react-highlight";
-import RowCards from './components/RowCards';
-import ScheduleDialog from './components/ScheduleDialog';
+import RowCards from './components/Scheduler/RowCards';
+import ScheduleDialog from './components/Scheduler/ScheduleDialog';
 import {
   Icon,
   Button,

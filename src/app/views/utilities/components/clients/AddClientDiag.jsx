@@ -7,18 +7,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
+  // FormControl,
+  // FormControlLabel,
+  // InputLabel,
+  // MenuItem,
+  // Select,
+  // Switch,
   Icon,
   Fab,
-  IconButton,
+  // IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import SimpleForm from '../SimpleForm';
 
 import  StepperForm  from "./StepperForm";
 const useStyles = makeStyles(theme => ({
@@ -61,10 +60,6 @@ export default function AddClientDiag() {
 
   return (
     <React.Fragment>
-      
-      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Icon>more_vert</Icon>
-      </IconButton> */}
       <Fab
           size="medium"
           color="secondary"
@@ -84,7 +79,7 @@ export default function AddClientDiag() {
         <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <SimpleCard >
+          <SimpleCard title=" Add client ">
                 <StepperForm />
             </SimpleCard>
           </DialogContentText>

@@ -120,7 +120,7 @@ class InfoForm extends Component {
                 errorMessages={["this field is required", "email is not valid"]}
               />
 
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   className="mb-16 w-100"
                   margin="none"
@@ -135,7 +135,7 @@ class InfoForm extends Component {
                     "aria-label": "change date"
                   }}
                 />
-                {/* <KeyboardTimePicker
+                <KeyboardTimePicker
                   margin="normal"
                   id="time-picker"
                   label="Time picker"
@@ -144,9 +144,9 @@ class InfoForm extends Component {
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
                   }}
-                /> */}
-              </MuiPickersUtilsProvider>
-              <TextValidator
+                />
+              </MuiPickersUtilsProvider> */}
+              {/* <TextValidator
                 className="mb-32 w-100"
                 label="Credit Card"
                 onChange={this.handleChange}
@@ -159,7 +159,7 @@ class InfoForm extends Component {
                   "maxStringLength: 16"
                 ]}
                 errorMessages={["this field is required"]}
-              />
+              /> */}
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>

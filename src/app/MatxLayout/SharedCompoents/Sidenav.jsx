@@ -39,7 +39,7 @@ class Sidenav extends Component {
       <Fragment>
         <Scrollbar option={{suppressScrollX: true}} className="scrollable position-relative">
           {this.props.children}
-          <MatxVerticalNav navigation={navigations} />
+          <MatxVerticalNav navigation={navigations} /> {/*  here we render the vertical navbar von unsere application */}
         </Scrollbar>
         {this.renderOverlay()}
       </Fragment>

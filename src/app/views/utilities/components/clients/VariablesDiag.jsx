@@ -7,20 +7,18 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
+  // FormControl,
+  // FormControlLabel,
+  // InputLabel,
+  // MenuItem,
+  // Select,
+  // Switch,
   Icon,
-  Fab,
+  // Fab,
   IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
 import VariablesTable from './VariablesTable';
-
-import  StepperForm  from "./StepperForm";
 const useStyles = makeStyles(theme => ({
   form: {
     display: "flex",
@@ -62,9 +60,6 @@ export default function VariablesDiag() {
   return (
     <React.Fragment>
       
-      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Icon>more_vert</Icon>
-      </IconButton> */}
       <IconButton>
                     <Icon color="green"  onClick={handleClickOpen}>library_books</Icon>
       </IconButton>

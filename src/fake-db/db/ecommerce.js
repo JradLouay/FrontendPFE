@@ -81,7 +81,7 @@ const EcommerceDB = {
       description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
     },
     {
-      id: shortId.generate(),
+      id: "323sa680b32497dfdfgga21rt48",
       imgUrl: "/assets/images/products/headphone-4.jpg",
       price: 299.0,
       title: "Beats Headphone",
@@ -92,7 +92,7 @@ const EcommerceDB = {
       description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
     },
     {
-      id: shortId.generate(),
+      id: "323sa688b324976dfgga21rt49",
       imgUrl: "/assets/images/products/iphone-1.jpg",
       price: 978.0,
       title: "Iphone 11 Max Pro",
@@ -221,10 +221,10 @@ const EcommerceDB = {
           productId: "323sa680b324976dfgga21rt47",
           amount: 1
         },{
-          productId: "323sa680b324976dfgga21rt47",
+          productId: "323sa680b32497dfdfgga21rt48",
           amount: 1
         },{
-          productId: "323sa680b324976dfgga21rt47",
+          productId: "323sa688b324976dfgga21rt49",
           amount: 1
         }
       ]

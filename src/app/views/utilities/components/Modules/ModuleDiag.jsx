@@ -7,18 +7,15 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  // FormControl,
-  // FormControlLabel,
-  // InputLabel,
-  // MenuItem,
-  // Select,
-  // Switch,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  Switch,
   Icon,
-  Fab,
-  // IconButton,
+  IconButton,
 } from "@material-ui/core";
-import { SimpleCard } from "matx";
-import SimpleAddForm from './SimpleAddForm';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -36,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddUserDiag() {
+export default function ModuleDiag() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -60,15 +57,12 @@ export default function AddUserDiag() {
 
   return (
     <React.Fragment>
-      <Fab
-          size="medium"
-          color="secondary"
-          aria-label="Add"
-          className={classes.button}
-          onClick={handleClickOpen}
-        >
-          <Icon>add</Icon>
-        </Fab>
+      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Open max-width dialog
+      </Button> */}
+      <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+                <Icon>more_vert</Icon>
+      </IconButton>
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
@@ -76,12 +70,10 @@ export default function AddUserDiag() {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title"></DialogTitle>
+        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <SimpleCard title="Add user" >
-                <SimpleAddForm  />
-          </SimpleCard>
+            Module description ..... DockerFile !!
           </DialogContentText>
           {/* <form className={classes.form} noValidate>
             <FormControl className={classes.formControl}>
