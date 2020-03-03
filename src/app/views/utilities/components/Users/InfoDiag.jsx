@@ -64,8 +64,8 @@ export default function InfoDiag() {
       {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
                 <Icon>more_vert</Icon>
       </IconButton> */}
-                  <IconButton>
-                    <Icon color="primary" onClick={handleClickOpen}>info</Icon>
+                  <IconButton onClick={handleClickOpen}>
+                    <Icon color="primary" >info</Icon>
                   </IconButton>
       {/* <Fab
           size="medium"

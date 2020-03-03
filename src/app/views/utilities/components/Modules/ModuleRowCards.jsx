@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { format } from "date-fns";
-import ModuleDialog from './ModuleDiag';
-
 import {
   Grid,
   Card,
@@ -23,11 +21,12 @@ const ModuleRowCards = (props) => {
       <Card className="py-8 px-4 project-card">
         <Grid container alignItems="center">
           <Grid item md={4} xs={5}>
-            <div className="flex flex-middle">
               <span className="card__roject-name font-weight-500">
-                Module {id}
+                Module 
               </span>
-            </div>
+              <div className="text-muted">
+                module {id}
+              </div>
           </Grid>
 
           <Grid item md={3} xs={4}>
@@ -52,7 +51,6 @@ const ModuleRowCards = (props) => {
           <Grid item xs={2}>
             <div className="flex flex-end">
               <Checkbox />
-              <ModuleDialog />
               
             </div>
             

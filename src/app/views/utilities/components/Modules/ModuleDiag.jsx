@@ -7,15 +7,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
   Icon,
   IconButton,
 } from "@material-ui/core";
+import EditorYaml from "./EditorYaml";
+
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -35,9 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ModuleDiag() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState("md");
+  const [open, setOpen] = React.useState(false)
 
   function handleClickOpen() {
     setOpen(true);
@@ -47,65 +41,24 @@ export default function ModuleDiag() {
     setOpen(false);
   }
 
-  function handleMaxWidthChange(event) {
-    setMaxWidth(event.target.value);
-  }
-
-  function handleFullWidthChange(event) {
-    setFullWidth(event.target.checked);
-  }
-
   return (
     <React.Fragment>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open max-width dialog
-      </Button> */}
       <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Icon>more_vert</Icon>
+                <Icon>edit</Icon>
       </IconButton>
+      
       <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        fullWidth="true"
+        maxWidth="lg"
         open={open}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
+        <DialogTitle id="max-width-dialog-title">Yaml Configuration</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Module description ..... DockerFile !!
           </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
-                />
-              }
-              label="Full width"
-            />
-          </form> */}
+                <EditorYaml />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

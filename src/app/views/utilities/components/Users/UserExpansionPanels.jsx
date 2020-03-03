@@ -38,11 +38,9 @@ export default function UserExpansionPanels() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
+    { key: 0, label: 'Client_1' },
+    { key: 1, label: 'Client_2' },
+    { key: 2, label: 'Client_3' }
   ]);
 
   const handleDelete = chipToDelete => () => {
@@ -89,7 +87,7 @@ export default function UserExpansionPanels() {
         >
           <Typography className={classes.heading}>Clients</Typography>
           <Typography className={classes.secondaryHeading}>
-            
+                Clients to Manage 
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>

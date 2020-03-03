@@ -6,11 +6,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import InfoForm from "./stepperForms/InfoForm";
 import TestProgress  from "./stepperForms/TestProgress";
+import VariablesForm from "./stepperForms/VariablesForm";
 
 function getSteps() {
   return [
     "Client Information",
-    "Connecting Credentials",
+    "Environment Variables",
     "Testing Remote Connexion"
   ];
 }
@@ -20,7 +21,7 @@ function getStepContent(stepIndex) {
     case 0:
       return (<InfoForm />);
     case 1:
-      return `Integer euismod dapibus sapien, a interdum augue blandit eget. Donec pellentesque, sapien iaculis dignissim sagittis, risus nulla auctor eros, sed suscipit eros mauris id lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer porttitor mauris egestas consequat molestie. Nam egestas iaculis malesuada. Praesent sagittis venenatis finibus. Praesent porttitor ipsum et sapien cursus, eu mattis augue ornare.`;
+      return (<VariablesForm />);
     case 2:
       return (<TestProgress />);  
     default:

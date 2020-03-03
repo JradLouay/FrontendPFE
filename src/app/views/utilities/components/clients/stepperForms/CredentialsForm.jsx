@@ -65,7 +65,7 @@ class CredentialsForm extends Component {
 
   render() {
     let {
-      Host,
+      host,
       Port,
       mobile,
       // password,
@@ -83,29 +83,28 @@ class CredentialsForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <TextValidator
                 className="mb-16 w-100"
-                label="Username (Min length 4, Max length 9)"
+                label="Host (Eg : 192.168.2.1)"
                 onChange={this.handleChange}
                 type="text"
-                name="username"
-                value={username}
+                name="host"
+                value={host}
                 validators={[
                   "required",
-                  "minStringLength: 4",
-                  "maxStringLength: 9"
+                  "minStringLength:11",
                 ]}
                 errorMessages={["this field is required"]}
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="First Name"
+                label="Port"
                 onChange={this.handleChange}
-                type="text"
-                name="firstName"
-                value={firstName}
-                validators={["required"]}
+                type="number"
+                name="port (4 Numbers)"
+                value={port}
+                validators={["required",]}
                 errorMessages={["this field is required"]}
               />
-              <TextValidator
+              {/* <TextValidator
                 className="mb-16 w-100"
                 label="Email"
                 onChange={this.handleChange}
@@ -114,7 +113,7 @@ class CredentialsForm extends Component {
                 value={email}
                 validators={["required", "isEmail"]}
                 errorMessages={["this field is required", "email is not valid"]}
-              />
+              /> */}
 
               {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker

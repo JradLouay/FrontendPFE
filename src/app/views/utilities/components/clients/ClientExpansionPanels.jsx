@@ -1,10 +1,33 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+// import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+// import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+// import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import {
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  ExpansionPanel
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {
+  Button,
+  Icon,
+  Grid,
+  IconButton,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Paper
+} from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
+ import DoneIcon from '@material-ui/icons/Done';
+// import { 
+//   ValidatorForm,
+//   TextValidator 
+// } from "react-material-ui-form-validator";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,9 +47,19 @@ const useStyles = makeStyles(theme => ({
 export default function ClientExpansionPanels() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [editable, setEditable] = React.useState({
+    editData : false
+  })
 
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  };
+
+  const handleEdit = (data) => {
+    
+    setEditable({ [data] : !editable[data] });
+    console.log("check change : ", editable[data]);
+    
   };
 
   return (
@@ -42,13 +75,58 @@ export default function ClientExpansionPanels() {
         >
           <Typography className={classes.heading}>General Info</Typography>
           <Typography className={classes.secondaryHeading}>
-            I am an expansion panel
+            Client_1
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
+          <Grid 
+              container xs={6}
+              justify="center"
+              alignItems="center">
+                        <Table
+                            //  className={classes.table}
+                            size="small" 
+                            minWidth="650"
+                            aria-label="a dense table">
+                                  
+                                    <TableBody>
+                                      
+                                        <TableRow 
+                                        // key={row.name}
+                                        >
+                                          <TableCell
+                                            component="th" 
+                                            scope="row"
+                                            size="small"
+                                            align="right">
+                                             <Typography variant="h6" gutterBottom>
+                                                Data :
+                                              </Typography>
+                                          </TableCell>
+                                          <TableCell align="left"  size="small">
+                                            {
+                                              editable.editData ?
+                                                  <TextField id="standard-basic" label="Data" /> :
+                                                       "data"
+                                            } 
+                                          </TableCell>
+                                          <TableCell align="right"  size="small">
+                                             
+                                                            <IconButton 
+                                                              size="small"
+                                                              onClick={ () => handleEdit('editData')} >
+                                                              { editable.editData ? 
+                                                                   <DoneIcon color="primary" size="small" />  : 
+                                                                          <EditIcon color="primary" size="small" />
+                                                              }
+
+                                                            </IconButton>
+                                          </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                              </Table>
+          </Grid>
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

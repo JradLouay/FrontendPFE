@@ -3,19 +3,18 @@ import clsx from 'clsx';
 import { Breadcrumb } from "matx";
 import ModuleRowCards from './components/Modules/ModuleRowCards';
 import {
-  // Icon,
   Button,
   CircularProgress,
-  // IconButton,
   Fab,
   Card,
   CardActions,
-  CardContent
+  CardContent,
+  CardHeader
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
-// import SaveIcon from '@material-ui/icons/Save';
+import ModuleDialog from './components/Modules/ModuleDiag';
 
 const useStyles = makeStyles(theme => ({
   
@@ -93,8 +92,13 @@ const Spacing = () => {
       </div>
 
       <Card elevation={6} className="px-24 py-20 h-100">
-                  <div className="card-title">Modules</div>
-                  <div className="card-subtitle mb-24">Client_1</div>
+                  <CardHeader
+                      action={
+                          <ModuleDialog />
+                      }
+                      title="Modules"
+                      subheader="Client_1"
+                    />
                 <CardContent>
                         <ModuleRowCards />
                 </CardContent>

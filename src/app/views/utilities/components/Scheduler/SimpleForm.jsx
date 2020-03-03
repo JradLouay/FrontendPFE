@@ -4,10 +4,10 @@ import {
   Button,
   Icon,
   Grid,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Checkbox
+  // Radio,
+  // RadioGroup,
+  // FormControlLabel,
+  // Checkbox
 } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
@@ -23,7 +23,6 @@ class SimpleForm extends Component {
     firstName: "",
     email: "",
     date: new Date(),
-    creditCard: "",
     mobile: "",
     password: "",
     confirmPassword: "",
@@ -67,7 +66,6 @@ class SimpleForm extends Component {
     let {
       username,
       firstName,
-      creditCard,
       mobile,
       password,
       confirmPassword,
@@ -135,18 +133,9 @@ class SimpleForm extends Component {
                     "aria-label": "change date"
                   }}
                 />
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Time picker"
-                  value={selectedDate}
-                  onChange={this.handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
+                
               </MuiPickersUtilsProvider>
-              <TextValidator
+              {/* <TextValidator
                 className="mb-32 w-100"
                 label="Credit Card"
                 onChange={this.handleChange}
@@ -159,7 +148,7 @@ class SimpleForm extends Component {
                   "maxStringLength: 16"
                 ]}
                 errorMessages={["this field is required"]}
-              />
+              /> */}
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -196,37 +185,22 @@ class SimpleForm extends Component {
                   "password didn't match"
                 ]}
               />
-              
-              <RadioGroup
-                className="mb-16"
-                value={gender}
-                name="gender"
-                onChange={this.handleChange}
-                row
-              >
-                <FormControlLabel
-                  value="Male"
-                  control={<Radio color="secondary" />}
-                  label="Male"
-                  labelPlacement="end"
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardTimePicker
+                  margin="normal"
+                  id="time-picker"
+                  label="Time picker"
+                  value={selectedDate}
+                  onChange={this.handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                  }}
                 />
-                <FormControlLabel
-                  value="Female"
-                  control={<Radio color="secondary" />}
-                  label="Female"
-                  labelPlacement="end"
-                />
-                <FormControlLabel
-                  value="Others"
-                  control={<Radio color="secondary" />}
-                  label="Others"
-                  labelPlacement="end"
-                />
-              </RadioGroup>
-              <FormControlLabel
+                </MuiPickersUtilsProvider>
+              {/* <FormControlLabel
                 control={<Checkbox />}
                 label="I have read and agree to the terms of service."
-              />
+              /> */}
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">

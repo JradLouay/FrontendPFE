@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   Checkbox
 } from "@material-ui/core";
-// import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 // import {
 //   MuiPickersUtilsProvider,
@@ -92,13 +92,13 @@ class SimpleAddForm extends Component {
       email,
       role
     } = this.state;
-    let Films = [
-      { title: "The Shawshank Redemption", year: 1994 },
-      { title: "The Godfather", year: 1972 },
-      { title: "The Godfather: Part II", year: 1974 },
-      { title: "The Dark Knight", year: 2008 },
-      { title: "12 Angry Men", year: 1957 },
-      { title: "Schindler's List", year: 1993 }];
+    let films = [
+      { name: "Client_1", id: 1994 },
+      { name: "Client_2", id: 1972 },
+      { name: "Client_3", id: 1974 },
+      { name: "Client_4", id: 2008 },
+      { name: "Client_5", id: 1957 },
+      { name: "Client_6", id: 1993 }];
     return (
       <div>
         <ValidatorForm
@@ -228,9 +228,9 @@ class SimpleAddForm extends Component {
                 row
               >
                 <FormControlLabel
-                  value="Admin"
+                  value="admin"
                   control={<Radio color="secondary" />}
-                  label="admin"
+                  label="Admin"
                   labelPlacement="end"
                 />
                 <FormControlLabel
@@ -246,23 +246,23 @@ class SimpleAddForm extends Component {
                   labelPlacement="end"
                 />
               </RadioGroup>
-              <div className={classes.root}>
-              {/* <Autocomplete
+              {/* <div className={classes.root}> */}
+              <Autocomplete
                   multiple
                   id="tags-standard"
-                  options={topFilms}
-                  getOptionLabel={option => option.title}
-                  defaultValue={[Films[13]]}
+                  options={films}
+                  getOptionLabel={option => option.name}
+                  defaultValue={[films[0]]}
                   renderInput={params => (
                     <TextField
                       {...params}
                       variant="standard"
-                      label="Multiple values"
-                      placeholder="Favorites"
+                      label="Clients"
+                      placeholder="Choose clients ..."
                     />
                   )}
-                /> */}
-                </div>
+                />
+                {/* </div> */}
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">
