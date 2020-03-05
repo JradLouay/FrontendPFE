@@ -24,8 +24,8 @@ function ShoppingCart(props) {
     settings,
     cartList = [],
     getCartList,
-    deleteProductFromCart,
-    updateCartAmount,
+    // deleteProductFromCart,
+    // updateCartAmount,
     user
   } = props;
 

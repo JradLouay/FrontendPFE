@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { setLayoutSettings } from "app/redux/actions/LayoutActions";
 import { logoutUser } from "app/redux/actions/UserActions";
 import { PropTypes } from "prop-types";
-import { MatxMenu, MatxSearchBox } from "matx";
+import { MatxMenu } from "matx";
 import { isMdScreen } from "utils";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
