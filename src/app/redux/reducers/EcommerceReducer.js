@@ -1,6 +1,12 @@
 import {
   GET_PRODUCT_LIST,
+  SET_SELECTED_CLIENT,
+  DELETE_CLIENT,
   GET_CART_LIST,
+  GET_VARIABLES_LIST,
+  DELETE_VARIABLE,
+  UPDATE_VARIABLE,
+  ADD_VARIABLE,
   ADD_PRODUCT_TO_CART,
   DELETE_PRODUCT_FROM_CART,
   UPDATE_CART_AMOUNT,
@@ -11,15 +17,59 @@ import {
 
 const initialState = {
   productList: [],
-  cartList: []
+  cartList: [],
+  variablesList: [],
+  selectedClient : {}
 };
 
 const EcommerceReducer = function(state = initialState, action) {
-  switch (action.type) {
-    case GET_PRODUCT_LIST: {
+  switch (action.type) { 
+    case GET_PRODUCT_LIST: {  // get client list 
       return {
         ...state,
         productList: [...action.payload]
+      };
+    }
+    case SET_SELECTED_CLIENT: { //set client reducer 
+      
+      return {
+        ...state,
+        selectedClient: {...action.payload}
+      };
+    }
+    case DELETE_CLIENT: {  // delete client REDUCER 
+      
+      return {
+        ...state,
+        productList: [...action.payload]
+      };
+    }
+    case GET_VARIABLES_LIST: {  // get variables REDUCER 
+      
+      return {
+        ...state,
+        variablesList: [...action.payload]
+      };
+    }
+    case DELETE_VARIABLE: {  // delete variables REDUCER 
+      
+      return {
+        ...state,
+        variablesList: [...action.payload]
+      };
+    }
+    case UPDATE_VARIABLE: {  // update variables REDUCER 
+      
+      return {
+        ...state,
+        variablesList: [...action.payload]
+      };
+    }
+    case ADD_VARIABLE: {  // Add variable REDUCER 
+      
+      return {
+        ...state,
+        variablesList: [...action.payload]
       };
     }
     case GET_CATEGORY_LIST: {

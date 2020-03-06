@@ -6,211 +6,108 @@ const EcommerceDB = {
     {
       id: "323sa680b32497dsfdsgga21rt47",
       imgUrl: "/assets/images/products/speaker-1.jpg",
-      price: 324.0,
-      title: "Bass Speaker Venue 8 - 8 - Intel Atom - 16GB - Black",
-      category: "audio",
-      brand: "Microlab",
-      rating: 1,
-      freeShipping: false,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
+      version: 1.2,
+      clientName: "Client_1",
+      lastUpdate: "14/02/1996",
+      state: "deployed",
+      host: "192.167.2.3",
+      port: "3259",
     },
     {
       id: "323sa680b324976dfgga21rt47",
       imgUrl: "/assets/images/products/speaker-2.jpg",
-      price: 454.0,
-      title: "Bass Speaker",
-      category: "audio",
-      brand: "Microlab",
-      rating: 3,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
+      version: 1.3,
+      clientName: "Client_2",
+      lastUpdate: "14/02/1996",
+      state: "deployed",
+      host: "192.167.2.3",
+      port: "3259",
+    },
+    {
+      id: "323sa680b32497dsfrsgga21rt47",
+      imgUrl: "/assets/images/products/headphone-1.jpg",
+      version: 1.6,
+      clientName: "Client_3",
+      lastUpdate: "14/02/1996",
+      state: "deployed",
+      host: "192.167.2.3",
+      port:"2592"
     },
     {
       id: shortId.generate(),
       imgUrl: "/assets/images/products/headphone-1.jpg",
-      price: 134.0,
-      title: "Bass Speaker",
-      category: "audio",
-      brand: "Sony",
-      rating: 4,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/headphone-2.jpg",
-      price: 987.0,
-      title: "Bit Bass Headphone",
-      category: "audio",
-      brand: "Sony",
-      rating: 5,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/headphone-3.jpg",
-      price: 870.0,
-      title: "Sony Headphone",
-      category: "audio",
-      brand: "Sony",
-      rating: 4,
-      freeShipping: false,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/watch-1.jpg",
-      price: 23.0,
-      title: "Comlion Watch",
-      category: "fashion",
-      brand: "Comlion",
-      rating: 3,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: "323sa680b32497dfdfgga21rt47",
-      imgUrl: "/assets/images/products/speaker-2.jpg",
-      price: 454.0,
-      title: "Bass Speaker",
-      category: "audio",
-      brand: "Microlab",
-      rating: 1,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: "323sa680b32497dfdfgga21rt48",
-      imgUrl: "/assets/images/products/headphone-4.jpg",
-      price: 299.0,
-      title: "Beats Headphone",
-      category: "audio",
-      brand: "Beats",
-      rating: 5,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: "323sa688b324976dfgga21rt49",
-      imgUrl: "/assets/images/products/iphone-1.jpg",
-      price: 978.0,
-      title: "Iphone 11 Max Pro",
-      category: "cellphone",
-      brand: "Iphone",
-      rating: 2,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/iphone-2.jpg",
-      price: 12.0,
-      title: "IPhone 11 Max Pro Case",
-      category: "accessories",
-      brand: "Iphone",
-      rating: 4,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/watch-1.jpg",
-      price: 23.0,
-      title: "Comlion Watch",
-      category: "fashion",
-      brand: "Comlion",
-      rating: 1,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/watch-2.jpg",
-      price: 75.0,
-      title: "Kurren Watch",
-      category: "fashion",
-      brand: "Kurren",
-      rating: 3,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
-    },
-    {
-      id: shortId.generate(),
-      imgUrl: "/assets/images/products/iphone-1.jpg",
-      price: 978.0,
-      title: "Iphone 11 Max Pro",
-      category: "cellphone",
-      brand: "Iphone",
-      rating: 5,
-      freeShipping: true,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`
+      version: 1.6,
+      clientName: "Client_4",
+      lastUpdate: "14/02/1995",
+      state: "deployed",
+      host: "192.167.2.3",
+      port:"2595"
     }
   ],
 
   category: [
-    {
-      title: "audio",
-      product: 321
-    },
-    {
-      title: "fashion",
-      product: 123
-    },
-    {
-      title: "cellphone",
-      product: 546
-    },
-    {
-      title: "accessories",
-      product: 76
-    }
+    // {
+    //   title: "audio",
+    //   product: 321
+    // },
+    // {
+    //   title: "fashion",
+    //   product: 123
+    // },
+    // {
+    //   title: "cellphone",
+    //   product: 546
+    // },
+    // {
+    //   title: "accessories",
+    //   product: 76
+    // }
   ],
 
   brand: [
-    {
-      title: "Microlab",
-      product: 32
-    },
-    {
-      title: "Sony",
-      product: 534
-    },
-    {
-      title: "Beats",
-      product: 23
-    },
-    {
-      title: "Iphone",
-      product: 65
-    },
-    {
-      title: "Comlion",
-      product: 198
-    }
+    // {
+    //   title: "Microlab",
+    //   product: 32
+    // },
+    // {
+    //   title: "Sony",
+    //   product: 534
+    // },
+    // {
+    //   title: "Beats",
+    //   product: 23
+    // },
+    // {
+    //   title: "Iphone",
+    //   product: 65
+    // },
+    // {
+    //   title: "Comlion",
+    //   product: 198
+    // }
   ],
 
   rating: [
-    {
-      rate: 5,
-      product: 345
-    },
-    {
-      rate: 4,
-      product: 53
-    },
-    {
-      rate: 3,
-      product: 765
-    },
-    {
-      rate: 2,
-      product: 32
-    },
-    {
-      rate: 1,
-      product: 64
-    }
+    // {
+    //   rate: 5,
+    //   product: 345
+    // },
+    // {
+    //   rate: 4,
+    //   product: 53
+    // },
+    // {
+    //   rate: 3,
+    //   product: 765
+    // },
+    // {
+    //   rate: 2,
+    //   product: 32
+    // },
+    // {
+    //   rate: 1,
+    //   product: 64
+    // }
   ],
 
   cart: [
@@ -227,6 +124,113 @@ const EcommerceDB = {
           productId: "323sa688b324976dfgga21rt49",
           amount: 1
         }
+      ]
+    }
+  ],
+  variables: [
+    {
+      cid: "323sa680b32497dsfdsgga21rt47",
+      list: [
+        {
+          id:shortId.generate(),
+          key: "ENVIRONMENT",
+          value: "development"
+        },
+        {
+          id:shortId.generate(),
+          key: "COMPOSE_PROJECT_NAME",
+          value: "app-manager"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_SERVER",
+          value: "botv.io:1255"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_PASSWORD",
+          value: "6vqwIyPDI!"
+        },
+        {
+          id:shortId.generate(),
+          key: "VERSION",
+          value: "NLP_VERSION"
+        },
+        {
+          id:shortId.generate(),
+          key: "BOT_SERVICES_PATH",
+          value: "/home/Documents/bot-services"
+        },
+      ]
+    },
+    {
+      cid: "323sa680b324976dfgga21rt47",
+      list: [
+        {
+          id:shortId.generate(),
+          key: "ENVIRONMENT",
+          value: "development"
+        },
+        {
+          id:shortId.generate(),
+          key: "COMPOSE_PROJECT_NAME",
+          value: "app-manager"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_SERVER",
+          value: "botv.io:1255"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_PASSWORD",
+          value: "6vqwIyPDI!"
+        },
+        {
+          id:shortId.generate(),
+          key: "VERSION",
+          value: "NLP_VERSION"
+        },
+        {
+          id:shortId.generate(),
+          key: "BOT_SERVICES_PATH",
+          value: "/home/Documents/bot-services"
+        },
+      ]
+    },
+    {
+      cid: "323sa680b32497dsfrsgga21rt47",
+      list: [
+        {
+          id:shortId.generate(),
+          key: "ENVIRONMENT",
+          value: "development"
+        },
+        {
+          id:shortId.generate(),
+          key: "COMPOSE_PROJECT_NAME",
+          value: "app-manager"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_SERVER",
+          value: "botv.io:1255"
+        },
+        {
+          id:shortId.generate(),
+          key: "REGISTRY_PASSWORD",
+          value: "6vqwIyPDI!"
+        },
+        {
+          id:shortId.generate(),
+          key: "VERSION",
+          value: "NLP_VERSION"
+        },
+        {
+          id:shortId.generate(),
+          key: "BOT_SERVICES_PATH",
+          value: "/home/Documents/bot-services"
+        },
       ]
     }
   ],
@@ -283,11 +287,103 @@ Mock.onGet("/api/ecommerce/get-cart-list").reply(config => {
   let response = [];
 
   if (uid) {
-    response = getDetailedCartList(uid);
+    response = getDetailedCartList(uid); // just to get the product from the list weil er hat nur die ID 
   }
 
   return [200, response];
 });
+
+Mock.onGet("/api/ecommerce/get-var-list").reply(config => { // this is to get the variables list for each client mit ein cid
+  let cid = config.data;
+  let response = [];
+
+  if (cid) {
+    let variablesList = EcommerceDB.variables.find(variableObj => variableObj.cid === cid);
+    response = variablesList ? variablesList.list : [] ;
+  }
+  
+
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting a variable
+  let { varId, cid } = JSON.parse(config.data);
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) {
+      return {
+        ...variableObj,
+        list: variableObj.list.filter(variable => variable.id !== varId)
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+
+  console.log(EcommerceDB.variables);
+  
+
+  const response = EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form 
+
+  return [200, response];
+});
+
+
+Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting a variable
+  let { varId, cid, newData } = JSON.parse(config.data);
+
+  console.log("[dataBase side ]",varId, cid, newData);
+  
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) {
+      return {
+        ...variableObj,  // optimization passer l'index du var dans le tab 
+        list: variableObj.list.map(variable => {
+          if(variable.id === varId){
+            return {
+              ...variable,
+              ...newData
+            }
+          } else return variable
+        })
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+  console.log(variableList);
+  
+
+  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for deleting a variable
+  let { cid, newData } = JSON.parse(config.data);
+
+  console.log("[dataBase side ]", cid, newData);
+  
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) { // find the vars for each client 
+      return {
+        ...variableObj,  // optimization passer l'index du var dans le tab 
+        list: variableObj.list.concat(newData)
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+  console.log(variableList);
+  
+
+  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  return [200, response];
+});
+
+
+
 
 Mock.onPost("/api/ecommerce/add-to-cart").reply(config => {
   let { uid, productId } = JSON.parse(config.data);
@@ -341,6 +437,17 @@ Mock.onPost("/api/ecommerce/delete-from-cart").reply(config => {
   EcommerceDB.cart = cartList;
 
   const response = getDetailedCartList(uid);
+
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/delete-client").reply(config => {
+  let { clientId } = JSON.parse(config.data);
+  let clients = EcommerceDB.productList.filter(client => client.id !== clientId);
+
+  EcommerceDB.productList = clients;
+
+  const response = clients;
 
   return [200, response];
 });

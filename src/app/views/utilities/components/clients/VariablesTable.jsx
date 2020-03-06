@@ -1,83 +1,100 @@
 import React from 'react';
-import MaterialTable from 'material-table';
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 
-export default function VariablesTable() {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Key', field: 'key' },
-      { title: 'Value', field: 'value' },
-     
-    ],
-    data: [
-      {
-        key: 'key_1', 
-        value: 'value_1'
-      },
-      {
-        key: 'key_2', 
-        value: 'value_2'
-      },
-      {
-        key: 'key_3', 
-        value: 'value_3'
-      },
-      {
-        key: 'key_4', 
-        value: 'value_4'
-      },
-      {
-        key: 'key_5', 
-        value: 'value_5'
-      },
-      {
-        key: 'key_6', 
-        value: 'value_6'
-      }
-    ],
-  });
+import shortId from "shortid"; // just for the Mock server otherwise this will not be used 
+import MaterialTable from 'material-table';
+import { 
+  getVariablesList,
+  deleteVariable,
+  updateVariable,
+  addVariable
+  } from "app/redux/actions/EcommerceActions";
+
+
+
+
+ function VariablesTable(props) {
+
+
+  const {
+        variablesList,
+        selectedClient,
+        getVariablesList,
+        addVariable,
+        deleteVariable,
+        updateVariable
+        
+          }=props;
+
+
+ 
+
+  const [loaded, setLoaded] = React.useState(false);
+
+  if (!loaded){
+    console.log('running to load ');
+    
+    getVariablesList(selectedClient.id);
+    setLoaded(true)
+
+  }
+
 
   return (
     <MaterialTable
       title=" Environment Variables "
-      columns={state.columns}
-      data={state.data}
+      columns={[
+        { title: 'Key', field: 'key' },
+        { title: 'Value', field: 'value' },
+       
+      ]}
+      data={variablesList}
       editable={{
         onRowAdd: newData =>
           new Promise(resolve => {
-            setTimeout(() => {  
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
+            const data = {
+                            ... newData,
+                            id : shortId.generate()
+                           }
+            addVariable(selectedClient.id, newData)
+            resolve(); // wait for server response then see if it's ok or not 
+            
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
-            setTimeout(() => {
+              updateVariable(oldData.id, selectedClient.id, newData)  
               resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
+           }),
         onRowDelete: oldData =>
           new Promise(resolve => {
-            setTimeout(() => {
+              deleteVariable(oldData.id, selectedClient.id);
               resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
+              
           }),
       }}
     />
   );
 }
+
+const mapStateToProps = (state) => ({
+ 
+  variablesList : state.ecommerce.variablesList,
+  selectedClient : state.ecommerce.selectedClient,
+  getVariablesList: PropTypes.func.isRequired,
+  deleteVariable : PropTypes.func.isRequired,
+  updateVariable : PropTypes.func.isRequired,
+  addVariable : PropTypes.func.isRequired
+  
+  
+});
+
+export default   connect(
+  mapStateToProps,
+  { 
+    getVariablesList,
+    deleteVariable,
+    updateVariable,
+    addVariable,
+    }
+)(VariablesTable);

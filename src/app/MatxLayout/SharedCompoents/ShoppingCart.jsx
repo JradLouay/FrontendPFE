@@ -110,10 +110,10 @@ function ShoppingCart(props) {
                 </IconButton> */}
               </div>
               <div className="mr-8">
-                <img src={product.imgUrl} alt={product.title} />
+                <img src={product.imgUrl} alt={product.clientName} />
               </div>
               <div className="mr-8 text-center">
-                <h6 className="m-0 mb-4">{product.title}</h6>
+                <h6 className="m-0 mb-4">{product.clientName}</h6>
                 {/* <small className="text-muted">
                   ${product.price} x {product.amount}
                 </small> */}

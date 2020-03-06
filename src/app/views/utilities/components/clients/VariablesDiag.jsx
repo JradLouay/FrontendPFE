@@ -7,14 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  // FormControl,
-  // FormControlLabel,
-  // InputLabel,
-  // MenuItem,
-  // Select,
-  // Switch,
   Icon,
-  // Fab,
   IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
@@ -35,7 +28,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function VariablesDiag() {
+export default function VariablesDiag(props) {
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -43,35 +37,22 @@ export default function VariablesDiag() {
 
   function handleClickOpen() {
     setOpen(true);
-  }
+  };
 
   function handleClose() {
     setOpen(false);
-  }
-
-  function handleMaxWidthChange(event) {
-    setMaxWidth(event.target.value);
-  }
-
-  function handleFullWidthChange(event) {
-    setFullWidth(event.target.checked);
-  }
+  };
 
   return (
     <React.Fragment>
-      
+
       <IconButton>
-                    <Icon color="green"  onClick={handleClickOpen}>library_books</Icon>
+        <Icon color="green" onClick={() => {
+          props.clicked()();
+          handleClickOpen();
+        }}>library_books</Icon>
       </IconButton>
-      {/* <Fab
-          size="medium"
-          color="secondary"
-          aria-label="Add"
-          className={classes.button}
-          onClick={handleClickOpen}
-        >
-          <Icon>add</Icon>
-        </Fab> */}
+      
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
@@ -82,42 +63,12 @@ export default function VariablesDiag() {
         <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <SimpleCard >
-                <VariablesTable />
+            <SimpleCard >
+              <VariablesTable />
 
             </SimpleCard>
           </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
-                />
-              }
-              label="Full width"
-            />
-          </form> */}
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -128,3 +79,5 @@ export default function VariablesDiag() {
     </React.Fragment>
   );
 }
+
+
