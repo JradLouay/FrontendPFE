@@ -46,11 +46,11 @@ export default function VariablesDiag(props) {
   return (
     <React.Fragment>
 
-      <IconButton>
-        <Icon color="green" onClick={() => {
+      <IconButton onClick={() => {
           props.clicked()();
           handleClickOpen();
-        }}>library_books</Icon>
+        }}> 
+        <Icon color="green" >library_books</Icon>
       </IconButton>
       
       <Dialog

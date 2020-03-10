@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from 'clsx';
 import { Breadcrumb } from "matx";
-import ModuleRowCards from './components/Modules/ModuleRowCards';
+import ModuleRowCards from './components/Client Modules/ModuleRowCards';
 import {
   Button,
   CircularProgress,
@@ -14,7 +14,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
-import ModuleDialog from './components/Modules/ModuleDiag';
+import ModuleDialog from './components/Client Modules/ModuleDiag';
 
 const useStyles = makeStyles(theme => ({
   

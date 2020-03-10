@@ -5,43 +5,51 @@ const EcommerceDB = {
   productList: [ // these will become clients 
     {
       id: "323sa680b32497dsfdsgga21rt47",
-      imgUrl: "/assets/images/products/speaker-1.jpg",
+      imgUrl: "/assets/images/logos/react.png",
       version: 1.2,
       clientName: "Client_1",
       lastUpdate: "14/02/1996",
       state: "deployed",
       host: "192.167.2.3",
       port: "3259",
+      userName: "client1",
+      password: "client1"
     },
     {
       id: "323sa680b324976dfgga21rt47",
-      imgUrl: "/assets/images/products/speaker-2.jpg",
+      imgUrl: "/assets/images/logos/react.png",
       version: 1.3,
       clientName: "Client_2",
       lastUpdate: "14/02/1996",
       state: "deployed",
       host: "192.167.2.3",
       port: "3259",
+      userName: "client2",
+      password: "client2"
     },
     {
       id: "323sa680b32497dsfrsgga21rt47",
-      imgUrl: "/assets/images/products/headphone-1.jpg",
+      imgUrl: "/assets/images/logos/react.png",
       version: 1.6,
       clientName: "Client_3",
       lastUpdate: "14/02/1996",
       state: "deployed",
       host: "192.167.2.3",
-      port:"2592"
+      port:"2592",
+      userName: "client3",
+      password: "client3"
     },
     {
       id: shortId.generate(),
-      imgUrl: "/assets/images/products/headphone-1.jpg",
+      imgUrl: "/assets/images/logos/react.png",
       version: 1.6,
       clientName: "Client_4",
       lastUpdate: "14/02/1995",
       state: "deployed",
       host: "192.167.2.3",
-      port:"2595"
+      port:"2595",
+      userName: "client4",
+      password: "client4"
     }
   ],
 
@@ -126,6 +134,53 @@ const EcommerceDB = {
         }
       ]
     }
+  ],
+  Modules:[
+    {
+      id:1,
+      ModuleName:"intent-manager-client",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    },
+    {
+      id:2,
+      ModuleName:"chatbot-manager-client",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    },
+    {
+      id:3,
+      ModuleName:"handout-client",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    },
+    {
+      id:4,
+      ModuleName:"monitor-client",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    },
+    {
+      id:5,
+      ModuleName:"middleware",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    },{
+      id:6,
+      ModuleName:"manager",
+      lastUpdate:"14/02/1996",
+      description:"here you can put some desc"
+    }
+  ],
+  deployedModules: [
+    {
+      cid: "323sa680b32497dsfdsgga21rt47",
+      list: [1,2]
+    },
+    {
+      cid: "323sa680b324976dfgga21rt47",
+      list: [1,2,3]
+    },
   ],
   variables: [
     {
@@ -261,37 +316,61 @@ const getDetailedCartList = uid => {
     ...EcommerceDB.productList.find(item => item.id === product.productId)
   }));
 };
+// const getDetailedClientModuleList = uid => {
+//   let cartList = EcommerceDB.cart.find(userCart => userCart.uid == uid).list;
+//   return cartList.map(product => ({
+//     amount: product.amount,
+//     ...EcommerceDB.productList.find(item => item.id === product.productId)
+//   }));
+// };
 
-Mock.onGet("/api/ecommerce/get-product-list").reply(config => {
+Mock.onGet("/api/ecommerce/get-product-list").reply(config => { // this is for the client get list 
   const response = EcommerceDB.productList;
   return [200, response];
 });
-
-Mock.onGet("/api/ecommerce/get-category-list").reply(config => {
-  const response = EcommerceDB.category;
+Mock.onGet("/api/ecommerce/get-modules-list").reply(config => { // this is for the modules get list 
+  const response = EcommerceDB.Modules;
   return [200, response];
 });
-
-Mock.onGet("/api/ecommerce/get-rating-list").reply(config => {
-  const response = EcommerceDB.rating;
-  return [200, response];
-});
-
-Mock.onGet("/api/ecommerce/get-brand-list").reply(config => {
-  const response = EcommerceDB.brand;
-  return [200, response];
-});
-
-Mock.onGet("/api/ecommerce/get-cart-list").reply(config => {
-  let uid = config.data;
+Mock.onGet("/api/ecommerce/get-client-modules").reply(config => { // this is to get the modules list for each client mit ein cid
+  let cid = config.data;
   let response = [];
 
-  if (uid) {
-    response = getDetailedCartList(uid); // just to get the product from the list weil er hat nur die ID 
+  if (cid) {
+    let modulesList = EcommerceDB.deployedModules.find(modObj => modObj.cid === cid);
+    response = modulesList ? modulesList.list : [] ;
   }
+  console.log('from dataBase',response);
+  
 
-  return [200, response];
+  return [200, []];
 });
+
+// Mock.onGet("/api/ecommerce/get-category-list").reply(config => {
+//   const response = EcommerceDB.category;
+//   return [200, response];
+// });
+
+// Mock.onGet("/api/ecommerce/get-rating-list").reply(config => {
+//   const response = EcommerceDB.rating;
+//   return [200, response];
+// });
+
+// Mock.onGet("/api/ecommerce/get-brand-list").reply(config => {
+//   const response = EcommerceDB.brand;
+//   return [200, response];
+// });
+
+// Mock.onGet("/api/ecommerce/get-cart-list").reply(config => {
+//   let uid = config.data;
+//   let response = [];
+
+//   if (uid) {
+//     response = getDetailedCartList(uid); // just to get the product from the list weil er hat nur die ID 
+//   }
+
+//   return [200, response];
+// });
 
 Mock.onGet("/api/ecommerce/get-var-list").reply(config => { // this is to get the variables list for each client mit ein cid
   let cid = config.data;
@@ -359,7 +438,7 @@ Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting 
   return [200, response];
 });
 
-Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for deleting a variable
+Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for adding a variable
   let { cid, newData } = JSON.parse(config.data);
 
   console.log("[dataBase side ]", cid, newData);
@@ -382,6 +461,37 @@ Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for deleting a v
   return [200, response];
 });
 
+Mock.onPost("/api/ecommerce/add-client").reply(config => { // this for adding a client
+  let  client  = JSON.parse(config.data);
+  const id = shortId.generate();
+                                                                  /////////
+  console.log("[dataBase side ]", client);                        /////////
+  const toBePers ={                                               /////////
+     ...client,
+     id: id,
+     imgUrl: "/assets/images/products/speaker-1.jpg",
+     state: "unknown",
+     lastUpdate: "______",
+  } 
+  // 
+  // initialize var table for the client 
+  const varObj = {
+                    cid: id,
+                    list: []
+                  }
+
+  EcommerceDB.productList.push(toBePers); // add the client 
+  const newClient = EcommerceDB.productList.find((client)=> client.id === id );
+  EcommerceDB.variables.push(varObj); // initialize the variables array 
+
+
+  console.log("object before ....", toBePers);
+  
+  
+
+  const response = [EcommerceDB.productList, newClient] ; // we need to make this in a abstract form
+  return [200, response];
+});
 
 
 

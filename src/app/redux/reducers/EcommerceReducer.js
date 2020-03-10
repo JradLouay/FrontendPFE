@@ -1,12 +1,17 @@
 import {
-  GET_PRODUCT_LIST,
+  GET_PRODUCT_LIST,///START_CLIENT/////////
   SET_SELECTED_CLIENT,
+  SET_GLOBAL_CLIENT,
   DELETE_CLIENT,
-  GET_CART_LIST,
-  GET_VARIABLES_LIST,
+  SET_CLIENT_TO_ADD,
+  ADD_CLIENT,
+  GET_VARIABLES_LIST,//END_CLIENT///START_VAR/////////
   DELETE_VARIABLE,
   UPDATE_VARIABLE,
-  ADD_VARIABLE,
+  ADD_VARIABLE, ////////END_VAR///////////
+  GET_MODULES_LIST,/////////START_MODULES
+  GET_CLIENT_MODULES,
+  GET_CART_LIST,
   ADD_PRODUCT_TO_CART,
   DELETE_PRODUCT_FROM_CART,
   UPDATE_CART_AMOUNT,
@@ -17,9 +22,13 @@ import {
 
 const initialState = {
   productList: [],
-  cartList: [],
   variablesList: [],
-  selectedClient : {}
+  selectedClient : {},
+  clientToAdd : {},
+  globalClient:{},
+  modulesList : [],
+  clientModules:[],
+  cartList: [],// out of the bi3 a
 };
 
 const EcommerceReducer = function(state = initialState, action) {
@@ -37,11 +46,33 @@ const EcommerceReducer = function(state = initialState, action) {
         selectedClient: {...action.payload}
       };
     }
+    case SET_GLOBAL_CLIENT: { //set client reducer 
+      
+      return {
+        ...state,
+        globalClient: {...action.payload}
+      };
+    }
     case DELETE_CLIENT: {  // delete client REDUCER 
       
       return {
         ...state,
         productList: [...action.payload]
+      };
+    }
+    case SET_CLIENT_TO_ADD: { //set client reducer 
+      
+      return {
+        ...state,
+        clientToAdd: {...action.payload},
+      };
+    }
+    case ADD_CLIENT: {  // delete client REDUCER 
+      
+      return {
+        ...state,
+        productList: [...action.payload[0]],
+        selectedClient: {...action.payload[1]}
       };
     }
     case GET_VARIABLES_LIST: {  // get variables REDUCER 
@@ -70,6 +101,18 @@ const EcommerceReducer = function(state = initialState, action) {
       return {
         ...state,
         variablesList: [...action.payload]
+      };
+    }
+    case GET_MODULES_LIST: {  // get modules list 
+      return {
+        ...state,
+        modulesList: [...action.payload]
+      };
+    }
+    case GET_CLIENT_MODULES: {  // get client modules list 
+      return {
+        ...state,
+        clientModules: [...action.payload]
       };
     }
     case GET_CATEGORY_LIST: {

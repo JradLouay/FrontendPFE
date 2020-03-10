@@ -57,7 +57,7 @@ import {
                             ... newData,
                             id : shortId.generate()
                            }
-            addVariable(selectedClient.id, newData)
+            addVariable(selectedClient.id, data);
             resolve(); // wait for server response then see if it's ok or not 
             
           }),

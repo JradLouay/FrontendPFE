@@ -12,6 +12,9 @@ const Typography = MatxLoadable({
 const Display = MatxLoadable({
   loader: () => import("./Display")
 });
+const ClientModules = MatxLoadable({
+  loader: () => import("./Modules")
+});
 
 const utilitiesRoutes = [
   {
@@ -29,6 +32,10 @@ const utilitiesRoutes = [
   {
     path: "/utilities/display",
     component: Display
+  },
+  {
+    path: "/utilities/modules",
+    component: ClientModules
   },
 ]
 

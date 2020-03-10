@@ -2,12 +2,16 @@ import axios from "axios";
 
 export const GET_PRODUCT_LIST = "GET_PRODUCT_LIST"; // getclients 
 export const SET_SELECTED_CLIENT = "SET_SELECTED_CLIENT"; // set client for the InfoDiag
+export const SET_GLOBAL_CLIENT = "SET_GLOBAL_CLIENT"; // set global  client for the common part of the app 
 export const DELETE_CLIENT ="DELETE_CLIENT";  // delete client
+export const SET_CLIENT_TO_ADD ="SET_CLIENT_TO_ADD";  // set client to add
+export const ADD_CLIENT ="ADD_CLIENT";  // add client
 export const GET_VARIABLES_LIST ="GET_VARIABLES_LIST";  // getVariables mit der client ID 
 export const DELETE_VARIABLE ="DELETE_VARIABLE";  // getVariables mit der client ID 
 export const UPDATE_VARIABLE = "UPDATE_VARIABLE"; // updateVariable mit der client ID und die var ID auch 
 export const ADD_VARIABLE = "ADD_VARIABLE"; // Add a new variable  
-
+export const GET_MODULES_LIST = "GET_MODULES_LIST"; // get modules list  (ALL) 
+export const GET_CLIENT_MODULES = "GET_CLIENT_MODULES"; // get client modules list  (ALL) 
 export const GET_CART_LIST = "GET_CART_LIST";
 export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
 export const GET_RATING_LIST = "GET_RATING_LIST";
@@ -38,6 +42,22 @@ export const setSelectedClient = (selectedClient) => {
         payload: selectedClient
       };
 };
+export const setGlobalClient = (globalClient) => {
+      console.log('[setGlobalClient] ', globalClient);
+      
+      return {
+        type: SET_GLOBAL_CLIENT,
+        payload: globalClient
+      };
+};
+export const setClientToAdd = (client) => {
+      console.log('[setSelectedClient] ', client);
+      
+      return {
+        type: SET_CLIENT_TO_ADD,
+        payload: client
+      };
+};
 
 export const deleteClient = (clientId) => dispatch => {
 
@@ -47,6 +67,18 @@ export const deleteClient = (clientId) => dispatch => {
     .then(res => {
       dispatch({
         type: DELETE_CLIENT,
+        payload: res.data
+      });
+    });
+};
+export const addClient = (client) => dispatch => {
+
+  console.log('[addClient] ', client);
+  axios
+    .post("/api/ecommerce/add-client", client )
+    .then(res => {
+      dispatch({
+        type: ADD_CLIENT,
         payload: res.data
       });
     });
@@ -139,7 +171,31 @@ export const addVariable = (cid, newData) => dispatch => { //delete variable
     });
 };
 // -----------------------------------------------END--------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+// -----------------------------------------------START--------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+
+export const getModulesList = () => dispatch => {
+  axios.get("/api/ecommerce/get-modules-list").then(res => {
+    dispatch({
+      type: GET_MODULES_LIST,
+      payload: res.data
+    });
+  });
+};
+export const getClientModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
+  
+  console.log('[getClientModulesList] ', cid);
+
+  axios.get("/api/ecommerce/get-client-modules", { data: cid }).then(res => {
+    dispatch({
+      type: GET_CLIENT_MODULES,
+      payload: res.data
+    });
+  });
+};
+// -----------------------------------------------END--------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 export const addProductToCart = (uid, productId) => dispatch => {
   axios.post("/api/ecommerce/add-to-cart", { uid, productId }).then(res => {
     dispatch({

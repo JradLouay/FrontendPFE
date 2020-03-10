@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { format } from "date-fns";
-import ModuleDialog from '../Modules/ModuleDiag';
+import ModuleDialog from '../Client Modules/ModuleDiag';
 
 import {
   Grid,

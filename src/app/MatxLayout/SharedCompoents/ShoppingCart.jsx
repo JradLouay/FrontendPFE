@@ -10,37 +10,44 @@ import { withStyles } from "@material-ui/styles";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  getCartList,
-  deleteProductFromCart,
-  updateCartAmount
+  getProductList,
+  setGlobalClient
 } from "app/redux/actions/EcommerceActions";
 
-let cartListLoaded = false;
+let clientListLoaded = false;
 
 function ShoppingCart(props) {
   const {
     container,
     theme,
     settings,
-    cartList = [],
-    getCartList,
-    // deleteProductFromCart,
-    // updateCartAmount,
-    user
+    productList = [],
+    getProductList,
+    setGlobalClient,
+    // user
   } = props;
+  
 
   const [panelOpen, setPanelOpen] = React.useState(false);
 
-  if (!cartListLoaded) {
-    getCartList(user.userId);
-    cartListLoaded = true;
-  }
+  
 
-  function handleDrawerToggle() {
+  function handleDrawerToggle(client) {
+    setGlobalClient(client)
+    // console.log(id);
+    
     setPanelOpen(!panelOpen);
   }
 
   const parentThemePalette = theme.palette;
+
+
+  if (!clientListLoaded) {
+    console.log( "not loaded" );
+    
+    getProductList();
+    clientListLoaded = true;
+  }
 
   return (
     <MuiThemeProvider theme={settings.themes[settings.activeTheme]}>
@@ -53,7 +60,7 @@ function ShoppingCart(props) {
               : parentThemePalette.text.primary
         }}
       >
-        <Badge color="secondary" badgeContent={cartList.length}>
+        <Badge color="secondary" badgeContent={productList.length}>
           <Icon>recent_actors</Icon>
         </Badge>
       </IconButton>
@@ -75,12 +82,12 @@ function ShoppingCart(props) {
           </div>
           
 
-          {cartList.map(product => (
+          {productList.map(client => (
             <div
-              key={product.id}
+              key={client.id}
               className="mini-cart__item flex flex-middle flex-space-between py-16 px-8"
               // add onClick method to manage !!
-              onClick={handleDrawerToggle}
+              onClick={()=> handleDrawerToggle(client)}
             >
               <div className="flex flex-column mr-8">
                 {/* <IconButton
@@ -110,10 +117,10 @@ function ShoppingCart(props) {
                 </IconButton> */}
               </div>
               <div className="mr-8">
-                <img src={product.imgUrl} alt={product.clientName} />
+                <img src={client.imgUrl} alt={client.clientName} />
               </div>
               <div className="mr-8 text-center">
-                <h6 className="m-0 mb-4">{product.clientName}</h6>
+                <h6 className="m-0 mb-4">{client.clientName}</h6>
                 {/* <small className="text-muted">
                   ${product.price} x {product.amount}
                 </small> */}
@@ -139,16 +146,20 @@ ShoppingCart.propTypes = {
 
 const mapStateToProps = state => ({
   settings: state.layout.settings,
-  getCartList: PropTypes.func.isRequired,
-  deleteProductFromCart: PropTypes.func.isRequired,
-  updateCartAmount: PropTypes.func.isRequired,
-  cartList: state.ecommerce.cartList,
-  user: state.user
+  getProductList:PropTypes.func.isRequired,
+  setGlobalClient: PropTypes.func.isRequired,
+  productList : state.ecommerce.productList,
+  // user: state.user
 });
 
 export default withStyles({}, { withTheme: true })(
   connect(
     mapStateToProps,
-    { getCartList, deleteProductFromCart, updateCartAmount }
+    { 
+      // getCartList, 
+      // deleteProductFromCart, 
+      // updateCartAmount,
+      getProductList,
+      setGlobalClient }
   )(ShoppingCart)
 );

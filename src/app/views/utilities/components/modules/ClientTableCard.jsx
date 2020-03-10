@@ -25,7 +25,6 @@ import {
   Snackbar
 } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
-import VariablesDiag from "./VariablesDiag";
 import InfoDiag from "./InfoDiag";
 
 let tableIsLoaded = false ;
@@ -173,7 +172,6 @@ const ClientTableCard = (props) => {
                   <IconButton onClick={()=> handleClickOpen(m.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
-                  <VariablesDiag clicked={()=> ()=> setSelectedClient(m)} />
                 </TableCell>
               </TableRow>
             ))}

@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import InfoForm from "./stepperForms/InfoForm";
 import TestProgress  from "./stepperForms/TestProgress";
-import VariablesTable from "./VariablesTable";
 
 function getSteps() {
   return [
@@ -25,7 +24,7 @@ function getStepContent(stepIndex, handleNext, handleBack) {
       return (<TestProgress next={handleNext}
                             prev={handleBack}  />);
     case 2:
-      return (<VariablesTable />);  
+      return 'loay';  
     default:
       return `Default`;
    

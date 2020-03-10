@@ -63,13 +63,19 @@ export const navigations = [
     children: [
       {
         // name: "Color",
-        name : "Clients",
+        name : "Client",
         path: "/utilities/color",
         iconText: "C"
       },
       {
+        // name: "Color",
+        name : "Modules",
+        path: "/utilities/modules",
+        iconText: "M"
+      },
+      {
         // name: "Spacing",
-        name: "Modules",
+        name: "client Modules",
         path: "/utilities/spacing",
         iconText: "S"
       },
