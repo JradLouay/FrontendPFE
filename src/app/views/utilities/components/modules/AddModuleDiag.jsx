@@ -7,18 +7,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  // FormControl,
-  // FormControlLabel,
-  // InputLabel,
-  // MenuItem,
-  // Select,
-  // Switch,
   Icon,
   Fab,
-  // IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import  StepperForm  from "./StepperForm";
+import  InfoForm  from "./InfoForm";
 const useStyles = makeStyles(theme => ({
   form: {
     display: "flex",
@@ -35,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddClientDiag() {
+export default function AddModuleDiag() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -78,41 +71,10 @@ export default function AddClientDiag() {
         <DialogTitle id="max-width-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <SimpleCard title=" Add client ">
-                <StepperForm />
+          <SimpleCard title=" Add Module ">
+                <InfoForm />
             </SimpleCard>
           </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
-                />
-              }
-              label="Full width"
-            />
-          </form> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

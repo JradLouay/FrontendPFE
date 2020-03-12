@@ -10,6 +10,9 @@ import {
   UPDATE_VARIABLE,
   ADD_VARIABLE, ////////END_VAR///////////
   GET_MODULES_LIST,/////////START_MODULES
+  SET_SELECTED_MODULE,
+  DELETE_MODULE,
+  ADD_MODULE,
   GET_CLIENT_MODULES,
   GET_CART_LIST,
   ADD_PRODUCT_TO_CART,
@@ -27,12 +30,14 @@ const initialState = {
   clientToAdd : {},
   globalClient:{},
   modulesList : [],
+  selectedModule: {},
   clientModules:[],
   cartList: [],// out of the bi3 a
 };
 
 const EcommerceReducer = function(state = initialState, action) {
   switch (action.type) { 
+
     case GET_PRODUCT_LIST: {  // get client list 
       return {
         ...state,
@@ -104,6 +109,24 @@ const EcommerceReducer = function(state = initialState, action) {
       };
     }
     case GET_MODULES_LIST: {  // get modules list 
+      return {
+        ...state,
+        modulesList: [...action.payload]
+      };
+    }
+    case SET_SELECTED_MODULE: {  // get modules list 
+      return {
+        ...state,
+        selectedModule: {...action.payload}
+      };
+    }
+    case DELETE_MODULE: {  // get modules list 
+      return {
+        ...state,
+        modulesList: [...action.payload]
+      };
+    }
+    case ADD_MODULE: {  // get modules list 
       return {
         ...state,
         modulesList: [...action.payload]

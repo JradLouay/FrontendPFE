@@ -1,7 +1,8 @@
 import React from "react";
 import {
-  getProductList,
-  setSelectedClient,
+  getModulesList,
+  deleteModule,
+  setSelectedModule,
   deleteClient
 } from "app/redux/actions/EcommerceActions";
 import { PropTypes } from "prop-types";
@@ -38,24 +39,25 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const ClientTableCard = (props) => {
+const ModuleTableCard = (props) => {
   const {
-    productList = [],
-    // selectedClient= {},
-    getProductList,
-    setSelectedClient,
+    // productList = [],
+    modulesList=[],
+    getModulesList,
+    deleteModule,
+    setSelectedModule,
     deleteClient,
   } = props;
   
   const [open, setOpen] = React.useState(false); // dialog
   const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
   const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
-  const [deleteClientId, setDeleteClientId] = React.useState(null);
+  const [deleteModuleId, setDeleteModuleId] = React.useState(null);
 
   // ----------------------DialogConfirmation--------
 
-  const handleClickOpen = (clientId) => {
-    setDeleteClientId(clientId);
+  const handleClickOpen = (moduleId) => {
+    setDeleteModuleId(moduleId);
     setOpen(true);
   };
 
@@ -63,9 +65,9 @@ const ClientTableCard = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.7) {
+        if (Math.random() >= 0.2) {
           setTimeout(() => {
-            deleteClient(deleteClientId);
+            deleteModule(deleteModuleId);
             setOpenSnackSuccess(true) ;
 
           }, 50);
@@ -97,19 +99,21 @@ const ClientTableCard = (props) => {
   };
 
   if (!tableIsLoaded) {
-    getProductList();
+    getModulesList();
+    // console.log(modulesList);
+    
     tableIsLoaded = true;
   }
   return (
     <React.Fragment>
     <Card elevation={3} className="pt-20 mb-24">
-      <div className="card-title px-24 mb-12">Clients</div>
+      <div className="card-title px-24 mb-12">Modules</div>
       <div className="overflow-auto">
         <Table className="product-table">
           <TableHead>
             <TableRow>
               <TableCell className="px-24" colSpan={1}>
-                Name
+                Module Name
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
                 Version
@@ -117,58 +121,33 @@ const ClientTableCard = (props) => {
               <TableCell className="px-0" colSpan={1}>
                 LastUpdate
               </TableCell>
-              <TableCell className="px-0" colSpan={1}>
+              {/* <TableCell className="px-0" colSpan={1}>
                 State
-              </TableCell>
+              </TableCell> */}
               <TableCell className="px-0" colSpan={1}>
                 Action
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {productList.map((m) => (
+            {modulesList.map((m) => (
               <TableRow key={m.id} >
                 <TableCell className="px-0 capitalize" colSpan={1} align="left">
                   <div className="flex flex-middle">
-                    <img
-                      className="circular-image-small"
-                      src="/assets/images/logos/react.png"
-                      alt="client"
-                    />
-                    <p className="m-0 ml-8">{m.clientName}</p>
+                    <p className="m-0 ml-8">{m.moduleName}</p>
                   </div>
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                
-                  {m.version > 999
-                    ? (m.version / 1000).toFixed(1) + "k"
-                    : m.version}
+                  {m.version}
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
                   {m.lastUpdate}
                 </TableCell>
 
-                <TableCell className="px-0" align="left" colSpan={1}>
-                  {m.state ? (
-                    m.state === "deployed" ? (
-                      <small className="border-radius-4 bg-green text-white px-8 py-1 ">
-                         Deployed
-                      </small>
-                    ) : (
-                      <small className="border-radius-4 bg-error text-white px-8 py-1 ">
-                        Not Deployed
-                      </small>
-                    )
-                  ) : (
-                    <small className="border-radius-4 bg-secondary text-white px-8 py-1 ">
-                      Unknown
-                    </small>
-                  )}
-                </TableCell>
                 <TableCell className="px-0" colSpan={1}>
                   
                   
-                  <InfoDiag clicked={()=> ()=> setSelectedClient(m)} />
+                  <InfoDiag clicked={()=> ()=> setSelectedModule(m)} />
                   <IconButton onClick={()=> handleClickOpen(m.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
@@ -188,10 +167,10 @@ const ClientTableCard = (props) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Delete User"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Delete Module"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you want to delete this client ?
+            Do you want to delete this module ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -205,7 +184,7 @@ const ClientTableCard = (props) => {
       </Dialog>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnackSuccess}>
         <Alert onClose={handleCloseSnackSuccess} severity="success">
-          Client Deleted successfully!
+          Module Deleted successfully!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnackError}>
@@ -218,22 +197,19 @@ const ClientTableCard = (props) => {
 };
 
 const mapStateToProps = state => ({
-  getProductList : PropTypes.func.isRequired,
-  setSelectedClient : PropTypes.func.isRequired,
+  // getProductList : PropTypes.func.isRequired,
+  getModulesList : PropTypes.func.isRequired,
+  deleteModule : PropTypes.func.isRequired,
+  setSelectedModule : PropTypes.func.isRequired,
   deleteClient : PropTypes.func.isRequired,
-  // cartList: state.ecommerce.cartList,
-  // clientList : state.ecommerce.clientList,
-  productList : state.ecommerce.productList,
-  // selectedClient : state.ecommerce.selectedClient
+  modulesList : state.ecommerce.modulesList,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   { 
-    // getCartList, 
-    // deleteProductFromCart, 
-    // updateCartAmount, 
-    getProductList, 
-    setSelectedClient,
+    getModulesList,
+    deleteModule,
+    setSelectedModule,
     deleteClient }
-)(ClientTableCard);
+)(ModuleTableCard);

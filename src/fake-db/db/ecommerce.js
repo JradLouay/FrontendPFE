@@ -138,36 +138,42 @@ const EcommerceDB = {
   Modules:[
     {
       id:1,
-      ModuleName:"intent-manager-client",
+      moduleName:"intent-manager-client",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     },
     {
       id:2,
-      ModuleName:"chatbot-manager-client",
+      moduleName:"chatbot-manager-client",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     },
     {
       id:3,
-      ModuleName:"handout-client",
+      moduleName:"handout-client",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     },
     {
       id:4,
-      ModuleName:"monitor-client",
+      moduleName:"monitor-client",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     },
     {
       id:5,
-      ModuleName:"middleware",
+      moduleName:"middleware",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     },{
       id:6,
-      ModuleName:"manager",
+      moduleName:"manager",
+      version:"2.6",
       lastUpdate:"14/02/1996",
       description:"here you can put some desc"
     }
@@ -328,10 +334,44 @@ Mock.onGet("/api/ecommerce/get-product-list").reply(config => { // this is for t
   const response = EcommerceDB.productList;
   return [200, response];
 });
+
+/////////////MODULES///////////////////////////////////////////////////////////////
 Mock.onGet("/api/ecommerce/get-modules-list").reply(config => { // this is for the modules get list 
   const response = EcommerceDB.Modules;
   return [200, response];
 });
+
+Mock.onPost("/api/ecommerce/delete-mod").reply(config => {
+
+  let  {moduleId}  = JSON.parse(config.data);
+  
+  let modules = EcommerceDB.Modules.filter(module => module.id !== moduleId);
+
+  EcommerceDB.Modules = modules;
+
+  const response = modules;
+
+  return [200, response];
+});
+
+
+Mock.onPost("/api/ecommerce/add-mod").reply(config=> {
+
+  let { modToAdd } = JSON.parse(config.data);
+  let response = [] ;
+
+  const copy =  {  ...modToAdd,
+                  id:shortId.generate()  };
+ 
+  EcommerceDB.Modules.push(copy) ;                           
+  response = EcommerceDB.Modules; 
+  console.log(response);
+
+  return [200, response] ;
+
+});
+
+
 Mock.onGet("/api/ecommerce/get-client-modules").reply(config => { // this is to get the modules list for each client mit ein cid
   let cid = config.data;
   let response = [];
@@ -345,6 +385,11 @@ Mock.onGet("/api/ecommerce/get-client-modules").reply(config => { // this is to 
 
   return [200, []];
 });
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Mock.onGet("/api/ecommerce/get-category-list").reply(config => {
 //   const response = EcommerceDB.category;
@@ -386,6 +431,7 @@ Mock.onGet("/api/ecommerce/get-var-list").reply(config => { // this is to get th
 });
 
 Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting a variable
+
   let { varId, cid } = JSON.parse(config.data);
 
   let variableList = EcommerceDB.variables.map(variableObj => {
@@ -553,6 +599,7 @@ Mock.onPost("/api/ecommerce/delete-from-cart").reply(config => {
 
 Mock.onPost("/api/ecommerce/delete-client").reply(config => {
   let { clientId } = JSON.parse(config.data);
+
   let clients = EcommerceDB.productList.filter(client => client.id !== clientId);
 
   EcommerceDB.productList = clients;

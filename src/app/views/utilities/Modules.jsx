@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "matx";
-import ClientTableCard from "./components/modules/ClientTableCard";
-import AddClientDiag from "./components/modules/AddClientDiag";
+import ModuleTableCard from "./components/modules/ModuleTableCard";
+import AddModuleDiag from "./components/modules/AddModuleDiag";
 import {
   Card,
   CardActions,
@@ -24,10 +24,10 @@ const Modules = () => {
               {/* <div className="card-title">Clients</div> */}
               {/* <div className="card-subtitle mb-24">Client_1</div> */}
               <CardContent>
-                <ClientTableCard />
+                <ModuleTableCard />
               </CardContent>
               <CardActions>
-                <AddClientDiag />
+                <AddModuleDiag />
               </CardActions>
             </Card>
     </div>

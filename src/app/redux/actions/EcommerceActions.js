@@ -11,6 +11,9 @@ export const DELETE_VARIABLE ="DELETE_VARIABLE";  // getVariables mit der client
 export const UPDATE_VARIABLE = "UPDATE_VARIABLE"; // updateVariable mit der client ID und die var ID auch 
 export const ADD_VARIABLE = "ADD_VARIABLE"; // Add a new variable  
 export const GET_MODULES_LIST = "GET_MODULES_LIST"; // get modules list  (ALL) 
+export const SET_SELECTED_MODULE = "SET_SELECTED_MODULE"; // get modules list  (ALL) 
+export const DELETE_MODULE = "DELETE_MODULE"; // delete a module 
+export const ADD_MODULE = "ADD_MODULE"; // delete a module 
 export const GET_CLIENT_MODULES = "GET_CLIENT_MODULES"; // get client modules list  (ALL) 
 export const GET_CART_LIST = "GET_CART_LIST";
 export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
@@ -23,9 +26,12 @@ export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
 export const UPDATE_CART_AMOUNT = "UPDATE_CART_AMOUNT";
 
 
-// -----------------------------------------START--------------------------------------------------------------
+// -----------------------------------------STARTCLIENT--------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------
 export const getProductList = () => dispatch => {
+
+  console.log('[getClients]');
+  
   axios.get("/api/ecommerce/get-product-list").then(res => {
     dispatch({
       type: GET_PRODUCT_LIST,
@@ -120,7 +126,7 @@ export const getCartList = uid => dispatch => {
     });
   });
 };
-// -------------------------------------------START------------------------------------------------------------
+// -------------------------------------------STARTVAR------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------
 export const getVariablesList = cid => dispatch => { // get list of vars mit die cid auf ein client
   
@@ -172,17 +178,59 @@ export const addVariable = (cid, newData) => dispatch => { //delete variable
 };
 // -----------------------------------------------END--------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------
-// -----------------------------------------------START--------------------------------------------------------
+// -----------------------------------------------STARTMOD--------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------
 
-export const getModulesList = () => dispatch => {
+export const getModulesList = () => dispatch => { // get all modules 
+  
+  console.log('[getModulesList] ');
   axios.get("/api/ecommerce/get-modules-list").then(res => {
+    
     dispatch({
       type: GET_MODULES_LIST,
       payload: res.data
     });
   });
 };
+
+export const setSelectedModule = (selectedModule) => {
+  console.log('[setSelectedModule] ', selectedModule);
+  
+  return {
+    type: SET_SELECTED_MODULE,
+    payload: selectedModule
+  };
+};
+
+export const deleteModule = moduleId => dispatch =>  { // deleting a module
+
+  
+    console.log('[DeleteModule] ', moduleId);
+    axios
+      .post("/api/ecommerce/delete-mod", { moduleId })  
+      .then(res => {
+        dispatch({
+          type: DELETE_MODULE,
+          payload: res.data
+        });
+      });
+  };
+export const addModule = modToAdd => dispatch =>  { // adding a module
+
+  
+    console.log('[AddModule] ', modToAdd);
+    axios
+      .post("/api/ecommerce/add-mod", { modToAdd })  
+      .then(res => {
+        dispatch({
+          type: ADD_MODULE,
+          payload: res.data
+        });
+      });
+  };
+
+
+
 export const getClientModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
   
   console.log('[getClientModulesList] ', cid);
