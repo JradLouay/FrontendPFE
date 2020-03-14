@@ -101,17 +101,17 @@ class Layout1Sidenav extends Component {
     </Brand>
   );
 
-  renderUser = () => {
+  renderClient = () => {
     let { user } = this.props;
+    let { globalClient } = this.props;
     return (
       <div className="sidenav__user">
         <div className="username-photo">
-          <img src={user.photoURL} alt="user" />
+         <img src={globalClient.imgUrl} /> 
         </div>
         <div className="ml-8">
           <span className="username">
-            {/* <Icon>lock</Icon> */}
-            {user.displayName}
+            {globalClient.clientName ? globalClient.clientName : <div className="text-muted">choose a Client </div>}
           </span>
           <div className="user__menu">
             <MatxMenu
@@ -171,7 +171,7 @@ class Layout1Sidenav extends Component {
             {(
               <Fragment>
                 {this.renderLogoSwitch()}
-                <Sidenav>{this.renderUser()}</Sidenav>
+                <Sidenav>{this.renderClient()}</Sidenav>
               </Fragment>
             )}
           </div>
@@ -186,6 +186,7 @@ Layout1Sidenav.propTypes = {
   setDefaultSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  globalClient : PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired
 };
 
@@ -194,6 +195,7 @@ const mapStateToProps = state => ({
   setLayoutSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   user: state.user,
+  globalClient: state.ecommerce.globalClient,
   settings: state.layout.settings
 });
 

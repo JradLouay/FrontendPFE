@@ -1,8 +1,26 @@
 export const navigations = [
   {
     name: "Dashboard",
-    path: "/dashboard/analytics",
-    icon: "dashboard"
+    icon : "build",
+    children : [
+      {
+        name : "dashboard",
+        path: "/dashboard/analytics",
+        icon: "dashboard"
+      },
+      {
+        // name: "Spacing",
+        name: "Client Modules",
+        path: "/dashboard/ClientModule", // c'est bon spacing wallet client module 
+        icon : "local_library"
+      },
+      {
+        // name: "Typography",
+        name: "Scheduler",
+        path: "/dashboard/Scheduler",   // c'est bon typography wallet scheduler 
+        icon: "access_time"
+      },
+    ]
   },
   // {
   //   name: "Forms",
@@ -63,8 +81,8 @@ export const navigations = [
     children: [
       {
         // name: "Color",
-        name : "Client",
-        path: "/utilities/color",
+        name : "Clients",
+        path: "/utilities/Clients",
         iconText: "C"
       },
       {
@@ -73,22 +91,22 @@ export const navigations = [
         path: "/utilities/modules",
         iconText: "M"
       },
-      {
-        // name: "Spacing",
-        name: "client Modules",
-        path: "/utilities/spacing",
-        iconText: "S"
-      },
-      {
-        // name: "Typography",
-        name: "Scheduler",
-        path: "/utilities/typography",
-        iconText: "T"
-      },
+      // {
+      //   // name: "Spacing",
+      //   name: "Client Modules",
+      //   path: "/utilities/ClientModule", // c'est bon spacing wallet client module 
+      //   iconText: "S"
+      // },
+      // {
+      //   // name: "Typography",
+      //   name: "Scheduler",
+      //   path: "/utilities/Scheduler",   // c'est bon typography wallet scheduler 
+      //   iconText: "T"
+      // },
       {
         // name: "Display",
         name: "users",
-        path: "/utilities/display",
+        path: "/utilities/Users", // c'est bon display wallet users 
         iconText: "D"
       }
     ]

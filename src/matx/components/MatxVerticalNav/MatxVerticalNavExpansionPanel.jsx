@@ -27,6 +27,11 @@ const styles = theme => {
 };
 
 class MatxVerticalNavExpansionPanel extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     collapsed: true
   };
@@ -73,7 +78,9 @@ class MatxVerticalNavExpansionPanel extends Component {
         >
           <div>
             <Icon className="text-middle item-icon">{icon}</Icon>
-            <span className="text-middle pl-20 item-text">{name}</span>
+              <span className="text-middle pl-20 item-text">
+              {name}
+              </span>     
           </div>
           {badge && (
             <div className={`badge bg-${badge.color}`}>{badge.value}</div>
@@ -86,6 +93,7 @@ class MatxVerticalNavExpansionPanel extends Component {
             }
           >
             <Icon className="text-middle">chevron_right</Icon>
+            
           </div>
         </TouchRipple>
 

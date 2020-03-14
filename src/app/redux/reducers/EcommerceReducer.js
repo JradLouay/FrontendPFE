@@ -14,6 +14,8 @@ import {
   DELETE_MODULE,
   ADD_MODULE,
   GET_CLIENT_MODULES,
+  ADD_MODULE_TO_CLIENT,
+  GET_SCHEDULER_LIST, // scheduler
   GET_CART_LIST,
   ADD_PRODUCT_TO_CART,
   DELETE_PRODUCT_FROM_CART,
@@ -30,6 +32,7 @@ const initialState = {
   clientToAdd : {},
   globalClient:{},
   modulesList : [],
+  schedulerList : [],
   selectedModule: {},
   clientModules:[],
   cartList: [],// out of the bi3 a
@@ -136,6 +139,20 @@ const EcommerceReducer = function(state = initialState, action) {
       return {
         ...state,
         clientModules: [...action.payload]
+      };
+    }
+    case ADD_MODULE_TO_CLIENT: {  // Add module to a client  
+      
+      return {
+        ...state,
+        clientModules: [...action.payload]
+      };
+    }
+    case GET_SCHEDULER_LIST: {  // get variables REDUCER 
+      
+      return {
+        ...state,
+        schedulerList: [...action.payload]
       };
     }
     case GET_CATEGORY_LIST: {

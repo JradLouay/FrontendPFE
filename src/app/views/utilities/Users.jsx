@@ -8,7 +8,7 @@ import {
   CardContent
 } from "@material-ui/core";
 
-const Display = () => {
+const Users = () => {
   const classList = [];
 
   return (
@@ -17,7 +17,7 @@ const Display = () => {
         <Breadcrumb
           routeSegments={[
             { name: "Utilities", path: "/utilities" },
-            { name: "Display" }
+            { name: "Users" }
           ]}
         />
       </div>
@@ -36,4 +36,4 @@ const Display = () => {
   );
 };
 
-export default Display;
+export default Users;

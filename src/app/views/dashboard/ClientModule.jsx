@@ -2,6 +2,11 @@ import React from "react";
 import clsx from 'clsx';
 import { Breadcrumb } from "matx";
 import ModuleRowCards from './components/Client Modules/ModuleRowCards';
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+// import { 
+
+//  } from "app/redux/actions/EcommerceActions";
 import {
   Button,
   CircularProgress,
@@ -15,6 +20,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
 import ModuleDialog from './components/Client Modules/ModuleDiag';
+import AddClModuleDiag from'./components/Client Modules/AddClModuleDiag';
 
 const useStyles = makeStyles(theme => ({
   
@@ -51,12 +57,15 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const Spacing = () => {
+const ClientModule = (props) => {
+
+  const {
+    globalClient
+  }= props ;
 
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
-  // const [selected, setSelected] = React.useState(false);
   const timer = React.useRef();
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
@@ -86,7 +95,7 @@ const Spacing = () => {
         <Breadcrumb
           routeSegments={[
             { name: "Utilities", path: "/utilities" },
-            { name: "Spacing" }
+            { name: globalClient.clientName ? globalClient.clientName + " Modules" : "undefined" }
           ]}
         />
       </div>
@@ -97,13 +106,13 @@ const Spacing = () => {
                           <ModuleDialog />
                       }
                       title="Modules"
-                      subheader="Client_1"
+                      subheader={globalClient.clientName ? globalClient.clientName : "undefined" }
                     />
                 <CardContent>
                         <ModuleRowCards />
                 </CardContent>
                   <CardActions>
-                        <div className={classes.wrapper}>
+                        {/* <div className={classes.wrapper}>
                             <Fab
                               aria-label="save"
                               color="primary"
@@ -125,14 +134,21 @@ const Spacing = () => {
                               {success ? "Deployed" : "Deploy" }
                               {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </Button>
-                        </div>
+                        </div> */}
+                        <AddClModuleDiag />
                   </CardActions>
-                
-     
-    </Card>
+   </Card>
       
     </div>
   );
 };
 
-export default Spacing;
+const mapStateToProps = state => ({
+  globalClient : state.ecommerce.globalClient,
+});
+export default   connect(
+  mapStateToProps,
+ {
+
+ }
+)(ClientModule);

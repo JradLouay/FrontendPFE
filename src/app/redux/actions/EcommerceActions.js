@@ -15,6 +15,8 @@ export const SET_SELECTED_MODULE = "SET_SELECTED_MODULE"; // get modules list  (
 export const DELETE_MODULE = "DELETE_MODULE"; // delete a module 
 export const ADD_MODULE = "ADD_MODULE"; // delete a module 
 export const GET_CLIENT_MODULES = "GET_CLIENT_MODULES"; // get client modules list  (ALL) 
+export const ADD_MODULE_TO_CLIENT = "ADD_MODULE_TO_CLIENT"; // add module to a client  
+export const GET_SCHEDULER_LIST = "GET_SCHEDULER_LIST"; // get scheduler list for specific client   
 export const GET_CART_LIST = "GET_CART_LIST";
 export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
 export const GET_RATING_LIST = "GET_RATING_LIST";
@@ -139,6 +141,17 @@ export const getVariablesList = cid => dispatch => { // get list of vars mit die
     });
   });
 };
+export const getSchedulerList = cid => dispatch => { // get list of scheduler mit die cid auf ein client
+  
+  console.log('[getSchedulerList] ', cid);
+
+  axios.get("/api/ecommerce/get-scheduler-list", { data: cid }).then(res => {
+    dispatch({
+      type: GET_SCHEDULER_LIST,
+      payload: res.data
+    });
+  });
+};
 export const deleteVariable = (varId, cid ) => dispatch => { //delete variable 
   
   console.log('[DeleteVariables] ', varId, cid);
@@ -176,6 +189,7 @@ export const addVariable = (cid, newData) => dispatch => { //delete variable
       });
     });
 };
+
 // -----------------------------------------------END--------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------
 // -----------------------------------------------STARTMOD--------------------------------------------------------
@@ -241,6 +255,19 @@ export const getClientModulesList = cid => dispatch => { // get list of vars mit
       payload: res.data
     });
   });
+};
+
+export const addModuleToClient = (cid, newModule) => dispatch => { //delete variable 
+  
+  console.log('[addModuleToClient] ',cid, newModule);
+  axios
+    .post("/api/ecommerce/add-mod-to-client", { cid, newModule })
+    .then(res => {
+      dispatch({
+        type: ADD_MODULE_TO_CLIENT,
+        payload: res.data
+      });
+    });
 };
 // -----------------------------------------------END--------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------

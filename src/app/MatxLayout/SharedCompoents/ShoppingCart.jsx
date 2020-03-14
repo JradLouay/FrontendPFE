@@ -24,6 +24,7 @@ function ShoppingCart(props) {
     productList = [],
     getProductList,
     setGlobalClient,
+    // globalClient,
     // user
   } = props;
   
@@ -32,10 +33,7 @@ function ShoppingCart(props) {
 
   
 
-  function handleDrawerToggle(client) {
-    setGlobalClient(client)
-    // console.log(id);
-    
+  function handleDrawerToggle() {
     setPanelOpen(!panelOpen);
   }
 
@@ -87,7 +85,10 @@ function ShoppingCart(props) {
               key={client.id}
               className="mini-cart__item flex flex-middle flex-space-between py-16 px-8"
               // add onClick method to manage !!
-              onClick={()=> handleDrawerToggle(client)}
+              onClick={()=> {
+                setGlobalClient(client);
+                handleDrawerToggle();
+              }}
             >
               <div className="flex flex-column mr-8">
                 {/* <IconButton

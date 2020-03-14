@@ -1,16 +1,10 @@
 import {MatxLoadable} from "matx";
 
-const Color = MatxLoadable({
-  loader: () => import("./Color")
+const Clients = MatxLoadable({
+  loader: () => import("./Clients")
 });
-const Spacing = MatxLoadable({
-  loader: () => import("./Spacing")
-});
-const Typography = MatxLoadable({
-  loader: () => import("./Typography")
-});
-const Display = MatxLoadable({
-  loader: () => import("./Display")
+const Users = MatxLoadable({
+  loader: () => import("./Users")
 });
 const ClientModules = MatxLoadable({
   loader: () => import("./Modules")
@@ -18,20 +12,12 @@ const ClientModules = MatxLoadable({
 
 const utilitiesRoutes = [
   {
-    path: '/utilities/color',
-    component: Color
+    path: '/utilities/Clients',
+    component: Clients
   },
   {
-    path: "/utilities/spacing",
-    component: Spacing
-  },
-  {
-    path: "/utilities/typography",
-    component: Typography
-  },
-  {
-    path: "/utilities/display",
-    component: Display
+    path: "/utilities/Users",
+    component: Users
   },
   {
     path: "/utilities/modules",

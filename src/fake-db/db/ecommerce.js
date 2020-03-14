@@ -40,7 +40,7 @@ const EcommerceDB = {
       password: "client3"
     },
     {
-      id: shortId.generate(),
+      id: "323sa680b32497dsfrsgga21rt00",
       imgUrl: "/assets/images/logos/react.png",
       version: 1.6,
       clientName: "Client_4",
@@ -53,70 +53,11 @@ const EcommerceDB = {
     }
   ],
 
-  category: [
-    // {
-    //   title: "audio",
-    //   product: 321
-    // },
-    // {
-    //   title: "fashion",
-    //   product: 123
-    // },
-    // {
-    //   title: "cellphone",
-    //   product: 546
-    // },
-    // {
-    //   title: "accessories",
-    //   product: 76
-    // }
-  ],
+  category: [],
 
-  brand: [
-    // {
-    //   title: "Microlab",
-    //   product: 32
-    // },
-    // {
-    //   title: "Sony",
-    //   product: 534
-    // },
-    // {
-    //   title: "Beats",
-    //   product: 23
-    // },
-    // {
-    //   title: "Iphone",
-    //   product: 65
-    // },
-    // {
-    //   title: "Comlion",
-    //   product: 198
-    // }
-  ],
+  brand: [],
 
-  rating: [
-    // {
-    //   rate: 5,
-    //   product: 345
-    // },
-    // {
-    //   rate: 4,
-    //   product: 53
-    // },
-    // {
-    //   rate: 3,
-    //   product: 765
-    // },
-    // {
-    //   rate: 2,
-    //   product: 32
-    // },
-    // {
-    //   rate: 1,
-    //   product: 64
-    // }
-  ],
+  rating: [],
 
   cart: [
     {
@@ -186,6 +127,105 @@ const EcommerceDB = {
     {
       cid: "323sa680b324976dfgga21rt47",
       list: [1,2,3]
+    },
+    {
+      cid: "323sa680b32497dsfrsgga21rt47",
+      list: [1,2,3]
+    },
+    {
+      cid: "323sa680b32497dsfrsgga21rt00",
+      list: [1,2,3,4]
+    },
+  ],
+  scheduler: [
+    {
+      cid: "323sa680b32497dsfdsgga21rt47",
+      list: [
+        {
+          schedulerName:"1st Update",
+          description:"here you can add some desc ",
+          date : new Date('August 19, 2019 23:15:30'),
+          version:"2.x",
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+
+        },
+        {
+          schedulerName:"2nd Update",
+          description:"here you can add some desc ",
+          date : new Date('August 19, 2018 23:15:30'),
+          version:"2.x",
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+
+        },
+    ]
+    },
+    {
+      cid: "323sa680b324976dfgga21rt47",
+      list: [
+        {
+          schedulerName:"1st Update",
+          description:"here you can add some desc ",
+          date : new Date('August 19, 1975 23:15:30'),
+          version:"2.x",
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+
+        },
+        {
+          schedulerName:"2nd Update",
+          description:"here you can add some desc ",
+          date : new Date('August 19, 1975 23:15:30'),
+          version:"2.x",
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+
+        },
+      ]
+    },
+    {
+      cid: "323sa680b32497dsfrsgga21rt47",
+      list: [
+        {
+          schedulerName:"1st Update",
+          description:"here you can add some desc ",
+          version:"2.x",
+          date : new Date('February 14, 2020 23:15:30'),
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+        },
+        {
+          schedulerName:"2nd Update",
+          description:"here you can add some desc ",
+          version:"2.x",
+          date : new Date('February 15, 2020 23:15:30'),
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+        },
+        {
+          schedulerName:"3rd Update",
+          description:"here you can add some desc ",
+          version:"2.x",
+          date : new Date('February 16, 2020 23:15:30'),
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+        },
+      ]
+    },
+    {
+      cid: "323sa680b32497dsfrsgga21rt00",
+      list: [
+        {
+          schedulerName:"2nd Update",
+          description:"here you can add some desc ",
+          date : new Date('August 19, 1975 23:15:30'),
+          version:"2.x",
+          type:"Instant ",
+          status:"Pending"   // Pending || Done || Deleted 
+
+        },
+      ]
     },
   ],
   variables: [
@@ -322,13 +362,7 @@ const getDetailedCartList = uid => {
     ...EcommerceDB.productList.find(item => item.id === product.productId)
   }));
 };
-// const getDetailedClientModuleList = uid => {
-//   let cartList = EcommerceDB.cart.find(userCart => userCart.uid == uid).list;
-//   return cartList.map(product => ({
-//     amount: product.amount,
-//     ...EcommerceDB.productList.find(item => item.id === product.productId)
-//   }));
-// };
+
 
 Mock.onGet("/api/ecommerce/get-product-list").reply(config => { // this is for the client get list 
   const response = EcommerceDB.productList;
@@ -372,18 +406,46 @@ Mock.onPost("/api/ecommerce/add-mod").reply(config=> {
 });
 
 
+const getDetailedClientModuleList = cid => {
+  let deployedModules = EcommerceDB.deployedModules.find(deployed => deployed.cid === cid).list;
+  return deployedModules.map(mod=> ({
+    ...EcommerceDB.Modules.find(item => item.id === mod)
+  }));
+};
+
 Mock.onGet("/api/ecommerce/get-client-modules").reply(config => { // this is to get the modules list for each client mit ein cid
   let cid = config.data;
   let response = [];
 
   if (cid) {
-    let modulesList = EcommerceDB.deployedModules.find(modObj => modObj.cid === cid);
-    response = modulesList ? modulesList.list : [] ;
+    // let modulesList = EcommerceDB.deployedModules.find(modObj => modObj.cid === cid);
+    let modulesList = getDetailedClientModuleList(cid);
+    response = modulesList ? modulesList : [] ;
   }
+
   console.log('from dataBase',response);
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/add-mod-to-client").reply(config => { // this for adding a variable
+  let { cid, newModule } = JSON.parse(config.data);
   
 
-  return [200, []];
+  let modulesList = EcommerceDB.deployedModules.map(moduleObj => {
+    if (moduleObj.cid === cid) { // find the vars for each client 
+      return {
+        ...moduleObj,  // optimization passer l'index du var dans le tab 
+        list: moduleObj.list.concat(newModule.id)
+      };
+    } else return moduleObj;
+  });
+
+  EcommerceDB.deployedModules = modulesList;
+  console.log(modulesList);
+  
+
+  const response =  getDetailedClientModuleList(cid) // we need to make this in a abstract form
+  return [200, response];
 });
 
 
@@ -507,6 +569,100 @@ Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for adding a var
   return [200, response];
 });
 
+////// this for the schedluler 
+
+
+Mock.onGet("/api/ecommerce/get-scheduler-list").reply(config => { // this is to get the variables list for each client mit ein cid
+  let cid = config.data;
+  let response = [];
+
+  if (cid) {
+    let schedulerList = EcommerceDB.scheduler.find(schedulerObj => schedulerObj.cid === cid);
+    response = schedulerList ? schedulerList.list : [] ;
+  }
+  
+
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting a variable
+
+  let { varId, cid } = JSON.parse(config.data);
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) {
+      return {
+        ...variableObj,
+        list: variableObj.list.filter(variable => variable.id !== varId)
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+
+  console.log(EcommerceDB.variables);
+  
+
+  const response = EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form 
+
+  return [200, response];
+});
+
+
+Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting a variable
+  let { varId, cid, newData } = JSON.parse(config.data);
+
+  console.log("[dataBase side ]",varId, cid, newData);
+  
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) {
+      return {
+        ...variableObj,  // optimization passer l'index du var dans le tab 
+        list: variableObj.list.map(variable => {
+          if(variable.id === varId){
+            return {
+              ...variable,
+              ...newData
+            }
+          } else return variable
+        })
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+  console.log(variableList);
+  
+
+  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for adding a variable
+  let { cid, newData } = JSON.parse(config.data);
+
+  console.log("[dataBase side ]", cid, newData);
+  
+
+  let variableList = EcommerceDB.variables.map(variableObj => {
+    if (variableObj.cid === cid) { // find the vars for each client 
+      return {
+        ...variableObj,  // optimization passer l'index du var dans le tab 
+        list: variableObj.list.concat(newData)
+      };
+    } else return variableObj;
+  });
+
+  EcommerceDB.variables = variableList;
+  console.log(variableList);
+  
+
+  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  return [200, response];
+});
+//////////////END for the scheduler 
+
 Mock.onPost("/api/ecommerce/add-client").reply(config => { // this for adding a client
   let  client  = JSON.parse(config.data);
   const id = shortId.generate();
@@ -525,16 +681,15 @@ Mock.onPost("/api/ecommerce/add-client").reply(config => { // this for adding a 
                     cid: id,
                     list: []
                   }
+  const modObj = {
+                    cid: id,
+                    list: []
+                  }
 
   EcommerceDB.productList.push(toBePers); // add the client 
   const newClient = EcommerceDB.productList.find((client)=> client.id === id );
   EcommerceDB.variables.push(varObj); // initialize the variables array 
-
-
-  console.log("object before ....", toBePers);
-  
-  
-
+  EcommerceDB.deployedModules.push(modObj); // initialize the modules array 
   const response = [EcommerceDB.productList, newClient] ; // we need to make this in a abstract form
   return [200, response];
 });

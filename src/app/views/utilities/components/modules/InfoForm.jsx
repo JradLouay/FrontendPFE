@@ -24,23 +24,11 @@ class InfoForm extends Component {
   }
   
 
-  state = {                                                                     
-    // clientName: "NewClient",
-    // // state : "",
-    // // lastUpdate: "",
-    // version: "1.0",
-    // email:"new_client@email.com",
-    // host: "163.258.6.9",
-    // port: "2310",
-    // userName:"newuser",
-    // password: "newuser",
-    // confirmPassword: "newuser"
+  state = {                              
     moduleName:"moduleName",
     version:"2.x",
     lastUpdate:"11/03/2020",
     description:"here you can put some desc"
-
-    
   };
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'

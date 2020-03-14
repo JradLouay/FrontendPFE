@@ -9,14 +9,14 @@ import {
 } from "@material-ui/core";
 
 
-const Color = () => {
+const Clients = () => {
   return (
     <div className="m-sm-30">
             <div className="mb-sm-30">
               <Breadcrumb
                 routeSegments={[
                   { name: "Utilities", path: "/utilities" },
-                  { name: "Color" }
+                  { name: "Clients" }
                 ]}
               />
             </div>
@@ -34,4 +34,4 @@ const Color = () => {
   );
 };
 
-export default Color;
+export default Clients;

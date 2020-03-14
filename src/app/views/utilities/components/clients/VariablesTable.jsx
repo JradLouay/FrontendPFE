@@ -26,11 +26,8 @@ import {
         updateVariable
         
           }=props;
-
-
- 
-
-  const [loaded, setLoaded] = React.useState(false);
+          
+const [loaded, setLoaded] = React.useState(false);
 
   if (!loaded){
     console.log('running to load ');
