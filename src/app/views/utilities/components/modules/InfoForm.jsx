@@ -129,16 +129,6 @@ class InfoForm extends Component {
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
-{/*               
-               <TextField
-                width= "200"
-                id="outlined-multiline-static"
-                label="Multiline"
-                multiline
-                rows="4"
-                defaultValue="Default Value"
-                variant="outlined"
-              />               */}
               
             </Grid>
           </Grid>

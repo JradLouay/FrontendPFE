@@ -15,8 +15,12 @@ export const SET_SELECTED_MODULE = "SET_SELECTED_MODULE"; // get modules list  (
 export const DELETE_MODULE = "DELETE_MODULE"; // delete a module 
 export const ADD_MODULE = "ADD_MODULE"; // delete a module 
 export const GET_CLIENT_MODULES = "GET_CLIENT_MODULES"; // get client modules list  (ALL) 
+export const GET_FILTRED_MODULES = "GET_FILTRED_MODULES"; // get filtred list  
 export const ADD_MODULE_TO_CLIENT = "ADD_MODULE_TO_CLIENT"; // add module to a client  
+export const DELETE_CLIENT_MODULE = "DELETE_CLIENT_MODULE"; // add module to a client  
 export const GET_SCHEDULER_LIST = "GET_SCHEDULER_LIST"; // get scheduler list for specific client   
+export const ADD_SCHEDULER = "ADD_SCHEDULER"; // adds a scheduler to a specific client   
+export const DELETE_SCHEDULER = "DELETE_SCHEDULER"; // adds a scheduler to a specific client   
 export const GET_CART_LIST = "GET_CART_LIST";
 export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
 export const GET_RATING_LIST = "GET_RATING_LIST";
@@ -164,6 +168,19 @@ export const deleteVariable = (varId, cid ) => dispatch => { //delete variable
       });
     });
 };
+
+export const deleteScheduler = (schedulerId, cid ) => dispatch => { //delete variable 
+  
+  console.log('[deleteScheduler] ', schedulerId, cid);
+  axios
+    .post("/api/ecommerce/delete-scheduler", { schedulerId, cid})
+    .then(res => {
+      dispatch({
+        type: DELETE_SCHEDULER,
+        payload: res.data
+      });
+    });
+};
 export const updateVariable = (varId, cid, newData) => dispatch => { //delete variable 
   
   console.log('[updateVariable] ', varId, cid, newData);
@@ -185,6 +202,18 @@ export const addVariable = (cid, newData) => dispatch => { //delete variable
     .then(res => {
       dispatch({
         type: ADD_VARIABLE,
+        payload: res.data
+      });
+    });
+};
+export const addScheduler = (cid, newScheduler) => dispatch => { //delete variable 
+  
+  // console.log('[addScheduler] ',cid, newScheduler);
+  axios
+    .post("/api/ecommerce/add-scheduler", { cid, newScheduler })
+    .then(res => {
+      dispatch({
+        type: ADD_SCHEDULER,
         payload: res.data
       });
     });
@@ -249,9 +278,22 @@ export const getClientModulesList = cid => dispatch => { // get list of vars mit
   
   console.log('[getClientModulesList] ', cid);
 
-  axios.get("/api/ecommerce/get-client-modules", { data: cid }).then(res => {
+  axios.get("/api/ecommerce/get-client-modules", { data: cid })
+  .then(res => {
     dispatch({
       type: GET_CLIENT_MODULES,
+      payload: res.data
+    });
+  });
+};
+
+export const getfiltredModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
+  
+  console.log('[getfiltredModulesList] ', cid);
+
+  axios.get("/api/ecommerce/get-filtred-modules-list", { data: cid }).then(res => {
+    dispatch({
+      type: GET_FILTRED_MODULES,
       payload: res.data
     });
   });
@@ -265,6 +307,19 @@ export const addModuleToClient = (cid, newModule) => dispatch => { //delete vari
     .then(res => {
       dispatch({
         type: ADD_MODULE_TO_CLIENT,
+        payload: res.data
+      });
+    });
+};
+
+export const deleteClientModule = (modId, cid ) => dispatch => { //delete module from a client 
+  
+  console.log('[deleteClientModule] ', modId, cid);
+  axios
+    .post("/api/ecommerce/delete-client-mod", { modId, cid})
+    .then(res => {
+      dispatch({
+        type: DELETE_CLIENT_MODULE,
         payload: res.data
       });
     });

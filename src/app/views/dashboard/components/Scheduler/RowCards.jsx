@@ -1,19 +1,16 @@
 import React, { Component, Fragment } from "react";
-// import { format } from "date-fns";
 import {
   Grid,
   Card,
   Icon,
   IconButton,
-  Checkbox,
-  // Fab,
-  // Avatar,
-  // Hidden,
+  Checkbox
 } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  getSchedulerList
+  getSchedulerList,
+  deleteScheduler
 
 } from "app/redux/actions/EcommerceActions";
 
@@ -23,7 +20,8 @@ const RowCards = (props) => {
   const {
     schedulerList,
     globalClient,
-    getSchedulerList
+    getSchedulerList,
+    deleteScheduler
   } = props;
 
 
@@ -52,7 +50,7 @@ const RowCards = (props) => {
               Update Date
                   </span>
             <div className="text-muted">
-              {scheduler.date.toDateString()}
+              {scheduler.date}
             </div>
           </Grid>
 
@@ -61,7 +59,7 @@ const RowCards = (props) => {
               Update Time
              </span>
             <div className="text-muted">
-              {scheduler.date.toLocaleTimeString()}
+              {scheduler.time}
             </div>
           </Grid>
           <Grid item md={3} xs={4}>
@@ -75,7 +73,7 @@ const RowCards = (props) => {
 
           <Grid item xs={1}>
             <div className="flex flex-end">
-              <IconButton onClick={() => { }}>
+              <IconButton onClick={() => { deleteScheduler(scheduler.id, globalClient.id)}}>
                 <Icon color="default">delete</Icon>
               </IconButton>
             </div>
@@ -96,12 +94,14 @@ const RowCards = (props) => {
 const mapStateToProps = state => ({
   schedulerList: state.ecommerce.schedulerList,
   globalClient: state.ecommerce.globalClient,
-  getSchedulerList : PropTypes.func.isRequired
+  getSchedulerList : PropTypes.func.isRequired,
+  deleteScheduler : PropTypes.func.isRequired
   // user: state.user
 });
 export default connect(
   mapStateToProps,
   {
-    getSchedulerList
+    getSchedulerList,
+    deleteScheduler
   }
 )(RowCards);

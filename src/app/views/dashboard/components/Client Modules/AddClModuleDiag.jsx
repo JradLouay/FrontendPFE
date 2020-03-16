@@ -18,7 +18,8 @@ import { connect } from "react-redux";
 
 import {
   getModulesList,
-  addModuleToClient
+  addModuleToClient,
+  getfiltredModulesList
 } from 'app/redux/actions/EcommerceActions'
 
 const useStyles = makeStyles(theme => ({
@@ -42,16 +43,23 @@ const useStyles = makeStyles(theme => ({
 
   const {
     globalClient,
-    getModulesList,
+    getfiltredModulesList,
     addModuleToClient,
-    modulesList
+    modulesList,
+    clientModules
   }= props ;
+
+  React.useEffect(() => {
+    if(globalClient.id)
+    getfiltredModulesList(globalClient.id)
+    return () => {
+    
+    };
+  }, [clientModules]);
 
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  // const [fullWidth, setFullWidth] = React.useState(true);
-  // const [maxWidth, setMaxWidth] = React.useState("xs");
 
   function handleClickOpen() {
     setOpen(true);
@@ -74,8 +82,8 @@ const useStyles = makeStyles(theme => ({
           color="secondary"
           aria-label="Add"
           className={classes.button}
-          onClick={ ()=>{ 
-                    getModulesList();  
+          onClick={ ()=>{   
+                    getfiltredModulesList(globalClient.id);
                     handleClickOpen();
                     }  }
         >
@@ -96,7 +104,7 @@ const useStyles = makeStyles(theme => ({
               </DialogContentText>
               <List>
                     {modulesList.map(mod => (
-                    <ListItem button onClick={() => handleModuleClick(mod)} key={mod.id}>
+                    <ListItem key={mod.id} button onClick={() => handleModuleClick(mod)} >
                         <ListItemText primary={"Name"} secondary={mod.moduleName} />
                         <ListItemText primary={"version"} secondary={mod.version} />
                     </ListItem>
@@ -126,13 +134,16 @@ const useStyles = makeStyles(theme => ({
 const mapStateToProps = state => ({
   getModulesList : PropTypes.func.isRequired,
   addModuleToClient: PropTypes.func.isRequired,
+  getfiltredModulesList: PropTypes.func.isRequired,
   globalClient : state.ecommerce.globalClient,
   modulesList: state.ecommerce.modulesList,
+  clientModules: state.ecommerce.clientModules,
 });
 export default   connect(
   mapStateToProps,
   { 
     getModulesList,
-    addModuleToClient
+    addModuleToClient,
+    getfiltredModulesList
     }
 )(AddClModuleDiag);

@@ -2,11 +2,7 @@ import React from "react";
 import clsx from 'clsx';
 import { Breadcrumb } from "matx";
 import ModuleRowCards from './components/Client Modules/ModuleRowCards';
-import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-// import { 
-
-//  } from "app/redux/actions/EcommerceActions";
 import {
   Button,
   CircularProgress,
@@ -95,7 +91,7 @@ const ClientModule = (props) => {
         <Breadcrumb
           routeSegments={[
             { name: "Utilities", path: "/utilities" },
-            { name: globalClient.clientName ? globalClient.clientName + " Modules" : "undefined" }
+            { name: globalClient.clientName ? globalClient.clientName : "undefined" }
           ]}
         />
       </div>
@@ -148,7 +144,5 @@ const mapStateToProps = state => ({
 });
 export default   connect(
   mapStateToProps,
- {
-
- }
+ {}
 )(ClientModule);

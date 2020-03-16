@@ -16,39 +16,50 @@ import {
 } from "@material-ui/pickers";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import { 
+  addScheduler
+ } from "app/redux/actions/EcommerceActions";
 
 class SimpleForm extends Component {
+
+
+  constructor(props) {
+    super(props);
+  }
+  
   state = {
-    username: "",
-    firstName: "",
-    email: "",
+    schedulerName: "update_2",
+    description: "Add Some desc here bruder ",
     date: new Date(),
-    mobile: "",
-    password: "",
-    confirmPassword: "",
-    selectedDate: "",
-    agreement: "",
-    gender:""
+    time: new Date(),
+    version: "2.0",
+    type: "Bug Fix",
   };
+  
 
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule("isPasswordMatch", value => {
-      if (value !== this.state.password) {
-        return false;
-      }
-      return true;
-    });
+    // ValidatorForm.addValidationRule("isPasswordMatch", value => {
+    //   if (value !== this.state.password) {
+    //     return false;
+    //   }
+    //   return true;
+    // });
   }
 
   componentWillUnmount() {
     // remove rule when it is not needed
-    ValidatorForm.removeValidationRule("isPasswordMatch");
+    // ValidatorForm.removeValidationRule("isPasswordMatch");
   }
 
   handleSubmit = event => {
-    console.log("submitted");
-    console.log(event);
+    // console.log("submitted");
+    this.props.addScheduler(this.props.globalClient.id, this.state);
+    this.props.close();
+    
+    // console.log(this.state);
   };
 
   handleChange = event => {
@@ -57,22 +68,20 @@ class SimpleForm extends Component {
   };
 
   handleDateChange = date => {
-    console.log(date);
-
     this.setState({ date });
+  };
+  handleTimeChange = time => {
+    this.setState({ time });
   };
 
   render() {
     let {
-      username,
-      firstName,
-      mobile,
-      password,
-      confirmPassword,
-      selectedDate,
+      schedulerName,
+      version,
+      type,
+      description,
       date,
-      email,
-      gender
+      time
     } = this.state;
     return (
       <div>
@@ -85,122 +94,83 @@ class SimpleForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <TextValidator
                 className="mb-16 w-100"
-                label="Username (Min length 4, Max length 9)"
+                label="Name (Name your update )"
                 onChange={this.handleChange}
                 type="text"
-                name="username"
-                value={username}
-                validators={[
-                  "required",
-                  "minStringLength: 4",
-                  "maxStringLength: 9"
-                ]}
+                name="schedulerName"
+                value={schedulerName}
+                validators={["required"]}
                 errorMessages={["this field is required"]}
               />
-              <TextValidator
+               <TextValidator
                 className="mb-16 w-100"
-                label="First Name"
+                label="Version  (give aversion)"
                 onChange={this.handleChange}
                 type="text"
-                name="firstName"
-                value={firstName}
+                name="version"
+                value={version}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="Email"
+                label="Type"
                 onChange={this.handleChange}
-                type="email"
-                name="email"
-                value={email}
-                validators={["required", "isEmail"]}
-                errorMessages={["this field is required", "email is not valid"]}
+                type="text"
+                name="type"
+                value={type}
+                validators={["required"]}
+                errorMessages={["this field is required"]}
               />
 
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  className="mb-16 w-100"
-                  margin="none"
-                  id="mui-pickers-date"
-                  label="Date picker"
-                  inputVariant="standard"
-                  type="text"
-                  autoOk={true}
-                  value={date}
-                  onChange={this.handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date"
-                  }}
-                />
-                
+              <KeyboardDatePicker
+                    className="mb-16 w-100"
+                    margin="none"
+                    id="mui-pickers-date"
+                    label="Date picker"
+                    inputVariant="standard"
+                    autoOk={true}
+                    value={date}
+                    onChange={this.handleDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date"
+                    }}
+                  />
               </MuiPickersUtilsProvider>
-              {/* <TextValidator
-                className="mb-32 w-100"
-                label="Credit Card"
-                onChange={this.handleChange}
-                type="number"
-                name="creditCard"
-                value={creditCard}
-                validators={[
-                  "required",
-                  "minStringLength:16",
-                  "maxStringLength: 16"
-                ]}
-                errorMessages={["this field is required"]}
-              /> */}
+              
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <TextValidator
-                className="mb-16 w-100"
-                label="Mobile Nubmer"
-                onChange={this.handleChange}
-                type="text"
-                name="mobile"
-                value={mobile}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
-              />
-              <TextValidator
-                className="mb-16 w-100"
-                label="Password"
-                onChange={this.handleChange}
-                name="password"
-                type="password"
-                value={password}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
-              />
-              <TextValidator
-                className="mb-16 w-100"
-                label="Confirm Password"
-                onChange={this.handleChange}
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                validators={["required", "isPasswordMatch"]}
-                errorMessages={[
-                  "this field is required",
-                  "password didn't match"
-                ]}
-              />
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              
               <KeyboardTimePicker
-                  margin="normal"
+                  className="mb-16 w-100"
+                  margin="none"
                   id="time-picker"
                   label="Time picker"
-                  value={selectedDate}
-                  onChange={this.handleDateChange}
+                  inputVariant="standard"
+                  value={time}
+                  onChange={this.handleTimeChange}
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
                   }}
                 />
-                </MuiPickersUtilsProvider>
-              {/* <FormControlLabel
-                control={<Checkbox />}
-                label="I have read and agree to the terms of service."
-              /> */}
+              </MuiPickersUtilsProvider>
+              <TextValidator
+                  className="mb-16 w-100"
+                  label="Description"
+                  onChange={this.handleChange}
+                  type="TextField"
+                  name="description"
+                  multiline={"multiline"}
+                  rows="7"
+                  variant="outlined"
+                  value={description}
+                  validators={["required"]}
+                  errorMessages={["this field is required"]}
+                />
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">
@@ -213,4 +183,14 @@ class SimpleForm extends Component {
   }
 }
 
-export default SimpleForm;
+const mapStateToProps = state => ({
+  addScheduler : PropTypes.func.isRequired,
+  globalClient : state.ecommerce.globalClient,
+  // user: state.user
+});
+export default   connect(
+  mapStateToProps,
+  {  
+    addScheduler,
+    }
+)(SimpleForm);

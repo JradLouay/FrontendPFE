@@ -14,8 +14,12 @@ import {
   DELETE_MODULE,
   ADD_MODULE,
   GET_CLIENT_MODULES,
+  GET_FILTRED_MODULES,
   ADD_MODULE_TO_CLIENT,
+  DELETE_CLIENT_MODULE,
   GET_SCHEDULER_LIST, // scheduler
+  ADD_SCHEDULER,
+  DELETE_SCHEDULER,
   GET_CART_LIST,
   ADD_PRODUCT_TO_CART,
   DELETE_PRODUCT_FROM_CART,
@@ -141,6 +145,12 @@ const EcommerceReducer = function(state = initialState, action) {
         clientModules: [...action.payload]
       };
     }
+    case GET_FILTRED_MODULES: {  // get modules list 
+      return {
+        ...state,
+        modulesList: [...action.payload]
+      };
+    }
     case ADD_MODULE_TO_CLIENT: {  // Add module to a client  
       
       return {
@@ -148,7 +158,28 @@ const EcommerceReducer = function(state = initialState, action) {
         clientModules: [...action.payload]
       };
     }
+    case DELETE_CLIENT_MODULE: {  // Add module to a client  
+      
+      return {
+        ...state,
+        clientModules: [...action.payload]
+      };
+    }
     case GET_SCHEDULER_LIST: {  // get variables REDUCER 
+      
+      return {
+        ...state,
+        schedulerList: [...action.payload]
+      };
+    }
+    case ADD_SCHEDULER: {  // get variables REDUCER 
+      
+      return {
+        ...state,
+        schedulerList: [...action.payload]
+      };
+    }
+    case DELETE_SCHEDULER: {  // delete variables REDUCER 
       
       return {
         ...state,

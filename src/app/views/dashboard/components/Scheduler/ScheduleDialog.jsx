@@ -84,7 +84,7 @@ export default function ScheduleDialog() {
         <DialogContent>
           <DialogContentText>
           <SimpleCard title="Schedule a Deployment">
-                <SimpleForm />
+                <SimpleForm close={handleClose}/>
             </SimpleCard>
           </DialogContentText>
           {/* <form className={classes.form} noValidate>

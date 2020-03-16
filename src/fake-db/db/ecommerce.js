@@ -142,18 +142,22 @@ const EcommerceDB = {
       cid: "323sa680b32497dsfdsgga21rt47",
       list: [
         {
+          id:shortId.generate(),
           schedulerName:"1st Update",
           description:"here you can add some desc ",
-          date : new Date('August 19, 2019 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           version:"2.x",
           type:"Instant ",
-          status:"Pending"   // Pending || Done || Deleted 
+          status:"Done"   // Pending || Done || Deleted 
 
         },
         {
+          id:shortId.generate(),
           schedulerName:"2nd Update",
           description:"here you can add some desc ",
-          date : new Date('August 19, 2018 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           version:"2.x",
           type:"Instant ",
           status:"Pending"   // Pending || Done || Deleted 
@@ -165,18 +169,22 @@ const EcommerceDB = {
       cid: "323sa680b324976dfgga21rt47",
       list: [
         {
+          id:shortId.generate(),
           schedulerName:"1st Update",
           description:"here you can add some desc ",
-          date : new Date('August 19, 1975 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           version:"2.x",
           type:"Instant ",
           status:"Pending"   // Pending || Done || Deleted 
 
         },
         {
+          id:shortId.generate(),
           schedulerName:"2nd Update",
           description:"here you can add some desc ",
-          date : new Date('August 19, 1975 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           version:"2.x",
           type:"Instant ",
           status:"Pending"   // Pending || Done || Deleted 
@@ -188,26 +196,32 @@ const EcommerceDB = {
       cid: "323sa680b32497dsfrsgga21rt47",
       list: [
         {
+          id:shortId.generate(),
           schedulerName:"1st Update",
           description:"here you can add some desc ",
           version:"2.x",
-          date : new Date('February 14, 2020 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           type:"Instant ",
-          status:"Pending"   // Pending || Done || Deleted 
+          status:"Done"   // Done || Done || Deleted 
         },
         {
+          id:shortId.generate(),
           schedulerName:"2nd Update",
           description:"here you can add some desc ",
           version:"2.x",
-          date : new Date('February 15, 2020 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           type:"Instant ",
           status:"Pending"   // Pending || Done || Deleted 
         },
         {
+          id:shortId.generate(),
           schedulerName:"3rd Update",
           description:"here you can add some desc ",
           version:"2.x",
-          date : new Date('February 16, 2020 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           type:"Instant ",
           status:"Pending"   // Pending || Done || Deleted 
         },
@@ -217,12 +231,14 @@ const EcommerceDB = {
       cid: "323sa680b32497dsfrsgga21rt00",
       list: [
         {
+          id:shortId.generate(),
           schedulerName:"2nd Update",
           description:"here you can add some desc ",
-          date : new Date('August 19, 1975 23:15:30'),
+          date : new Date('August 19, 1975 23:15:30').toLocaleDateString(),
+          time : new Date('August 19, 1975 23:15:30').toLocaleTimeString(),
           version:"2.x",
           type:"Instant ",
-          status:"Pending"   // Pending || Done || Deleted 
+          status:"Done"   // Pending || Done || Deleted 
 
         },
       ]
@@ -370,10 +386,12 @@ Mock.onGet("/api/ecommerce/get-product-list").reply(config => { // this is for t
 });
 
 /////////////MODULES///////////////////////////////////////////////////////////////
+
 Mock.onGet("/api/ecommerce/get-modules-list").reply(config => { // this is for the modules get list 
   const response = EcommerceDB.Modules;
   return [200, response];
 });
+
 
 Mock.onPost("/api/ecommerce/delete-mod").reply(config => {
 
@@ -427,6 +445,17 @@ Mock.onGet("/api/ecommerce/get-client-modules").reply(config => { // this is to 
   return [200, response];
 });
 
+Mock.onGet("/api/ecommerce/get-filtred-modules-list").reply( (config) => {  // this is for filtering the modules list 
+  let cid = config.data;
+  
+
+  const list = EcommerceDB.deployedModules.find(deployed => deployed.cid === cid).list;
+
+  const response = EcommerceDB.Modules.filter(({id})=>  !list.includes(id));
+  
+  return [200, response];
+});
+
 Mock.onPost("/api/ecommerce/add-mod-to-client").reply(config => { // this for adding a variable
   let { cid, newModule } = JSON.parse(config.data);
   
@@ -445,6 +474,27 @@ Mock.onPost("/api/ecommerce/add-mod-to-client").reply(config => { // this for ad
   
 
   const response =  getDetailedClientModuleList(cid) // we need to make this in a abstract form
+  return [200, response];
+});
+
+Mock.onPost("/api/ecommerce/delete-client-mod").reply(config => { // this for deleting a variable
+
+  let { modId, cid } = JSON.parse(config.data);
+
+  let deployedModulesList = EcommerceDB.deployedModules.map(obj => {
+    if (obj.cid === cid) {
+      return {
+        ...obj,
+        list: obj.list.filter(mod => mod !== modId)
+      };
+    } else return obj;
+  });
+
+
+  EcommerceDB.deployedModules = deployedModulesList;
+  
+
+  const response = getDetailedClientModuleList(cid);// we need to make this in a abstract form 
   return [200, response];
 });
 
@@ -484,7 +534,7 @@ Mock.onGet("/api/ecommerce/get-var-list").reply(config => { // this is to get th
   let response = [];
 
   if (cid) {
-    let variablesList = EcommerceDB.variables.find(variableObj => variableObj.cid === cid);
+    let variablesList = EcommerceDB.variables.find(obj => obj.cid === cid);
     response = variablesList ? variablesList.list : [] ;
   }
   
@@ -496,13 +546,13 @@ Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting 
 
   let { varId, cid } = JSON.parse(config.data);
 
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) {
+  let variableList = EcommerceDB.variables.map(obj => {
+    if (obj.cid === cid) {
       return {
-        ...variableObj,
-        list: variableObj.list.filter(variable => variable.id !== varId)
+        ...obj,
+        list: obj.list.filter(variable => variable.id !== varId)
       };
-    } else return variableObj;
+    } else return obj;
   });
 
   EcommerceDB.variables = variableList;
@@ -510,7 +560,7 @@ Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting 
   console.log(EcommerceDB.variables);
   
 
-  const response = EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form 
+  const response = EcommerceDB.variables.find(obj => obj.cid === cid).list; // we need to make this in a abstract form 
 
   return [200, response];
 });
@@ -522,11 +572,11 @@ Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting 
   console.log("[dataBase side ]",varId, cid, newData);
   
 
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) {
+  let variableList = EcommerceDB.variables.map(obj => {
+    if (obj.cid === cid) {
       return {
-        ...variableObj,  // optimization passer l'index du var dans le tab 
-        list: variableObj.list.map(variable => {
+        ...obj,  // optimization passer l'index du var dans le tab 
+        list: obj.list.map(variable => {
           if(variable.id === varId){
             return {
               ...variable,
@@ -535,14 +585,14 @@ Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting 
           } else return variable
         })
       };
-    } else return variableObj;
+    } else return obj;
   });
 
   EcommerceDB.variables = variableList;
   console.log(variableList);
   
 
-  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  const response =  EcommerceDB.variables.find(obj => obj.cid === cid).list; // we need to make this in a abstract form
   return [200, response];
 });
 
@@ -552,20 +602,20 @@ Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for adding a var
   console.log("[dataBase side ]", cid, newData);
   
 
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) { // find the vars for each client 
+  let variableList = EcommerceDB.variables.map(obj => {
+    if (obj.cid === cid) { // find the vars for each client 
       return {
-        ...variableObj,  // optimization passer l'index du var dans le tab 
-        list: variableObj.list.concat(newData)
+        ...obj,  // optimization passer l'index du var dans le tab 
+        list: obj.list.concat(newData)
       };
-    } else return variableObj;
+    } else return obj;
   });
 
   EcommerceDB.variables = variableList;
   console.log(variableList);
   
 
-  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
+  const response =  EcommerceDB.variables.find(obj => obj.cid === cid).list; // we need to make this in a abstract form
   return [200, response];
 });
 
@@ -585,80 +635,80 @@ Mock.onGet("/api/ecommerce/get-scheduler-list").reply(config => { // this is to 
   return [200, response];
 });
 
-Mock.onPost("/api/ecommerce/delete-var").reply(config => { // this for deleting a variable
+Mock.onPost("/api/ecommerce/delete-scheduler").reply(config => { // this for deleting a variable
 
-  let { varId, cid } = JSON.parse(config.data);
+  let { schedulerId, cid } = JSON.parse(config.data);
 
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) {
+  let schedulerList = EcommerceDB.scheduler.map(obj => {
+    if (obj.cid === cid) {
       return {
-        ...variableObj,
-        list: variableObj.list.filter(variable => variable.id !== varId)
+        ...obj,
+        list: obj.list.filter(scheduler => scheduler.id !== schedulerId)
       };
-    } else return variableObj;
+    } else return obj;
   });
 
-  EcommerceDB.variables = variableList;
-
-  console.log(EcommerceDB.variables);
+  EcommerceDB.scheduler = schedulerList;
   
 
-  const response = EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form 
+  const response = EcommerceDB.scheduler.find(obj => obj.cid === cid).list; // we need to make this in a abstract form 
 
   return [200, response];
 });
 
 
-Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting a variable
-  let { varId, cid, newData } = JSON.parse(config.data);
+// Mock.onPost("/api/ecommerce/update-var").reply(config => { // this for deleting a variable
+//   let { varId, cid, newData } = JSON.parse(config.data);
 
-  console.log("[dataBase side ]",varId, cid, newData);
+//   console.log("[dataBase side ]",varId, cid, newData);
   
 
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) {
+//   let variableList = EcommerceDB.variables.map(obj => {
+//     if (obj.cid === cid) {
+//       return {
+//         ...obj,  // optimization passer l'index du var dans le tab 
+//         list: obj.list.map(variable => {
+//           if(variable.id === varId){
+//             return {
+//               ...variable,
+//               ...newData
+//             }
+//           } else return variable
+//         })
+//       };
+//     } else return obj;
+//   });
+
+//   EcommerceDB.variables = variableList;
+//   console.log(variableList);
+  
+
+//   const response =  EcommerceDB.variables.find(obj => obj.cid === cid).list; // we need to make this in a abstract form
+//   return [200, response];
+// });
+
+Mock.onPost("/api/ecommerce/add-scheduler").reply(config => { // this for adding a variable
+  let { cid, newScheduler } = JSON.parse(config.data);
+  const copy = {
+    ...newScheduler,
+    status : "Pending"
+  }
+
+  let schedulerList = EcommerceDB.scheduler.map(schedulerObj => {
+    if (schedulerObj.cid === cid) { // find the vars for each client 
       return {
-        ...variableObj,  // optimization passer l'index du var dans le tab 
-        list: variableObj.list.map(variable => {
-          if(variable.id === varId){
-            return {
-              ...variable,
-              ...newData
-            }
-          } else return variable
-        })
+        ...schedulerObj,  // optimization passer l'index du var dans le tab 
+        list: schedulerObj.list.concat([copy])
       };
-    } else return variableObj;
+    } else return schedulerObj;
   });
 
-  EcommerceDB.variables = variableList;
-  console.log(variableList);
+  EcommerceDB.scheduler = schedulerList;
   
 
-  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
-  return [200, response];
-});
+  const response =  EcommerceDB.scheduler.find(s => s.cid === cid).list; // we need to make this in a abstract form
 
-Mock.onPost("/api/ecommerce/add-var").reply(config => { // this for adding a variable
-  let { cid, newData } = JSON.parse(config.data);
-
-  console.log("[dataBase side ]", cid, newData);
   
-
-  let variableList = EcommerceDB.variables.map(variableObj => {
-    if (variableObj.cid === cid) { // find the vars for each client 
-      return {
-        ...variableObj,  // optimization passer l'index du var dans le tab 
-        list: variableObj.list.concat(newData)
-      };
-    } else return variableObj;
-  });
-
-  EcommerceDB.variables = variableList;
-  console.log(variableList);
-  
-
-  const response =  EcommerceDB.variables.find(variableObj => variableObj.cid === cid).list; // we need to make this in a abstract form
   return [200, response];
 });
 //////////////END for the scheduler 

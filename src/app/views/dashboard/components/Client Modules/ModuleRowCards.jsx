@@ -1,19 +1,16 @@
 import React, { Component, Fragment } from "react";
-// import { format } from "date-fns";
 import {
   Grid,
   Card,
   Icon,
   IconButton,
   Checkbox,
-  // Fab,
-  // Avatar,
-  // Hidden,
 } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  getClientModulesList
+  getClientModulesList,
+  deleteClientModule
   
 } from "app/redux/actions/EcommerceActions";
 
@@ -23,13 +20,13 @@ const ModuleRowCards = (props) => {
   const {
       globalClient,
       clientModules,
-      getClientModulesList
+      getClientModulesList,
+      deleteClientModule
 
   }=props;
 
 
   React.useEffect(() => {
-    console.log("run fro the module part management ");
     getClientModulesList(globalClient.id);
     return () => {
     
@@ -69,7 +66,7 @@ const ModuleRowCards = (props) => {
                   
           <Grid item xs={2}>
             <div className="flex flex-end">
-                  <IconButton onClick={()=>{}}>
+                  <IconButton onClick={()=>deleteClientModule(mod.id, globalClient.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
             </div>
@@ -91,12 +88,14 @@ const mapStateToProps = state => ({
   globalClient : state.ecommerce.globalClient,
   clientModules : state.ecommerce.clientModules,
   getClientModulesList : PropTypes.func.isRequired,
+  deleteClientModule : PropTypes.func.isRequired,
   modulesList: state.ecommerce.modulesList,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   { 
-    getClientModulesList
+    getClientModulesList,
+    deleteClientModule
     }
 )(ModuleRowCards);
