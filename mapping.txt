@@ -1,4 +1,0 @@
-Display =>  Users 
-Spacing =>  Repo (Modules) 
-Typographie =>  schedule 
-Color => clients 
