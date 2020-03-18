@@ -23,19 +23,11 @@ import {
 } from 'app/redux/actions/EcommerceActions'
 
 const useStyles = makeStyles(theme => ({
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    margin: "auto",
-    width: "fit-content"
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
   },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1)
-  }
 }));
 
 
@@ -94,6 +86,7 @@ const useStyles = makeStyles(theme => ({
         fullWidth={true}
         maxWidth={"xs"}
         open={open}
+        scroll={"paper"}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >     
@@ -102,22 +95,13 @@ const useStyles = makeStyles(theme => ({
               <DialogContentText>
                 Choose a module to add to the client .
               </DialogContentText>
-              <List>
+              <List className={classes.root}>
                     {modulesList.map(mod => (
                     <ListItem key={mod.id} button onClick={() => handleModuleClick(mod)} >
                         <ListItemText primary={"Name"} secondary={mod.moduleName} />
                         <ListItemText primary={"version"} secondary={mod.version} />
                     </ListItem>
                     ))}
-
-                    {/* <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-                    <ListItemAvatar>
-                        <Avatar>
-                        <AddIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Add account" />
-                    </ListItem> */}
                 </List>
             </DialogContent>
             <DialogActions>

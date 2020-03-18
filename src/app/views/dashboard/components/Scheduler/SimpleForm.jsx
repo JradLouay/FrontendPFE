@@ -57,7 +57,7 @@ class SimpleForm extends Component {
   handleSubmit = event => {
     // console.log("submitted");
     this.props.addScheduler(this.props.globalClient.id, this.state);
-    this.props.close();
+    // this.props.close();
     
     // console.log(this.state);
   };

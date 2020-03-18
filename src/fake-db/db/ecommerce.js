@@ -735,11 +735,16 @@ Mock.onPost("/api/ecommerce/add-client").reply(config => { // this for adding a 
                     cid: id,
                     list: []
                   }
+  const schedObj = {
+                    cid: id,
+                    list: []
+                  }
 
   EcommerceDB.productList.push(toBePers); // add the client 
   const newClient = EcommerceDB.productList.find((client)=> client.id === id );
   EcommerceDB.variables.push(varObj); // initialize the variables array 
   EcommerceDB.deployedModules.push(modObj); // initialize the modules array 
+  EcommerceDB.scheduler.push(schedObj); // initialize the scheduler array 
   const response = [EcommerceDB.productList, newClient] ; // we need to make this in a abstract form
   return [200, response];
 });

@@ -10,7 +10,8 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader
+  CardHeader,
+  Backdrop
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
@@ -48,7 +49,11 @@ const useStyles = makeStyles(theme => ({
     left: '50%',
     marginTop: -12,
     marginLeft: -12,
-  }
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 
@@ -60,12 +65,19 @@ const ClientModule = (props) => {
   }= props ;
 
   const classes = useStyles();
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
+  // const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
-  const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
-  });
+  // const buttonClassname = clsx({
+  //   [classes.buttonSuccess]: success,
+  // });
+  const [open, setOpen] = React.useState(true);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // const handleToggle = () => {
+  //   setOpen(!open);
+  // };
 
   React.useEffect(() => {
     return () => {
@@ -73,69 +85,64 @@ const ClientModule = (props) => {
     };
   }, []);
 
+  const Content = ()=>{
+    return (
+      <div className="m-sm-30">
+        <div className="mb-sm-30">
+          <Breadcrumb
+            routeSegments={[
+              { name: "Utilities", path: "/utilities" },
+              { name: globalClient.clientName ? globalClient.clientName : "undefined" }
+            ]}
+          />
+        </div>
+          <Card elevation={6} className="px-24 py-20 h-100">
+                      <CardHeader
+                          action={
+                              <ModuleDialog />
+                          }
+                          title="Modules"
+                          subheader={globalClient.clientName ? globalClient.clientName : "undefined" }
+                        />
+                    <CardContent>
+                            <ModuleRowCards />
+                    </CardContent>
+                      <CardActions>
+                           {/* go and get the button from the material UI site */}
+                            <AddClModuleDiag />
+                      </CardActions>
+          </Card>
+        
+      </div>
+    );  
+  }
 
-  const handleButtonClick = () => {
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-      }, 2000);
-    }
-  };
+
+  // const ChooseClient = () => {
+  //       return(
+  //         // <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+  //         //     <CircularProgress color="inherit" />
+  //         // </Backdrop>
+  //       );
+  // };
+
+
+  // const handleButtonClick = () => {   für die button 
+  //   if (!loading) {
+  //     setSuccess(false);
+  //     setLoading(true);
+  //     timer.current = setTimeout(() => {
+  //       setSuccess(true);
+  //       setLoading(false);
+  //     }, 2000);
+  //   }
+  // };
 
   return (
-    <div className="m-sm-30">
-      <div className="mb-sm-30">
-        <Breadcrumb
-          routeSegments={[
-            { name: "Utilities", path: "/utilities" },
-            { name: globalClient.clientName ? globalClient.clientName : "undefined" }
-          ]}
-        />
-      </div>
-
-      <Card elevation={6} className="px-24 py-20 h-100">
-                  <CardHeader
-                      action={
-                          <ModuleDialog />
-                      }
-                      title="Modules"
-                      subheader={globalClient.clientName ? globalClient.clientName : "undefined" }
-                    />
-                <CardContent>
-                        <ModuleRowCards />
-                </CardContent>
-                  <CardActions>
-                        {/* <div className={classes.wrapper}>
-                            <Fab
-                              aria-label="save"
-                              color="primary"
-                              className={buttonClassname}
-                              onClick={handleButtonClick}
-                            >
-                              {success ? <CheckIcon /> : 2 }
-                            </Fab>
-                          {loading && <CircularProgress size={68} className={classes.fabProgress} />}
-                        </div>
-                        <div className={classes.wrapper}>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              className={buttonClassname}
-                              disabled={loading}
-                              onClick={handleButtonClick}
-                            >
-                              {success ? "Deployed" : "Deploy" }
-                              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                            </Button>
-                        </div> */}
-                        <AddClModuleDiag />
-                  </CardActions>
-   </Card>
-      
-    </div>
+    //  <React.Fragment>
+    //    { globalClient.id ?  <Content /> : <ChooseClient /> }
+    //  </React.Fragment>
+    <Content />
   );
 };
 

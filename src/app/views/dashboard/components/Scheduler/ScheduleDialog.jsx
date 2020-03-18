@@ -60,10 +60,6 @@ export default function ScheduleDialog() {
 
   return (
     <React.Fragment>
-      
-      {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <Icon>more_vert</Icon>
-      </IconButton> */}
       <Fab
           size="medium"
           color="secondary"
@@ -80,50 +76,19 @@ export default function ScheduleDialog() {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title"></DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-          <SimpleCard title="Schedule a Deployment">
-                <SimpleForm close={handleClose}/>
-            </SimpleCard>
-          </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
-                />
-              }
-              label="Full width"
-            />
-          </form> */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
+            <DialogTitle id="max-width-dialog-title"></DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                  <SimpleCard title="Schedule a Deployment">
+                      <SimpleForm close={handleClose}/>
+                  </SimpleCard>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
       </Dialog>
     </React.Fragment>
   );

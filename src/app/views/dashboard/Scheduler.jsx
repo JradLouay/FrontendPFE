@@ -32,11 +32,11 @@ const Scheduler = (props) => {
           ]}
         />
       </div>
-      <Card elevation={6} className="px-24 py-20 h-100">
+      <Card elevation={6} xs={3} className="px-24 py-20 h-100">
         <div className="card-title">Scheduler </div>
         <div className="card-subtitle mb-24">{globalClient.clientName ? globalClient.clientName : "undefined"}</div>
         <CardContent>
-          <RowCards  />
+          <RowCards />
         </CardContent>
         <CardActions>
         

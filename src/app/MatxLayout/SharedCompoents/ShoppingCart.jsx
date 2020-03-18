@@ -4,7 +4,8 @@ import {
   Badge,
   MuiThemeProvider,
   IconButton,
-  Drawer
+  Drawer,
+  Grid 
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import { PropTypes } from "prop-types";
@@ -83,55 +84,38 @@ function ShoppingCart(props) {
           {productList.map(client => (
             <div
               key={client.id}
-              className="mini-cart__item flex flex-middle flex-space-between py-16 px-8"
+              className="mini-cart__item flex flex-middle flex-space-between py-8 px-8"
               // add onClick method to manage !!
               onClick={()=> {
                 setGlobalClient(client);
                 handleDrawerToggle();
               }}
             >
-              <div className="flex flex-column mr-8">
-                {/* <IconButton
-                  size="small"
-                  onClick={() =>
-                    updateCartAmount(
-                      user.userId,
-                      product.id,
-                      product.amount + 1
-                    )
-                  }
-                >
-                  <Icon className="cursor-pointer">keyboard_arrow_up</Icon>
-                </IconButton>
-                <IconButton
-                  disabled={!(product.amount - 1)}
-                  size="small"
-                  onClick={() =>
-                    updateCartAmount(
-                      user.userId,
-                      product.id,
-                      product.amount - 1
-                    )
-                  }
-                >
-                  <Icon className="cursor-pointer">keyboard_arrow_down</Icon>
-                </IconButton> */}
-              </div>
-              <div className="mr-8">
+              <div className="mr-5">
                 <img src={client.imgUrl} alt={client.clientName} />
               </div>
-              <div className="mr-8 text-center">
+              <Grid item md={3} xs={4}>
+                  <span className="card__roject-name font-weight-500">
+                    name
+                  </span>
+                  <div className="text-muted">
+                    {client.clientName} 
+                  </div>
+              </Grid>
+              <Grid item md={3} xs={4}>
+                  <span className="card__roject-name font-weight-500">
+                    State
+                  </span>
+                  <div className="text-muted">
+                    {client.state} 
+                  </div>
+              </Grid>
+              {/* <div className="mr-8 text-center">
                 <h6 className="m-0 mb-4">{client.clientName}</h6>
-                {/* <small className="text-muted">
-                  ${product.price} x {product.amount}
-                </small> */}
-              </div>
-              {/* <IconButton
-                size="small"
-                onClick={() => deleteProductFromCart(user.userId, product.id)}
-              >
-                <Icon fontSize="small">clear</Icon>
-              </IconButton> */}
+                <small className="text-muted">
+                  {client.version}
+                </small>
+              </div> */}
             </div>
           ))}
         </div>
