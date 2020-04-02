@@ -111,10 +111,10 @@ class Layout1Sidenav extends Component {
         </div>
         <div className="ml-8">
           <span className="username">
-            {globalClient.clientName ? globalClient.clientName : <div className="text-muted">choose a Client </div>}
+            {globalClient.clientName ? globalClient.clientName : <div className="text-muted">Choose a Client </div>}
           </span>
           <div className="user__menu">
-            <MatxMenu
+            {/* <MatxMenu
               menuButton={
                 <Tooltip title="Settings">
                   <IconButtonWhite
@@ -135,21 +135,21 @@ class Layout1Sidenav extends Component {
                 <Icon> settings </Icon>
                 <span className="pl-16"> Account Setting </span>
               </MenuItem>
-            </MatxMenu>
+            </MatxMenu> */}
 
-            <Tooltip title="Profile">
+            <Tooltip title="Modules">
               <IconButtonWhite aria-label="Delete" className="" size="small">
-                <IconSmall>person</IconSmall>
+                <IconSmall>local_library</IconSmall>
               </IconButtonWhite>
             </Tooltip>
-            <Tooltip title="Sign out">
+            <Tooltip title="Scheduler">
               <IconButtonWhite
                 aria-label="Delete"
                 className=""
                 size="small"
-                onClick={this.handleSignOut}
+                // onClick={this.handleSignOut}
               >
-                <IconSmall>exit_to_app</IconSmall>
+                <IconSmall>access_time</IconSmall>
               </IconButtonWhite>
             </Tooltip>
           </div>

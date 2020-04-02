@@ -1,23 +1,23 @@
 import React from "react";
 import clsx from 'clsx';
 import { Breadcrumb } from "matx";
-import ModuleRowCards from './components/Client Modules/ModuleRowCards';
 import { connect } from "react-redux";
 import {
-  Button,
-  CircularProgress,
-  Fab,
+  // Button,
+  // CircularProgress,
+  // Fab,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  Backdrop
+  // Backdrop
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
 import ModuleDialog from './components/Client Modules/ModuleDiag';
 import AddClModuleDiag from'./components/Client Modules/AddClModuleDiag';
+import ModuleRowCards from './components/Client Modules/ModuleRowCards';
 
 const useStyles = makeStyles(theme => ({
   
@@ -92,24 +92,24 @@ const ClientModule = (props) => {
           <Breadcrumb
             routeSegments={[
               { name: "Utilities", path: "/utilities" },
-              { name: globalClient.clientName ? globalClient.clientName : "undefined" }
+              { name: globalClient.clientName ? globalClient.clientName : "" }
             ]}
           />
         </div>
-          <Card elevation={6} className="px-24 py-20 h-100">
+          <Card elevation={6} className="px-24 py-20 h-100" >
                       <CardHeader
                           action={
-                              <ModuleDialog />
+                              <ModuleDialog showButton={globalClient.clientName ? false : true} />
                           }
                           title="Modules"
-                          subheader={globalClient.clientName ? globalClient.clientName : "undefined" }
+                          subheader={globalClient.clientName ? globalClient.clientName : "" }
                         />
                     <CardContent>
                             <ModuleRowCards />
                     </CardContent>
                       <CardActions>
                            {/* go and get the button from the material UI site */}
-                            <AddClModuleDiag />
+                            <AddClModuleDiag showButton={globalClient.clientName ? false : true} />
                       </CardActions>
           </Card>
         
@@ -120,14 +120,14 @@ const ClientModule = (props) => {
 
   // const ChooseClient = () => {
   //       return(
-  //         // <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-  //         //     <CircularProgress color="inherit" />
-  //         // </Backdrop>
+  //         <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+  //             <SelectClient/>
+  //         </Backdrop>
   //       );
   // };
 
 
-  // const handleButtonClick = () => {   für die button 
+  // const handleButtonClick = () => {   für die Button 
   //   if (!loading) {
   //     setSuccess(false);
   //     setLoading(true);

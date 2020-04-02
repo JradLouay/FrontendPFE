@@ -31,7 +31,7 @@ class SimpleForm extends Component {
   
   state = {
     schedulerName: "update_2",
-    description: "Add Some desc here bruder ",
+    description: "Bitte, füge hier etwas hinzu Brüder.... ",
     date: new Date(),
     time: new Date(),
     version: "2.0",

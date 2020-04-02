@@ -1,6 +1,6 @@
 export const navigations = [
   {
-    name: "Dashboard",
+    name: "Manage & Deploy",
     icon : "build",
     children : [
       {
@@ -12,7 +12,7 @@ export const navigations = [
         // name: "Spacing",
         name: "Client Modules",
         path: "/dashboard/ClientModule", // c'est bon spacing wallet client module 
-        icon : "local_library"
+        icon : "content_copy"
       },
       {
         // name: "Typography",

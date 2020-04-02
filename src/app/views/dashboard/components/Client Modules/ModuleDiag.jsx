@@ -29,7 +29,9 @@ import EditorYaml from "./EditorYaml";
 //   }
 // }));
 
-export default function ModuleDiag() {
+export default function ModuleDiag(props) {
+
+ 
   // const classes = useStyles();
   const [open, setOpen] = React.useState(false)
 
@@ -43,7 +45,11 @@ export default function ModuleDiag() {
 
   return (
     <React.Fragment>
-      <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+      <IconButton 
+      variant="outlined" 
+      color="primary" 
+      onClick={handleClickOpen}
+      disabled={props.showButton}>
                 <Icon>edit</Icon>
       </IconButton>
       
@@ -69,3 +75,5 @@ export default function ModuleDiag() {
     </React.Fragment>
   );
 }
+
+

@@ -66,7 +66,7 @@ const ModuleRowCards = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.7) {
+        if (Math.random() >= 0.1) {
           setTimeout(() => {
             deleteClientModule(moduleId, globalClient.id );
             setOpenSnackSuccess(true) ;

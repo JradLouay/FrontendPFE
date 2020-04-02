@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ScheduleDialog() {
+export default function ScheduleDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -50,13 +50,13 @@ export default function ScheduleDialog() {
     setOpen(false);
   }
 
-  function handleMaxWidthChange(event) {
-    setMaxWidth(event.target.value);
-  }
+  // function handleMaxWidthChange(event) {
+  //   setMaxWidth(event.target.value);
+  // }
 
-  function handleFullWidthChange(event) {
-    setFullWidth(event.target.checked);
-  }
+  // function handleFullWidthChange(event) {
+  //   setFullWidth(event.target.checked);
+  // }
 
   return (
     <React.Fragment>
@@ -66,6 +66,7 @@ export default function ScheduleDialog() {
           aria-label="Add"
           className={classes.button}
           onClick={handleClickOpen}
+          disabled = {props.showButton}
         >
           <Icon>add</Icon>
         </Fab>

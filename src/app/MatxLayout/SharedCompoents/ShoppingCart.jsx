@@ -25,7 +25,7 @@ function ShoppingCart(props) {
     productList = [],
     getProductList,
     setGlobalClient,
-    // globalClient,
+    globalClient,
     // user
   } = props;
   
@@ -42,10 +42,12 @@ function ShoppingCart(props) {
 
 
   if (!clientListLoaded) {
-    console.log( "not loaded" );
-    
     getProductList();
     clientListLoaded = true;
+    if(!globalClient.id){
+      setPanelOpen(true);
+    }
+
   }
 
   return (
@@ -134,6 +136,7 @@ const mapStateToProps = state => ({
   getProductList:PropTypes.func.isRequired,
   setGlobalClient: PropTypes.func.isRequired,
   productList : state.ecommerce.productList,
+  globalClient : state.ecommerce.globalClient,
   // user: state.user
 });
 

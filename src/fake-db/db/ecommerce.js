@@ -52,13 +52,6 @@ const EcommerceDB = {
       password: "client4"
     }
   ],
-
-  category: [],
-
-  brand: [],
-
-  rating: [],
-
   cart: [
     {
       uid: "1",
@@ -503,31 +496,6 @@ Mock.onPost("/api/ecommerce/delete-client-mod").reply(config => { // this for de
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Mock.onGet("/api/ecommerce/get-category-list").reply(config => {
-//   const response = EcommerceDB.category;
-//   return [200, response];
-// });
-
-// Mock.onGet("/api/ecommerce/get-rating-list").reply(config => {
-//   const response = EcommerceDB.rating;
-//   return [200, response];
-// });
-
-// Mock.onGet("/api/ecommerce/get-brand-list").reply(config => {
-//   const response = EcommerceDB.brand;
-//   return [200, response];
-// });
-
-// Mock.onGet("/api/ecommerce/get-cart-list").reply(config => {
-//   let uid = config.data;
-//   let response = [];
-
-//   if (uid) {
-//     response = getDetailedCartList(uid); // just to get the product from the list weil er hat nur die ID 
-//   }
-
-//   return [200, response];
-// });
 
 Mock.onGet("/api/ecommerce/get-var-list").reply(config => { // this is to get the variables list for each client mit ein cid
   let cid = config.data;
@@ -711,13 +679,14 @@ Mock.onPost("/api/ecommerce/add-scheduler").reply(config => { // this for adding
   
   return [200, response];
 });
+
 //////////////END for the scheduler 
 
 Mock.onPost("/api/ecommerce/add-client").reply(config => { // this for adding a client
   let  client  = JSON.parse(config.data);
   const id = shortId.generate();
                                                                   /////////
-  console.log("[dataBase side ]", client);                        /////////
+  console.log("[dataBase side]", client);                        /////////
   const toBePers ={                                               /////////
      ...client,
      id: id,

@@ -34,14 +34,14 @@ const Scheduler = (props) => {
       </div>
       <Card elevation={6} xs={3} className="px-24 py-20 h-100">
         <div className="card-title">Scheduler </div>
-        <div className="card-subtitle mb-24">{globalClient.clientName ? globalClient.clientName : "undefined"}</div>
+        <div className="card-subtitle mb-24">{globalClient.clientName ? globalClient.clientName : ""}</div>
         <CardContent>
           <RowCards />
         </CardContent>
         <CardActions>
         
           <div zIndex="left">
-          <ScheduleDialog />
+          <ScheduleDialog showButton={globalClient.clientName ? false : true} />
           </div>
         </CardActions>
 

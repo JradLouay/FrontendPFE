@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
  function AddClModuleDiag(props) {
 
   const {
+    showButton,
     globalClient,
     getfiltredModulesList,
     addModuleToClient,
@@ -74,6 +75,7 @@ const useStyles = makeStyles(theme => ({
           color="secondary"
           aria-label="Add"
           className={classes.button}
+          disabled={showButton}
           onClick={ ()=>{   
                     getfiltredModulesList(globalClient.id);
                     handleClickOpen();
