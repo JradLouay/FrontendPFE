@@ -3,7 +3,8 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  addModule
+  addModule,
+  updateModule
 } from "app/redux/actions/EcommerceActions";
 import {
   Button,
@@ -23,12 +24,11 @@ class InfoForm extends Component {
     super(props);
   }
   
-
   state = {                              
-    moduleName:"moduleName",
-    version:"2.x",
-    lastUpdate:"11/03/2020",
-    description:"here you can put some desc"
+    moduleName: this.props.type==="edit" ? this.props.selectedModule.moduleName :  null,
+    version : this.props.type==="edit" ? this.props.selectedModule.version :  null,
+    lastUpdate : this.props.type==="edit" ? this.props.selectedModule.lastUpdate :  null,
+    description : this.props.type==="edit" ? this.props.selectedModule.description :  null
   };
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
@@ -50,9 +50,15 @@ class InfoForm extends Component {
     const copy = {
       ...this.state
     };
-    console.log(copy);
+    if (this.props.type ==="edit") {
+      console.log("edit", copy);  
+      this.props.updateModule(this.props.selectedModule.id, copy);
+    }else if(this.props.type ==="add"){
+      this.props.addModule(copy);
+      console.log("add", copy);
+      
+    }
     
-    this.props.addModule(copy);
   };
 
   handleChange = event => {
@@ -134,7 +140,7 @@ class InfoForm extends Component {
           </Grid>
           <Button color="primary" variant="contained" type="submit">
             <Icon>send</Icon>
-            <span className="pl-8 capitalize">Next</span>
+            <span className="pl-8 capitalize">{this.props.type==="edit" ? "Edit" : "Add" }</span>
           </Button>
         </ValidatorForm>
       </div>
@@ -143,11 +149,14 @@ class InfoForm extends Component {
 }
 const mapStateToProps = state => ({
   addModule : PropTypes.func.isRequired,
+  selectedModule : state.ecommerce.selectedModule,
+  updateModule : PropTypes.func.isRequired,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   {  
     addModule,
+    updateModule
     }
 )(InfoForm);

@@ -3,12 +3,14 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  setClientToAdd
+  setClientToAdd,
+  updateClient
 } from "app/redux/actions/EcommerceActions";
 import {
   Button,
   Icon,
   Grid,
+  IconButton
   // Radio,
   // RadioGroup,
   // FormControlLabel,
@@ -24,16 +26,17 @@ class InfoForm extends Component {
   
 
   state = {                                                                     
-    clientName: "NewClient",
-    // state : "",
+    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : "NewClient",
+    host: this.props.type==="edit"? this.props.selectedClient.host : "163.258.6.9",
+    port: this.props.type==="edit"? this.props.selectedClient.port : "2310",
+    userName: this.props.type==="edit"? this.props.selectedClient.userName : "newuser",
+    password: this.props.type==="edit"? this.props.selectedClient.password : "password",
+    // status : "",
     // lastUpdate: "",
-    version: "1.0",
-    email:"new_client@email.com",
-    host: "163.258.6.9",
-    port: "2310",
-    userName:"newuser",
-    password: "newuser",
-    confirmPassword: "newuser"
+    version: this.props.type==="edit"? this.props.selectedClient.version : "1.0",
+    // confirmPassword: "password",
+    file: null,
+    // image: null
     
   };
   componentDidMount() {
@@ -53,12 +56,21 @@ class InfoForm extends Component {
 
   handleSubmit = event => {
     console.log("submitted");
-    let copy = {
-      ...this.state
-    };
-    delete copy.confirmPassword;
-    this.props.setClientToAdd(copy);
-    this.props.next()//this actually will not have any error weil er hat kein side effect 
+    // delete copy.confirmPassword;
+    // const copy = {
+    //   ...this.state
+    // };
+    if (this.props.type ==="edit") {
+      console.log("edit", this.state);  
+      this.props.updateClient(this.props.selectedClient.id, this.state);
+    }else if(this.props.type ==="add"){
+      // this.props.addModule(copy);
+      this.props.setClientToAdd(this.state);
+      this.props.next()//this actually will not have any error weil er hat kein side effect 
+      // console.log("add", copy);
+      
+    }
+   
   };
 
   handleChange = event => {
@@ -70,18 +82,22 @@ class InfoForm extends Component {
     console.log(date);
     this.setState({ date });
   };
+   handelChosenFile= (f)=> {
+      this.setState({file : f});
+  }
 
   render() {
     let {
-      clientName,//
-    email,      //
-    // state ,
-    version,
+    clientName,//
     host,
     port,
     userName, //
     password,
-    confirmPassword
+    // status ,
+    // lastUpdate,
+    version,
+    // confirmPassword,
+    // email
   
     } = this.state;
     return (
@@ -134,7 +150,7 @@ class InfoForm extends Component {
                 errorMessages={["this field is required"]}
               />
               
-              <TextValidator
+              {/* <TextValidator
                 className="mb-16 w-100"
                 label="Email"
                 onChange={this.handleChange}
@@ -143,7 +159,8 @@ class InfoForm extends Component {
                 value={email}
                 validators={["required", "isEmail"]}
                 errorMessages={["this field is required", "email is not valid"]}
-              />
+              /> */}
+                                       
 
             </Grid>
 
@@ -177,12 +194,12 @@ class InfoForm extends Component {
                 label="Password"
                 onChange={this.handleChange}
                 name="password"
-                type="password"
+                // type="password"
                 value={password}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
-              <TextValidator
+              {/* <TextValidator
                 className="mb-16 w-100"
                 label="Confirm Password"
                 onChange={this.handleChange}
@@ -194,13 +211,26 @@ class InfoForm extends Component {
                   "this field is required",
                   "password didn't match"
                 ]}
-              />
+              /> */}
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">
             <Icon>send</Icon>
-            <span className="pl-8 capitalize">Next</span>
+            <span className="pl-8 capitalize">{this.props.type==="edit" ? "Edit" : "Add" }</span>
           </Button>
+          <input
+                              accept=".yml"
+                              style={{ display: 'none' }}
+                              id="raised-button-file"
+                              multiple
+                              type="file"
+                              onChange={e=> this.handelChosenFile(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file">
+                              <IconButton variant="outlined" component="span"  >
+                                <Icon>file_upload</Icon>
+                            </IconButton>
+                            </label>
         </ValidatorForm>
       </div>
     );
@@ -208,11 +238,15 @@ class InfoForm extends Component {
 }
 const mapStateToProps = state => ({
   setClientToAdd : PropTypes.func.isRequired,
+  selectedClient : state.ecommerce.selectedClient,
+  updateClient : PropTypes.func.isRequired,
   // clientToAdd : state.ecommerce.clientToAdd,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   {  
-    setClientToAdd,  }
+    setClientToAdd,
+    updateClient
+    }
 )(InfoForm);

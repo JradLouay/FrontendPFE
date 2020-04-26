@@ -4,8 +4,14 @@ import {
     CardHeader,
     Icon,
     IconButton,
-    Button
+    // Button
              } from "@material-ui/core";
+import {
+updateClient
+} from "app/redux/actions/EcommerceActions";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import axios from "axios";
 // ace editor 
 import AceEditor from "react-ace";
 import 'brace/mode/yaml';
@@ -15,29 +21,44 @@ import 'brace/theme/monokai';
 
 
 
-const EditorYaml = ({ title, subtitle }) => {
+const EditorYaml = (props) => {
+
+  const {
+    globalClient,
+    updateClient,
+    title, 
+    subtitle 
+
+  }= props;
 
 
     const[yamlFile, setYamlFile] = React.useState("");
+
+    React.useEffect(() => {
+      axios.get(`http://localhost:9000/${globalClient.file}`).then(res => {
+          // console.log(res.data);
+          setYamlFile(res.data);
+      });
+      return () => {
+      
+      };
+    }, [globalClient]);
     const onChange = (value) =>{
         console.log(value);
         setYamlFile(value);
         };
 
-    let fileReader ; 
+    const saveFile=() => {
+      let blob = new Blob([yamlFile], { type: "text/yaml"});
+      // console.log(globalClient);
+      
+      updateClient(globalClient.id, {
+          clientName : globalClient.clientName,
+          file : blob
+      });
+      
+    }
 
-      const handleFileRead = (event) =>{
-        const content = fileReader.result;
-        setYamlFile(content);
-      }
-
-      const handelChosenFile= (file)=> {
-        fileReader = new FileReader();
-        fileReader.onloadend= handleFileRead ;
-        fileReader.readAsText(file);
-      }
-
-    
   return (
     <Card elevation={6} className="px-24 py-20 h-100">
       <div className="card-title">Client_1</div>
@@ -45,10 +66,10 @@ const EditorYaml = ({ title, subtitle }) => {
                  <CardHeader
                       action={
                         <React.Fragment>
-                            <IconButton variant="outlined" color="primary" >
+                            <IconButton variant="outlined" color="primary" onClick={saveFile} >
                                 <Icon>save</Icon>
                             </IconButton>
-                            <input
+                            {/* <input
                               accept=".yml"
                               style={{ display: 'none' }}
                               id="raised-button-file"
@@ -60,7 +81,7 @@ const EditorYaml = ({ title, subtitle }) => {
                               <IconButton variant="outlined" component="span"  >
                                 <Icon>file_upload</Icon>
                             </IconButton>
-                            </label> 
+                            </label>  */}
 
                         </React.Fragment>
                       }
@@ -90,4 +111,13 @@ const EditorYaml = ({ title, subtitle }) => {
   );
 };
 
-export default EditorYaml;
+const mapStateToProps = state => ({
+  globalClient : state.ecommerce.globalClient,
+  updateClient : PropTypes.func.isRequired,
+});
+export default   connect(
+  mapStateToProps,
+  { 
+    updateClient
+    }
+)(EditorYaml);

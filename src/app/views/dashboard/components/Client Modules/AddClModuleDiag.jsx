@@ -57,8 +57,8 @@ const useStyles = makeStyles(theme => ({
   function handleClickOpen() {
     setOpen(true);
   }
-  function handleModuleClick(newModule) {
-    addModuleToClient(globalClient.id, newModule);
+  function handleModuleClick(modId) {
+    addModuleToClient(globalClient.id, modId);
   }
 
   function handleClose() {
@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
               </DialogContentText>
               <List className={classes.root}>
                     {modulesList.map(mod => (
-                    <ListItem key={mod.id} button onClick={() => handleModuleClick(mod)} >
+                    <ListItem key={mod.id} button onClick={() => handleModuleClick(mod.id)} >
                         <ListItemText primary={"Name"} secondary={mod.moduleName} />
                         <ListItemText primary={"version"} secondary={mod.version} />
                     </ListItem>

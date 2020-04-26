@@ -20,7 +20,7 @@ function getSteps() {
 function getStepContent(stepIndex, handleNext, handleBack) {
   switch (stepIndex) {
     case 0:
-      return (<InfoForm next={handleNext} />);
+      return (<InfoForm type={"add"} next={handleNext} />);
     case 1:
       return (<TestProgress next={handleNext}
                             prev={handleBack}  />);

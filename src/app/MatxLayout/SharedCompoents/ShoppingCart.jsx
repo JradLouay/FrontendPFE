@@ -94,7 +94,7 @@ function ShoppingCart(props) {
               }}
             >
               <div className="mr-5">
-                <img src={client.imgUrl} alt={client.clientName} />
+                <img src={client.image} alt={client.clientName} />
               </div>
               <Grid item md={3} xs={4}>
                   <span className="card__roject-name font-weight-500">
@@ -109,7 +109,7 @@ function ShoppingCart(props) {
                     State
                   </span>
                   <div className="text-muted">
-                    {client.state} 
+                    {client.status} 
                   </div>
               </Grid>
               {/* <div className="mr-8 text-center">

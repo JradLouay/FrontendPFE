@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import  ClientExpansionPanels  from "./ClientExpansionPanels";
+import  InfoForm  from "./stepperForms/InfoForm";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -49,10 +49,10 @@ export default function InfoDiag(props) {
     <Fragment>
       
                   <IconButton onClick={()=> {
-                     props.clicked()();
-                     handleClickOpen();
-                                   }}>
-                    <Icon color="primary" >info</Icon>
+                      props.clicked()();
+                      handleClickOpen();
+                                    }}>
+                      <Icon color="primary" >edit</Icon>
                   </IconButton>
       
       <Dialog
@@ -66,7 +66,8 @@ export default function InfoDiag(props) {
             <DialogContent>
               <DialogContentText>
                 <SimpleCard title="Client info" >
-                      <ClientExpansionPanels  />
+                      {/* <ClientExpansionPanels  /> */}
+                      <InfoForm type={"edit"} />
                 </SimpleCard>
               </DialogContentText>
             </DialogContent>

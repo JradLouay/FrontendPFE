@@ -25,8 +25,9 @@ import {
   Slide,
   Snackbar
 } from "@material-ui/core";
+import ModuleInfoDiag from "./ModuleInfoDiag";
 import MuiAlert from '@material-ui/lab/Alert';
-import InfoDiag from "./InfoDiag";
+import EditDiag from "./editDiag";
 
 let tableIsLoaded = false ;
 
@@ -41,12 +42,10 @@ function Alert(props) {
 
 const ModuleTableCard = (props) => {
   const {
-    // productList = [],
     modulesList=[],
     getModulesList,
     deleteModule,
     setSelectedModule,
-    deleteClient,
   } = props;
   
   const [open, setOpen] = React.useState(false); // dialog
@@ -99,9 +98,9 @@ const ModuleTableCard = (props) => {
   };
 
   if (!tableIsLoaded) {
-    getModulesList();
-    // console.log(modulesList);
+    console.log("working fine for modules ");
     
+    getModulesList();
     tableIsLoaded = true;
   }
   return (
@@ -146,11 +145,11 @@ const ModuleTableCard = (props) => {
 
                 <TableCell className="px-0" colSpan={1}>
                   
-                  
-                  <InfoDiag clicked={()=> ()=> setSelectedModule(m)} />
-                  <IconButton onClick={()=> handleClickOpen(m.id)}>
+                   <IconButton onClick={()=> handleClickOpen(m.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
+                  <EditDiag clicked={()=> ()=> setSelectedModule(m)} />
+                  <ModuleInfoDiag title={"Module Description"} desc={m.description} />
                 </TableCell>
               </TableRow>
             ))}
@@ -201,7 +200,7 @@ const mapStateToProps = state => ({
   getModulesList : PropTypes.func.isRequired,
   deleteModule : PropTypes.func.isRequired,
   setSelectedModule : PropTypes.func.isRequired,
-  deleteClient : PropTypes.func.isRequired,
+  // deleteClient : PropTypes.func.isRequired,
   modulesList : state.ecommerce.modulesList,
   // user: state.user
 });
@@ -211,5 +210,6 @@ export default   connect(
     getModulesList,
     deleteModule,
     setSelectedModule,
-    deleteClient }
+    // deleteClient 
+  }
 )(ModuleTableCard);

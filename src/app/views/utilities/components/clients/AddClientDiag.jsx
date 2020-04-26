@@ -83,37 +83,6 @@ export default function AddClientDiag() {
                 <StepperForm />
             </SimpleCard>
           </DialogContentText>
-          {/* <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                inputProps={{
-                  name: "max-width",
-                  id: "max-width"
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={
-                <Switch
-                  checked={fullWidth}
-                  onChange={handleFullWidthChange}
-                  value="fullWidth"
-                />
-              }
-              label="Full width"
-            />
-          </form> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

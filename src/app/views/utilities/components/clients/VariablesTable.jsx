@@ -51,8 +51,7 @@ const [loaded, setLoaded] = React.useState(false);
         onRowAdd: newData =>
           new Promise(resolve => {
             const data = {
-                            ... newData,
-                            id : shortId.generate()
+                            ... newData
                            }
             addVariable(selectedClient.id, data);
             resolve(); // wait for server response then see if it's ok or not 
@@ -60,7 +59,7 @@ const [loaded, setLoaded] = React.useState(false);
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
-              updateVariable(oldData.id, selectedClient.id, newData)  
+              updateVariable(selectedClient.id, newData)  
               resolve();
            }),
         onRowDelete: oldData =>

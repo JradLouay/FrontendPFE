@@ -72,7 +72,7 @@ export default function AddModuleDiag() {
         <DialogContent>
           <DialogContentText>
           <SimpleCard title=" Add Module ">
-                <InfoForm />
+                <InfoForm type={"add"} />
             </SimpleCard>
           </DialogContentText>
         </DialogContent>

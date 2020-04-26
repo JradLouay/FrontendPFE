@@ -6,6 +6,7 @@ export const SET_GLOBAL_CLIENT = "SET_GLOBAL_CLIENT"; // set global  client for 
 export const DELETE_CLIENT ="DELETE_CLIENT";  // delete client
 export const SET_CLIENT_TO_ADD ="SET_CLIENT_TO_ADD";  // set client to add
 export const ADD_CLIENT ="ADD_CLIENT";  // add client
+export const UPDATE_CLIENT ="UPDATE_CLIENT";  // add client
 export const GET_VARIABLES_LIST ="GET_VARIABLES_LIST";  // getVariables mit der client ID 
 export const DELETE_VARIABLE ="DELETE_VARIABLE";  // getVariables mit der client ID 
 export const UPDATE_VARIABLE = "UPDATE_VARIABLE"; // updateVariable mit der client ID und die var ID auch 
@@ -32,13 +33,14 @@ export const DELETE_PRODUCT_FROM_CART = "DELETE_PRODUCT_FROM_CART";
 export const UPDATE_CART_AMOUNT = "UPDATE_CART_AMOUNT";
 
 
-// -----------------------------------------STARTCLIENT--------------------------------------------------------------
+// -----------------------------------------STARTCLIENT------Finished--------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------
 export const getProductList = () => dispatch => {
 
   console.log('[getClients]');
   
-  axios.get("/api/ecommerce/get-product-list").then(res => {
+  // axios.get("/api/ecommerce/get-product-list").then(res => {
+  axios.get("http://localhost:9000/api/clients").then(res => {
     dispatch({
       type: GET_PRODUCT_LIST,
       payload: res.data
@@ -75,24 +77,80 @@ export const deleteClient = (clientId) => dispatch => {
 
   console.log('[deleteClient] ', clientId);
   axios
-    .post("/api/ecommerce/delete-client", { clientId })
-    .then(res => {
-      dispatch({
-        type: DELETE_CLIENT,
-        payload: res.data
-      });
+    .delete(`http://localhost:9000/api/clients/${clientId}`)
+    .then(res1 => {
+          axios.get("http://localhost:9000/api/clients").then(res2 => {
+            dispatch({
+              type: DELETE_CLIENT,
+              payload: res2.data
+            });
+            
+          }).catch(res2 => {
+                // etwas für Error
+          });
+    })
+    .catch(res1 => {
+        // etwas für Error
     });
 };
+
 export const addClient = (client) => dispatch => {
 
-  console.log('[addClient] ', client);
-  axios
-    .post("/api/ecommerce/add-client", client )
-    .then(res => {
-      dispatch({
-        type: ADD_CLIENT,
-        payload: res.data
+  // console.log('[addClient] ', client);
+  let form_data = new FormData();
+    for ( var key in client ) {
+      form_data.append(key, client[key]);
+  }
+  // axios
+  //   .post("http://localhost:9000/api/clients", client )
+  axios({
+    method: 'post',
+    url: 'http://localhost:9000/api/clients',
+    data: form_data,
+    // headers: {'Content-Type': 'multipart/form-data' }
+    })
+    .then(res1 => {
+      axios.get("http://localhost:9000/api/clients").then(res2 => {
+        dispatch({
+          type: ADD_CLIENT,
+          payload: [res2.data, res1.data]
+        });
+      }).catch(res2 => {
+            // etwas für Error
       });
+    })
+    .catch(res1 => {
+        // etwas für Error
+    });
+};
+
+export const updateClient = (cid, client) => dispatch => {
+
+  // console.log('[addClient] ', client);
+  let form_data = new FormData();
+    for ( var key in client ) {
+      form_data.append(key, client[key]);
+  }
+  // axios
+  //   .post("http://localhost:9000/api/clients", client )
+  axios({
+    method: 'put',
+    url: `http://localhost:9000/api/clients/${cid}`,
+    data: form_data,
+    // headers: {'Content-Type': 'multipart/form-data' }
+    })
+    .then(res1 => {
+      axios.get("http://localhost:9000/api/clients").then(res2 => {
+        dispatch({
+          type: ADD_CLIENT,
+          payload: [res2.data, res1.data]
+        });
+      }).catch(res2 => {
+            // etwas für Error
+      });
+    })
+    .catch(res1 => {
+        // etwas für Error
     });
 };
 // ---------------------------------------------END----------------------------------------------------------
@@ -138,10 +196,13 @@ export const getVariablesList = cid => dispatch => { // get list of vars mit die
   
   console.log('[getVariablesList] ', cid);
 
-  axios.get("/api/ecommerce/get-var-list", { data: cid }).then(res => {
+  // axios.get("/api/ecommerce/get-var-list", { data: cid }).then(res => {
+    axios
+    .get(`http://localhost:9000/api/clients/${cid}`).then(res => {
+    
     dispatch({
       type: GET_VARIABLES_LIST,
-      payload: res.data
+      payload: res.data.variables
     });
   });
 };
@@ -158,20 +219,28 @@ export const getSchedulerList = cid => dispatch => { // get list of scheduler mi
 };
 export const deleteVariable = (varId, cid ) => dispatch => { //delete variable 
   
-  console.log('[DeleteVariables] ', varId, cid);
+  // console.log('[DeleteVariables] ', varId, cid);
   axios
-    .post("/api/ecommerce/delete-var", { varId, cid})
-    .then(res => {
-      dispatch({
-        type: DELETE_VARIABLE,
-        payload: res.data
+    .delete(`http://localhost:9000/api/variables/${cid}/${varId}`)
+    .then(res1 => {
+      axios.get(`http://localhost:9000/api/clients/${cid}`).then(res2 => {
+        dispatch({
+          type: DELETE_VARIABLE,
+          payload: res2.data.variables
+        });
+        
+      }).catch(res2 => {
+            // etwas für Error
       });
-    });
+})
+.catch(res1 => {
+    // etwas für Error
+});
 };
 
 export const deleteScheduler = (schedulerId, cid ) => dispatch => { //delete variable 
   
-  console.log('[deleteScheduler] ', schedulerId, cid);
+  // console.log('[deleteScheduler] ', schedulerId, cid);
   axios
     .post("/api/ecommerce/delete-scheduler", { schedulerId, cid})
     .then(res => {
@@ -181,28 +250,33 @@ export const deleteScheduler = (schedulerId, cid ) => dispatch => { //delete var
       });
     });
 };
-export const updateVariable = (varId, cid, newData) => dispatch => { //delete variable 
+export const updateVariable = (cid, newData) => dispatch => { //delete variable 
   
-  console.log('[updateVariable] ', varId, cid, newData);
+  // console.log('[updateVariable] ', cid, newData);
   axios
-    .post("/api/ecommerce/update-var", { varId, cid, newData })
+    .put(`http://localhost:9000/api/variables/${newData.id}`, { ...newData })
     .then(res => {
-      dispatch({
-        type: UPDATE_VARIABLE,
-        payload: res.data
+      console.log(res.data);
+      axios.get(`http://localhost:9000/api/clients/${cid}`).then(res2 => {
+        dispatch({
+          type: UPDATE_VARIABLE,
+          payload: res2.data.variables
+        });
+      }).catch(res2 => {
+            // etwas für Error
       });
     });
 };
 
 export const addVariable = (cid, newData) => dispatch => { //delete variable 
   
-  console.log('[addVariable] ',cid, newData);
+  // console.log('[addVariable] ',cid, newData);
   axios
-    .post("/api/ecommerce/add-var", { cid, newData })
+    .post(`http://localhost:9000/api/variables/${cid}`, { ...newData })
     .then(res => {
       dispatch({
         type: ADD_VARIABLE,
-        payload: res.data
+        payload: res.data.variables
       });
     });
 };
@@ -226,8 +300,8 @@ export const addScheduler = (cid, newScheduler) => dispatch => { //delete variab
 
 export const getModulesList = () => dispatch => { // get all modules 
   
-  console.log('[getModulesList] ');
-  axios.get("/api/ecommerce/get-modules-list").then(res => {
+  // console.log('[getModulesList] ');
+  axios.get("http://localhost:9000/api/modules").then(res => {
     
     dispatch({
       type: GET_MODULES_LIST,
@@ -237,7 +311,7 @@ export const getModulesList = () => dispatch => { // get all modules
 };
 
 export const setSelectedModule = (selectedModule) => {
-  console.log('[setSelectedModule] ', selectedModule);
+  // console.log('[setSelectedModule] ', selectedModule);
   
   return {
     type: SET_SELECTED_MODULE,
@@ -248,26 +322,52 @@ export const setSelectedModule = (selectedModule) => {
 export const deleteModule = moduleId => dispatch =>  { // deleting a module
 
   
-    console.log('[DeleteModule] ', moduleId);
+    // console.log('[DeleteModule] ', moduleId);
     axios
-      .post("/api/ecommerce/delete-mod", { moduleId })  
+      .delete(`http://localhost:9000/api/modules/${moduleId}`)  
       .then(res => {
-        dispatch({
-          type: DELETE_MODULE,
-          payload: res.data
+        axios.get(`http://localhost:9000/api/modules`).then(res2 => {
+          dispatch({
+            type: DELETE_MODULE,
+            payload: res2.data
+          });
+        }).catch(res2 => {
+              // etwas für Error
         });
       });
   };
 export const addModule = modToAdd => dispatch =>  { // adding a module
 
   
-    console.log('[AddModule] ', modToAdd);
+    // console.log('[AddModule] ', modToAdd);
     axios
-      .post("/api/ecommerce/add-mod", { modToAdd })  
+      .post(`http://localhost:9000/api/modules`, { ...modToAdd })  
       .then(res => {
-        dispatch({
-          type: ADD_MODULE,
-          payload: res.data
+        axios.get(`http://localhost:9000/api/modules`).then(res2 => {
+          dispatch({
+            type: ADD_MODULE,
+            payload: res2.data
+          });
+        }).catch(res2 => {
+              // etwas für Error
+        });
+      });
+  };
+
+export const updateModule = (modId, modToAdd) => dispatch =>  { // adding a module
+
+  
+    console.log('[UpdateModule] ', modToAdd);
+    axios
+      .put(`http://localhost:9000/api/modules/${modId}`, { ...modToAdd })  
+      .then(res => {
+        axios.get(`http://localhost:9000/api/modules`).then(res2 => {
+          dispatch({
+            type: ADD_MODULE,
+            payload: res2.data
+          });
+        }).catch(res2 => {
+              // etwas für Error
         });
       });
   };
@@ -276,22 +376,22 @@ export const addModule = modToAdd => dispatch =>  { // adding a module
 
 export const getClientModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
   
-  console.log('[getClientModulesList] ', cid);
+  // console.log('[getClientModulesList] ', cid);
 
-  axios.get("/api/ecommerce/get-client-modules", { data: cid })
+  axios.get(`http://localhost:9000/api/clients/${cid}`)
   .then(res => {
     dispatch({
       type: GET_CLIENT_MODULES,
-      payload: res.data
+      payload: res.data.deployedModules
     });
   });
 };
 
 export const getfiltredModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
   
-  console.log('[getfiltredModulesList] ', cid);
+  // console.log('[getfiltredModulesList] ', cid);
 
-  axios.get("/api/ecommerce/get-filtred-modules-list", { data: cid }).then(res => {
+  axios.get(`http://localhost:9000/api/modules/${cid}`, { data: cid }).then(res => {
     dispatch({
       type: GET_FILTRED_MODULES,
       payload: res.data
@@ -299,28 +399,32 @@ export const getfiltredModulesList = cid => dispatch => { // get list of vars mi
   });
 };
 
-export const addModuleToClient = (cid, newModule) => dispatch => { //delete variable 
+export const addModuleToClient = (cid, modId) => dispatch => { //delete variable 
   
-  console.log('[addModuleToClient] ',cid, newModule);
+  //  console.log('[addModuleToClient] ',cid, modId);
   axios
-    .post("/api/ecommerce/add-mod-to-client", { cid, newModule })
+    .post(`http://localhost:9000/api/modules/${cid}/${modId}`)
     .then(res => {
-      dispatch({
-        type: ADD_MODULE_TO_CLIENT,
-        payload: res.data
+      axios.get(`http://localhost:9000/api/clients/${cid}`)
+      .then(res => {
+        dispatch({
+          type: ADD_MODULE_TO_CLIENT,
+          payload: res.data.deployedModules
+        });
       });
+      
     });
 };
 
 export const deleteClientModule = (modId, cid ) => dispatch => { //delete module from a client 
   
-  console.log('[deleteClientModule] ', modId, cid);
+  // console.log('[deleteClientModule] ', modId, cid);
   axios
-    .post("/api/ecommerce/delete-client-mod", { modId, cid})
+    .delete(`http://localhost:9000/api/modules/${cid}/${modId}`)
     .then(res => {
       dispatch({
         type: DELETE_CLIENT_MODULE,
-        payload: res.data
+        payload: res.data.deployedModules
       });
     });
 };

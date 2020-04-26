@@ -42,7 +42,6 @@ function Alert(props) {
 const ClientTableCard = (props) => {
   const {
     productList = [],
-    // selectedClient= {},
     getProductList,
     setSelectedClient,
     deleteClient,
@@ -64,7 +63,7 @@ const ClientTableCard = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.7) {
+        if (true) {
           setTimeout(() => {
             deleteClient(deleteClientId);
             setOpenSnackSuccess(true) ;
@@ -98,6 +97,7 @@ const ClientTableCard = (props) => {
   };
 
   if (!tableIsLoaded) {
+    console.log("working fine for clients ");
     getProductList();
     tableIsLoaded = true;
   }
@@ -113,10 +113,10 @@ const ClientTableCard = (props) => {
                 Name
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                Version
+                Host
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                LastUpdate
+                Port
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
                 State
@@ -127,8 +127,8 @@ const ClientTableCard = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productList.map((m) => (
-              <TableRow key={m.id} >
+            {productList.map((client) => (
+              <TableRow key={client.id} >
                 <TableCell className="px-0 capitalize" colSpan={1} align="left">
                   <div className="flex flex-middle">
                     <img
@@ -136,22 +136,18 @@ const ClientTableCard = (props) => {
                       src="/assets/images/logos/react.png"
                       alt="client"
                     />
-                    <p className="m-0 ml-8">{m.clientName}</p>
+                    <p className="m-0 ml-8">{client.clientName}</p>
                   </div>
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                
-                  {m.version > 999
-                    ? (m.version / 1000).toFixed(1) + "k"
-                    : m.version}
+                  {client.host}
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  {m.lastUpdate}
+                  {client.port}
                 </TableCell>
-
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {m.state ? (
-                    m.state === "deployed" ? (
+                  {client.state ? (
+                    client.state === "deployed" ? (
                       <small className="border-radius-4 bg-green text-white px-8 py-1 ">
                          Deployed
                       </small>
@@ -169,11 +165,11 @@ const ClientTableCard = (props) => {
                 <TableCell className="px-0" colSpan={1}>
                   
                   
-                  <InfoDiag clicked={()=> ()=> setSelectedClient(m)} />
-                  <IconButton onClick={()=> handleClickOpen(m.id)}>
+                  <InfoDiag clicked={()=> ()=> setSelectedClient(client)} />
+                  <IconButton onClick={()=> handleClickOpen(client.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
-                  <VariablesDiag clicked={()=> ()=> setSelectedClient(m)} />
+                  <VariablesDiag clicked={()=> ()=> setSelectedClient(client)} />
                 </TableCell>
               </TableRow>
             ))}

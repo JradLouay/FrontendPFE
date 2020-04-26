@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -8,11 +8,11 @@ import {
   DialogContentText,
   DialogTitle,
   Icon,
-  IconButton,
+  IconButton
+  // Fab,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import  ClientExpansionPanels  from "./ClientExpansionPanels";
-
+import  InfoForm  from "./InfoForm";
 const useStyles = makeStyles(theme => ({
   form: {
     display: "flex",
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function InfoDiag(props) {
+export default function EditDiag(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -43,18 +43,22 @@ export default function InfoDiag(props) {
     setOpen(false);
   }
 
- 
+  function handleMaxWidthChange(event) {
+    setMaxWidth(event.target.value);
+  }
+
+  function handleFullWidthChange(event) {
+    setFullWidth(event.target.checked);
+  }
 
   return (
-    <Fragment>
-      
-                  <IconButton onClick={()=> {
+    <React.Fragment>
+       <IconButton onClick={()=> {
                      props.clicked()();
                      handleClickOpen();
                                    }}>
-                    <Icon color="primary" >info</Icon>
+                    <Icon color="primary" >edit</Icon>
                   </IconButton>
-      
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
@@ -62,20 +66,20 @@ export default function InfoDiag(props) {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-            <DialogTitle id="max-width-dialog-title"></DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <SimpleCard title="Client info" >
-                      <ClientExpansionPanels  />
-                </SimpleCard>
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  Close
-                </Button>
-            </DialogActions>
+        <DialogTitle id="max-width-dialog-title"></DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+          <SimpleCard title=" Edit Module ">
+                <InfoForm type={"edit"} />
+            </SimpleCard>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
       </Dialog>
-    </Fragment>
+    </React.Fragment>
   );
 }
