@@ -119,7 +119,8 @@ const RowCards = (props) => {
                     Update Date
                         </span>
                   <div className="text-muted">
-                    {scheduler.date}
+                    { new Date(scheduler.date)
+                          .toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                   </div>
                 </Grid>
 
@@ -128,7 +129,8 @@ const RowCards = (props) => {
                     Update Time
                   </span>
                   <div className="text-muted">
-                    {scheduler.time}
+                    {new Date(scheduler.time)
+                          .toLocaleTimeString('it-IT')}
                   </div>
                 </Grid>
                 <Grid item md={3} xs={4}>
@@ -142,7 +144,7 @@ const RowCards = (props) => {
 
                 <Grid item xs={1}>
                   <div className="flex flex-end">
-                    {scheduler.status === "Pending" ? 
+                    {scheduler.status === "PENDING" ? 
                     <IconButton onClick={() => { handleClickOpen(scheduler.id)}}>
                       <Icon color="default">delete</Icon>
                     </IconButton> : ""}

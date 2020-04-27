@@ -210,10 +210,10 @@ export const getSchedulerList = cid => dispatch => { // get list of scheduler mi
   
   console.log('[getSchedulerList] ', cid);
 
-  axios.get("/api/ecommerce/get-scheduler-list", { data: cid }).then(res => {
+  axios.get(`http://localhost:9000/api/clients/${cid}`).then(res => {
     dispatch({
       type: GET_SCHEDULER_LIST,
-      payload: res.data
+      payload: res.data.schedulers
     });
   });
 };
@@ -242,13 +242,22 @@ export const deleteScheduler = (schedulerId, cid ) => dispatch => { //delete var
   
   // console.log('[deleteScheduler] ', schedulerId, cid);
   axios
-    .post("/api/ecommerce/delete-scheduler", { schedulerId, cid})
-    .then(res => {
-      dispatch({
-        type: DELETE_SCHEDULER,
-        payload: res.data
+    .delete(`http://localhost:9000/api/schedulers/${cid}/${schedulerId}`)
+    .then(res1 => {
+      axios.get(`http://localhost:9000/api/clients/${cid}`).then(res2 => {
+        dispatch({
+          type: DELETE_SCHEDULER,
+          payload: res2.data.schedulers
+        });
+        
+      }).catch(res2 => {
+            // etwas für Error
       });
-    });
+})
+.catch(res1 => {
+    // etwas für Error
+});
+ 
 };
 export const updateVariable = (cid, newData) => dispatch => { //delete variable 
   
@@ -284,11 +293,11 @@ export const addScheduler = (cid, newScheduler) => dispatch => { //delete variab
   
   // console.log('[addScheduler] ',cid, newScheduler);
   axios
-    .post("/api/ecommerce/add-scheduler", { cid, newScheduler })
+    .post(`http://localhost:9000/api/schedulers/${cid}`, { ...newScheduler })
     .then(res => {
       dispatch({
         type: ADD_SCHEDULER,
-        payload: res.data
+        payload: res.data.schedulers
       });
     });
 };

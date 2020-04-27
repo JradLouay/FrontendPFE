@@ -38,15 +38,29 @@ const EditorYaml = (props) => {
       axios.get(`http://localhost:9000/${globalClient.file}`).then(res => {
           // console.log(res.data);
           setYamlFile(res.data);
+          // console.log('globalclient', globalClient);
       });
       return () => {
       
       };
     }, [globalClient]);
+
     const onChange = (value) =>{
-        console.log(value);
         setYamlFile(value);
         };
+
+    let fileReader ; 
+
+    const handleFileRead = (event) =>{
+      const content = fileReader.result;
+      setYamlFile(content);
+    }
+
+    const handelChosenFile= (file)=> {
+      fileReader = new FileReader();
+      fileReader.onloadend= handleFileRead ;
+      fileReader.readAsText(file);
+    }
 
     const saveFile=() => {
       let blob = new Blob([yamlFile], { type: "text/yaml"});
@@ -61,7 +75,7 @@ const EditorYaml = (props) => {
 
   return (
     <Card elevation={6} className="px-24 py-20 h-100">
-      <div className="card-title">Client_1</div>
+      <div className="card-title">{globalClient.clientName}</div>
       <div className="card-subtitle mb-24">docker-compose.yml</div>
                  <CardHeader
                       action={
@@ -69,7 +83,7 @@ const EditorYaml = (props) => {
                             <IconButton variant="outlined" color="primary" onClick={saveFile} >
                                 <Icon>save</Icon>
                             </IconButton>
-                            {/* <input
+                            <input
                               accept=".yml"
                               style={{ display: 'none' }}
                               id="raised-button-file"
@@ -81,12 +95,12 @@ const EditorYaml = (props) => {
                               <IconButton variant="outlined" component="span"  >
                                 <Icon>file_upload</Icon>
                             </IconButton>
-                            </label>  */}
+                            </label> 
 
                         </React.Fragment>
                       }
-                      title="Modules"
-                      subheader="Client_1"
+                      // title="Modules"
+                      // subheader={globalClient.clientName}
                     />
                 <AceEditor
                           focus

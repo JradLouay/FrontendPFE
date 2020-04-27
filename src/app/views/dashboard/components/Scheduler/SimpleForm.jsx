@@ -56,10 +56,21 @@ class SimpleForm extends Component {
 
   handleSubmit = event => {
     // console.log("submitted");
-    this.props.addScheduler(this.props.globalClient.id, this.state);
+    // this.props.addScheduler(this.props.globalClient.id, this.state);
     // this.props.close();
-    
-    // console.log(this.state);
+    let copy = {
+      ...this.state ,
+      date : new Date(this.state.date.getFullYear(),
+                      this.state.date.getMonth(),
+                      this.state.date.getDate(),
+                      this.state.time.getHours(),
+                      this.state.time.getMinutes(),
+                      this.state.time.getSeconds()),
+      status : "PENDING"
+
+    }   
+    this.props.addScheduler(this.props.globalClient.id, copy);
+    // this.props.close();
   };
 
   handleChange = event => {

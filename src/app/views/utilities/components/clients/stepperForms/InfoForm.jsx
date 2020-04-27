@@ -35,7 +35,7 @@ class InfoForm extends Component {
     // lastUpdate: "",
     version: this.props.type==="edit"? this.props.selectedClient.version : "1.0",
     // confirmPassword: "password",
-    file: null,
+    // file: null,
     // image: null
     
   };
@@ -199,6 +199,31 @@ class InfoForm extends Component {
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
+              <label for="file">Choose a file :</label>
+              
+                      <TextValidator
+                          accept=".yml"
+                          // style={{ display: 'none' }}
+                          id="file"
+                          type="file"
+                          onChange={e=> this.handelChosenFile(e.target.files[0])} />
+                              {/* <input
+                              accept=".yml"
+                              style={{ display: 'none' }}
+                              id="raised-button-file"
+                              multiple
+                              type="file"
+                              onChange={e=> this.handelChosenFile(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file"> 
+                              Choose a file:
+                              <IconButton variant="outlined" component="span"  >
+                                <Icon>file_upload</Icon>
+                            </IconButton>
+                            </label> */}
+              {/* <input type="file"
+                    id="avatar" name="avatar"
+                    accept="image/png, image/jpeg"></input> */}
               {/* <TextValidator
                 className="mb-16 w-100"
                 label="Confirm Password"
@@ -218,19 +243,7 @@ class InfoForm extends Component {
             <Icon>send</Icon>
             <span className="pl-8 capitalize">{this.props.type==="edit" ? "Edit" : "Add" }</span>
           </Button>
-          <input
-                              accept=".yml"
-                              style={{ display: 'none' }}
-                              id="raised-button-file"
-                              multiple
-                              type="file"
-                              onChange={e=> this.handelChosenFile(e.target.files[0])}
-                            />
-                            <label htmlFor="raised-button-file">
-                              <IconButton variant="outlined" component="span"  >
-                                <Icon>file_upload</Icon>
-                            </IconButton>
-                            </label>
+          
         </ValidatorForm>
       </div>
     );
