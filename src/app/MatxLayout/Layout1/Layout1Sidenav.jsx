@@ -113,6 +113,21 @@ class Layout1Sidenav extends Component {
           <span className="username">
             {globalClient.clientName ? globalClient.clientName : <div className="text-muted">Choose a Client </div>}
           </span>
+          {globalClient.status ? (
+                    globalClient.status === "Deployed" ? (
+                      <small className="border-radius-4 bg-green text-white px-8 py-1 ">
+                         Deployed
+                      </small>
+                    ) : (
+                      <small className="border-radius-4 bg-error text-white px-8 py-1 ">
+                        Not Deployed
+                      </small>
+                    )
+                  ) : (
+                    <small className="border-radius-4 bg-secondary text-white px-8 py-1 ">
+                      Unknown
+                    </small>
+                  )}
           <div className="user__menu">
             {/* <MatxMenu
               menuButton={

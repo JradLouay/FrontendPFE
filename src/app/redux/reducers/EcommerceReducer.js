@@ -17,6 +17,11 @@ import {
   GET_FILTRED_MODULES,
   ADD_MODULE_TO_CLIENT,
   DELETE_CLIENT_MODULE,
+  GET_USERS_LIST,
+  DELETE_USER,
+  ADD_USER,
+  UPDATE_USER,
+  SET_SELECTED_USER,
   GET_SCHEDULER_LIST, // scheduler
   ADD_SCHEDULER,
   DELETE_SCHEDULER,
@@ -39,6 +44,9 @@ const initialState = {
   schedulerList : [],
   selectedModule: {},
   clientModules:[],
+  filtredModulesList:[],
+  selectedUser: {},
+  usersList: [],
   cartList: [],// out of the bi3 a
 };
 
@@ -121,10 +129,22 @@ const EcommerceReducer = function(state = initialState, action) {
         modulesList: [...action.payload]
       };
     }
+    case GET_USERS_LIST: {  // get modules list 
+      return {
+        ...state,
+        usersList: [...action.payload]
+      };
+    }
     case SET_SELECTED_MODULE: {  // get modules list 
       return {
         ...state,
         selectedModule: {...action.payload}
+      };
+    }
+    case SET_SELECTED_USER: {  // get modules list 
+      return {
+        ...state,
+        selectedUser: {...action.payload}
       };
     }
     case DELETE_MODULE: {  // get modules list 
@@ -133,10 +153,22 @@ const EcommerceReducer = function(state = initialState, action) {
         modulesList: [...action.payload]
       };
     }
+    case DELETE_USER: {  // get modules list 
+      return {
+        ...state,
+        usersList: [...action.payload]
+      };
+    }
     case ADD_MODULE: {  // get modules list 
       return {
         ...state,
         modulesList: [...action.payload]
+      };
+    }
+    case ADD_USER: {  // get modules list 
+      return {
+        ...state,
+        usersList: [...action.payload]
       };
     }
     case GET_CLIENT_MODULES: {  // get client modules list 
@@ -148,7 +180,7 @@ const EcommerceReducer = function(state = initialState, action) {
     case GET_FILTRED_MODULES: {  // get modules list 
       return {
         ...state,
-        modulesList: [...action.payload]
+        filtredModulesList: [...action.payload]
       };
     }
     case ADD_MODULE_TO_CLIENT: {  // Add module to a client  

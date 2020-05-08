@@ -66,7 +66,6 @@ export default function InfoDiag(props) {
             <DialogContent>
               <DialogContentText>
                 <SimpleCard title="Client info" >
-                      {/* <ClientExpansionPanels  /> */}
                       <InfoForm type={"edit"} />
                 </SimpleCard>
               </DialogContentText>

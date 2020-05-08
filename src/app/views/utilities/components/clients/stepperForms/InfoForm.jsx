@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import shortId from "shortid";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
@@ -10,7 +11,7 @@ import {
   Button,
   Icon,
   Grid,
-  IconButton
+  // IconButton
   // Radio,
   // RadioGroup,
   // FormControlLabel,
@@ -31,7 +32,8 @@ class InfoForm extends Component {
     port: this.props.type==="edit"? this.props.selectedClient.port : "2310",
     userName: this.props.type==="edit"? this.props.selectedClient.userName : "newuser",
     password: this.props.type==="edit"? this.props.selectedClient.password : "password",
-    // status : "",
+    fileName: this.props.type==="edit"? this.props.selectedClient.fileName : shortId.generate(),
+    status : "Not Deployed",
     // lastUpdate: "",
     version: this.props.type==="edit"? this.props.selectedClient.version : "1.0",
     // confirmPassword: "password",
@@ -61,14 +63,15 @@ class InfoForm extends Component {
     //   ...this.state
     // };
     if (this.props.type ==="edit") {
-      console.log("edit", this.state);  
+      // this.state.fileName = this.props.selectedClient.fileName
       this.props.updateClient(this.props.selectedClient.id, this.state);
+      // console.log(this.state);
+      
+
     }else if(this.props.type ==="add"){
-      // this.props.addModule(copy);
+        // console.log(this.state)
       this.props.setClientToAdd(this.state);
       this.props.next()//this actually will not have any error weil er hat kein side effect 
-      // console.log("add", copy);
-      
     }
    
   };
@@ -78,27 +81,22 @@ class InfoForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleDateChange = date => {
-    console.log(date);
-    this.setState({ date });
-  };
-   handelChosenFile= (f)=> {
+  
+   handelChosenFile = (f)=> {
       this.setState({file : f});
+  }
+   handelChosenImage = (image)=> {
+      this.setState({image : image});
   }
 
   render() {
     let {
-    clientName,//
+    clientName,
     host,
     port,
-    userName, //
+    userName, 
     password,
-    // status ,
-    // lastUpdate,
     version,
-    // confirmPassword,
-    // email
-  
     } = this.state;
     return (
       <div>
@@ -160,6 +158,14 @@ class InfoForm extends Component {
                 validators={["required", "isEmail"]}
                 errorMessages={["this field is required", "email is not valid"]}
               /> */}
+              <label for="file">Choose an Image :</label>
+              
+              <TextValidator
+                  accept=".yml"
+                  // style={{ display: 'none' }}
+                  id="file"
+                  type="file"
+                  onChange={e=> this.handelChosenImage(e.target.files[0])} />
                                        
 
             </Grid>
@@ -201,29 +207,13 @@ class InfoForm extends Component {
               />
               <label for="file">Choose a file :</label>
               
-                      <TextValidator
-                          accept=".yml"
-                          // style={{ display: 'none' }}
-                          id="file"
-                          type="file"
-                          onChange={e=> this.handelChosenFile(e.target.files[0])} />
-                              {/* <input
-                              accept=".yml"
-                              style={{ display: 'none' }}
-                              id="raised-button-file"
-                              multiple
-                              type="file"
-                              onChange={e=> this.handelChosenFile(e.target.files[0])}
-                            />
-                            <label htmlFor="raised-button-file"> 
-                              Choose a file:
-                              <IconButton variant="outlined" component="span"  >
-                                <Icon>file_upload</Icon>
-                            </IconButton>
-                            </label> */}
-              {/* <input type="file"
-                    id="avatar" name="avatar"
-                    accept="image/png, image/jpeg"></input> */}
+              <TextValidator
+                  accept=".yml"
+                  // style={{ display: 'none' }}
+                  id="file"
+                  type="file"
+                  onChange={e=> this.handelChosenFile(e.target.files[0])} />
+                              
               {/* <TextValidator
                 className="mb-16 w-100"
                 label="Confirm Password"

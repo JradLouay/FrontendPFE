@@ -4,18 +4,18 @@ import { connect } from "react-redux";
 import {
   addClient
 } from "app/redux/actions/EcommerceActions";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import { LinearProgress } from "@material-ui/core";
 import { Breadcrumb, SimpleCard } from "matx";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  progress: {
-    margin: theme.spacing(2)
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     flexGrow: 1
+//   },
+//   progress: {
+//     margin: theme.spacing(2)
+//   }
+// }));
 
 const TestProgress = (props) => {
 

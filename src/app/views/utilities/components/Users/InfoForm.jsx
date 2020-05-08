@@ -3,17 +3,17 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  addModule,
-  updateModule
+  addUser,
+  updateUser
 } from "app/redux/actions/EcommerceActions";
 import {
   Button,
   Icon,
   Grid,
-  TextField
-  // Radio,
-  // RadioGroup,
-  // FormControlLabel,
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
   // Checkbox
 } from "@material-ui/core";
 import "date-fns";
@@ -25,10 +25,10 @@ class InfoForm extends Component {
   }
   
   state = {                              
-    moduleName: this.props.type==="edit" ? this.props.selectedModule.moduleName :  null,
-    version : this.props.type==="edit" ? this.props.selectedModule.version :  null,
-    lastUpdate : this.props.type==="edit" ? this.props.selectedModule.lastUpdate :  null,
-    description : this.props.type==="edit" ? this.props.selectedModule.description :  null
+    name: this.props.type==="edit" ? this.props.selectedUser.name :  "louay",
+    email : this.props.type==="edit" ? this.props.selectedUser.email :  "louay@gmail.com",
+    password : this.props.type==="edit" ? this.props.selectedUser.password :  null,
+    role : this.props.type==="edit" ? this.props.selectedUser.role :  null
   };
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
@@ -47,14 +47,16 @@ class InfoForm extends Component {
 
   handleSubmit = event => {
     console.log("submitted");
+
     const copy = {
       ...this.state
     };
+    delete copy.confirmPassword;
     if (this.props.type ==="edit") {
       console.log("edit", copy);  
-      this.props.updateModule(this.props.selectedModule.id, copy);
+      // this.props.updateUser(this.props.selectedModule.id, copy);
     }else if(this.props.type ==="add"){
-      this.props.addModule(copy);
+      this.props.addUser(copy);
       console.log("add", copy);
       
     }
@@ -73,10 +75,11 @@ class InfoForm extends Component {
 
   render() {
     let {
-      moduleName,
-      version,
-      lastUpdate,
-      description
+      name,
+      email,
+      password,
+      confirmPassword,
+      role
   
     } = this.state;
     return (
@@ -90,15 +93,30 @@ class InfoForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextValidator
                 className="mb-16 w-100"
-                label="Module Name(Min length 4, Max length 9)"
+                label="Name(Min length 4, Max length 9)"
                 onChange={this.handleChange}
                 type="text"
-                name="moduleName"
-                value={moduleName}
-                validators={["required"]}
+                name="name"
+                value={name}
+                validators={["required",
+                             ]}
                 errorMessages={["this field is required"]}
               />
-              <TextValidator
+             <TextValidator
+                className="mb-16 w-100"
+                label="Email"
+                onChange={this.handleChange}
+                type="email"
+                name="email"
+                value={email}
+                validators={["required", "isEmail"]}
+                errorMessages={["this field is required", "email is not valid"]}
+              />
+
+            </Grid>
+
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+            {/* <TextValidator
                 className="mb-16 w-100"
                 label="Version (Eg: 1.0)"
                 onChange={this.handleChange}
@@ -107,34 +125,57 @@ class InfoForm extends Component {
                 value={version}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
+              /> */}
+              <TextValidator
+                className="mb-16 w-100"
+                label="Password"
+                onChange={this.handleChange}
+                name="password"
+                type="password"
+                value={password}
+                validators={["required",
+                             "minStringLength: 6"]}
+                errorMessages={["this field is required"]}
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="Last Update (Min length 4, Max length 9)"
+                label="Confirm Password"
                 onChange={this.handleChange}
-                type="text"
-                name="lastUpdate"
-                value={lastUpdate}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
+                name="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                validators={["required", "isPasswordMatch"]}
+                errorMessages={[
+                  "this field is required",
+                  "password didn't match"
+                ]}
               />
-
-            </Grid>
-
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              <TextValidator
-                className="mb-16 w-100"
-                label="Description"
+              <RadioGroup
+                className="mb-16"
+                value={role}
+                name="role"
                 onChange={this.handleChange}
-                type="TextField"
-                name="description"
-                multiline={"multiline"}
-                rows="7"
-                variant="outlined"
-                value={description}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
-              />
+                row
+              >
+                <FormControlLabel
+                  value="admin"
+                  control={<Radio color="secondary" />}
+                  label="Admin"
+                  labelPlacement="end"
+                />
+                <FormControlLabel
+                  value="user"
+                  control={<Radio color="secondary" />}
+                  label="User"
+                  labelPlacement="end"
+                />
+                {/* <FormControlLabel
+                  value="Stagaire"
+                  control={<Radio color="secondary" />}
+                  label="Stagaire"
+                  labelPlacement="end"
+                /> */}
+              </RadioGroup>
               
             </Grid>
           </Grid>
@@ -148,15 +189,15 @@ class InfoForm extends Component {
   }
 }
 const mapStateToProps = state => ({
-  addModule : PropTypes.func.isRequired,
-  selectedModule : state.ecommerce.selectedModule,
-  updateModule : PropTypes.func.isRequired,
+  addUser : PropTypes.func.isRequired,
+  selectedUser : state.ecommerce.selectedModule,
+  updateUser : PropTypes.func.isRequired,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   {  
-    addModule,
-    updateModule
+    addUser,
+    updateUser
     }
 )(InfoForm);

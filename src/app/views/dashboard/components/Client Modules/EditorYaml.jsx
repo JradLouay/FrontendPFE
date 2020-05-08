@@ -4,11 +4,12 @@ import {
     CardHeader,
     Icon,
     IconButton,
-    // Button
-             } from "@material-ui/core";
+    Button
+} from "@material-ui/core";
+import SaveIcon from '@material-ui/icons/Save';
 import {
-updateClient
-} from "app/redux/actions/EcommerceActions";
+      updateClient
+      } from "app/redux/actions/EcommerceActions";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -35,10 +36,11 @@ const EditorYaml = (props) => {
     const[yamlFile, setYamlFile] = React.useState("");
 
     React.useEffect(() => {
+      
       axios.get(`http://localhost:9000/${globalClient.file}`).then(res => {
-          // console.log(res.data);
+          console.log("get the file ",res.data);
+          
           setYamlFile(res.data);
-          // console.log('globalclient', globalClient);
       });
       return () => {
       
@@ -63,26 +65,32 @@ const EditorYaml = (props) => {
     }
 
     const saveFile=() => {
+      console.log("saving file");
       let blob = new Blob([yamlFile], { type: "text/yaml"});
-      // console.log(globalClient);
-      
       updateClient(globalClient.id, {
-          clientName : globalClient.clientName,
+          fileName : globalClient.fileName,
           file : blob
       });
       
     }
 
   return (
+    
     <Card elevation={6} className="px-24 py-20 h-100">
       <div className="card-title">{globalClient.clientName}</div>
       <div className="card-subtitle mb-24">docker-compose.yml</div>
                  <CardHeader
                       action={
                         <React.Fragment>
-                            <IconButton variant="outlined" color="primary" onClick={saveFile} >
-                                <Icon>save</Icon>
-                            </IconButton>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="small"
+                              onClick={saveFile}
+                              startIcon={<SaveIcon />}
+                            >
+                              Save
+                            </Button>
                             <input
                               accept=".yml"
                               style={{ display: 'none' }}
@@ -99,8 +107,8 @@ const EditorYaml = (props) => {
 
                         </React.Fragment>
                       }
-                      // title="Modules"
-                      // subheader={globalClient.clientName}
+                      // title={globalClient.clientName}
+                      // subheader="docker-compose.yml"
                     />
                 <AceEditor
                           focus

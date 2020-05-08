@@ -7,9 +7,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Icon,
   IconButton,
 } from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 import EditorYaml from "./EditorYaml";
 
 
@@ -50,7 +50,7 @@ export default function ModuleDiag(props) {
       color="primary" 
       onClick={handleClickOpen}
       disabled={props.showButton}>
-                <Icon>edit</Icon>
+                <EditIcon />
       </IconButton>
       
       <Dialog
@@ -60,7 +60,6 @@ export default function ModuleDiag(props) {
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
       >
-        <DialogTitle id="max-width-dialog-title">Yaml Configuration</DialogTitle>
         <DialogContent>
           <DialogContentText>
           </DialogContentText>

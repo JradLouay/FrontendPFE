@@ -1,5 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import InfoDiag from "./InfoDiag";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import {
+  getUsersList,
+  deleteUser,
+  setSelectedUser
+} from "app/redux/actions/EcommerceActions";
 import {
   Card,
   Button,
@@ -20,6 +27,8 @@ import {
 } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 
+let tableIsLoaded = false ;
+
 //transition for the confirmation Diag 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,51 +38,46 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const UsersTableCard = () => {
-  const Modules = [
-    {
-      
-      name: "user_1",
-      userName: "user1" ,
-      lastUpdate: '03/02/2019',
-      state: "blocked"
-      
-    },
-    {
-      name: "user_2",
-      userName: "user2",
-      lastUpdate: '14/02/2020',
-      state: "blocked"
-    },
-    {
-      name: "user_3",
-      userName: "user3",
-      lastUpdate: '14/02/2018',
-      state: "blocked"
-    }
-  ];
+const UsersTableCard = (props) => {
+  const {
+    usersList=[],
+    getUsersList,
+    deleteUser,
+    setSelectedUser,
+  } = props;
+  
   const [open, setOpen] = React.useState(false); // dialog
   const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
   const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
+  const [DeleteUserId, setDeleteUserId] = React.useState(null);
 
   // ----------------------DialogConfirmation--------
 
-  const handleClickOpen = () => {
+  
+  const handleClickOpen = (userId) => {
+    setDeleteUserId(userId);
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    if (Math.random() >= 0.7) {
-      setTimeout(() => {
-        setOpenSnackSuccess(true) ;
-      }, 500);
-    } else {
-      setTimeout(() => {
-        setOpenSnackError(true) ;
-  }, 500);
-    }
-  
+  const handleClose = (decision = null) => {
+    
+    switch (decision) {
+      case true:
+        if (Math.random() >= 0.2) {
+          setTimeout(() => {
+            deleteUser(DeleteUserId);
+            setOpenSnackSuccess(true) ;
+
+          }, 50);
+        } else {
+          setTimeout(() => {
+            setOpenSnackError(true) ;
+      }, 50);
+        }
+    
+      default:
+        setOpen(false);
+    } 
   };
   // -----------------------snack-------------------
 
@@ -91,6 +95,15 @@ const UsersTableCard = () => {
 
     setOpenSnackError(false);
   };
+  
+  if (!tableIsLoaded) {
+    console.log("working fine for Users ");
+    
+    getUsersList();
+    tableIsLoaded = true;
+    console.log(usersList);
+    
+  }
 
   return (
     <React.Fragment> 
@@ -104,11 +117,11 @@ const UsersTableCard = () => {
                 Name
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                Username
+                Email
               </TableCell>
-              <TableCell className="px-0" colSpan={1}>
+              {/* <TableCell className="px-0" colSpan={1}>
                 LastUpdate
-              </TableCell>
+              </TableCell> */}
               <TableCell className="px-0" colSpan={1}>
                 State
               </TableCell>
@@ -118,33 +131,29 @@ const UsersTableCard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Modules.map((m, index) => (
-              <TableRow key={index}>
+            {usersList.map((user) => (
+              <TableRow key={user.id}>
                 <TableCell className="px-0 capitalize" colSpan={1} align="left">
                   <div className="flex flex-middle">
-                    {/* <img
+                    <img
                       className="circular-image-small"
-                      src={m.imgUrl}
+                      src={user.picture}
                       alt="user"
-                    /> */}
-                    <p className="m-0 ml-8">{m.name}</p>
+                    />
+                    <p className="m-0 ml-8">{user.name}</p>
                   </div>
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
                   
-                  {m.userName > 999
-                    ? (m.userName / 1000).toFixed(1) + "k"
-                    : m.userName}
+                  {user.email}
                 </TableCell>
-                <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  {m.lastUpdate}
-                </TableCell>
+                
 
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {m.state ? (
-                    m.state === "blocked" ? (
+                  {user.state ? (
+                    user.state === "blocked" ? (
                       <small className="border-radius-4 bg-error text-white px-8 py-1 ">
-                         blocked
+                         Blocked
                       </small>
                     ) : (
                       <small className="border-radius-4 bg-green text-white px-8 py-1 ">
@@ -153,18 +162,23 @@ const UsersTableCard = () => {
                     )
                   ) : (
                     <small className="border-radius-4 bg-secondary text-white px-8 py-1 ">
-                      Unknown
+                      Blocked
                     </small>
                   )}
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
-                  <InfoDiag />
+                  {/* <InfoDiag />
                   <IconButton onClick={handleClickOpen}>
                     <Icon color="error">delete</Icon>
                   </IconButton>
                   <IconButton>
                     <Icon color="warning">block</Icon>
+                  </IconButton> */}
+                  <IconButton onClick={()=> handleClickOpen(user.id)}>
+                    <Icon color="default">delete</Icon>
                   </IconButton>
+                  <InfoDiag clicked={()=> ()=> setSelectedUser(user)} />
+                  {/* <ModuleInfoDiag title={"Module Description"} desc={m.description} /> */}
                 </TableCell>
               </TableRow>
             ))}
@@ -181,17 +195,17 @@ const UsersTableCard = () => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Delete User"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Delete Module"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Do you want to delete this user ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={()=>handleClose(true)} color="primary">
             Yes
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={()=>handleClose(false)} color="primary">
             No
           </Button>
         </DialogActions>
@@ -210,5 +224,21 @@ const UsersTableCard = () => {
     </React.Fragment>
   );
 };
-
-export default UsersTableCard;
+const mapStateToProps = state => ({
+  // getProductList : PropTypes.func.isRequired,
+  getUsersList : PropTypes.func.isRequired,
+  deleteUser : PropTypes.func.isRequired,
+  setSelectedUser : PropTypes.func.isRequired,
+  // deleteClient : PropTypes.func.isRequired,
+  usersList : state.ecommerce.usersList,
+  // user: state.user
+});
+export default   connect(
+  mapStateToProps,
+  { 
+    getUsersList,
+    deleteUser,
+    setSelectedUser,
+    // deleteClient 
+  }
+)(UsersTableCard);

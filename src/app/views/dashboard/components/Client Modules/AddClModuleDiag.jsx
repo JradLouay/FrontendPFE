@@ -7,12 +7,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Icon,
-  Fab,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Icon,
+  Fab
 } from "@material-ui/core";
+// import AddIcon from '@material-ui/icons/Add';
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     globalClient,
     getfiltredModulesList,
     addModuleToClient,
-    modulesList,
+    filtredModulesList,
     clientModules
   }= props ;
 
@@ -69,9 +70,9 @@ const useStyles = makeStyles(theme => ({
 
   return (
     <Fragment>
-      
-      <Fab
-          size="medium"
+
+        <Fab
+          size="small"
           color="secondary"
           aria-label="Add"
           className={classes.button}
@@ -83,6 +84,18 @@ const useStyles = makeStyles(theme => ({
         >
           <Icon>add</Icon>
         </Fab>
+              {/* <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              disabled={showButton}
+              onClick={ ()=>{   
+                        getfiltredModulesList(globalClient.id);
+                        handleClickOpen();
+                        }  }
+              startIcon={<AddIcon />}
+            >
+            </Button> */}
       
       <Dialog
         fullWidth={true}
@@ -98,7 +111,7 @@ const useStyles = makeStyles(theme => ({
                 Choose a module to add to the client .
               </DialogContentText>
               <List className={classes.root}>
-                    {modulesList.map(mod => (
+                    {filtredModulesList.map(mod => (
                     <ListItem key={mod.id} button onClick={() => handleModuleClick(mod.id)} >
                         <ListItemText primary={"Name"} secondary={mod.moduleName} />
                         <ListItemText primary={"version"} secondary={mod.version} />
@@ -122,7 +135,7 @@ const mapStateToProps = state => ({
   addModuleToClient: PropTypes.func.isRequired,
   getfiltredModulesList: PropTypes.func.isRequired,
   globalClient : state.ecommerce.globalClient,
-  modulesList: state.ecommerce.modulesList,
+  filtredModulesList: state.ecommerce.filtredModulesList,
   clientModules: state.ecommerce.clientModules,
 });
 export default   connect(

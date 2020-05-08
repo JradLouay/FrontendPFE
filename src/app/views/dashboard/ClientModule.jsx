@@ -1,54 +1,30 @@
 import React from "react";
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import { Breadcrumb } from "matx";
 import { connect } from "react-redux";
 import {
-  // Button,
-  // CircularProgress,
+  Button,
+  CircularProgress,
   // Fab,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
-  // Backdrop
+  CardHeader
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import CheckIcon from '@material-ui/icons/Check';
 import ModuleDialog from './components/Client Modules/ModuleDiag';
 import AddClModuleDiag from'./components/Client Modules/AddClModuleDiag';
 import ModuleRowCards from './components/Client Modules/ModuleRowCards';
+import DeployInfo from "./components/Client Modules/DeployInfo";
 
 const useStyles = makeStyles(theme => ({
   
   root: {
     display: 'flex',
     alignItems: 'center',
-  },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: 'relative',
-  },
-  buttonSuccess: {
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
+    '& > *': {
+      margin: theme.spacing(1),
     },
-  },
-  fabProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: -6,
-    left: -6,
-    zIndex: 1,
-  },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -65,29 +41,11 @@ const ClientModule = (props) => {
   }= props ;
 
   const classes = useStyles();
-  // const [loading, setLoading] = React.useState(false);
-  // const [success, setSuccess] = React.useState(false);
-  const timer = React.useRef();
-  // const buttonClassname = clsx({
-  //   [classes.buttonSuccess]: success,
-  // });
-  const [open, setOpen] = React.useState(true);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  // const handleToggle = () => {
-  //   setOpen(!open);
-  // };
 
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
 
-  const Content = ()=>{
-    return (
-      <div className="m-sm-30">
+  return (
+     <React.Fragment>
+       <div className="m-sm-30">
         <div className="mb-sm-30">
           <Breadcrumb
             routeSegments={[
@@ -99,7 +57,30 @@ const ClientModule = (props) => {
           <Card elevation={6} className="px-24 py-20 h-100" >
                       <CardHeader
                           action={
-                              <ModuleDialog showButton={globalClient.clientName ? false : true} />
+                            <React.Fragment>
+                                 <div className={classes.root}>
+                                  {
+                                    globalClient.status!=="Deployed" ? 
+                                   <DeployInfo />: 
+                                   <React.Fragment>
+                                      <Button
+                                      variant="contained"
+                                      size="small"
+                                      >
+                                        Update
+                                      </Button>
+                                      <Button
+                                      variant="contained"
+                                      size="small"
+                                      >
+                                        Stop
+                                      </Button>
+                                    </React.Fragment>
+
+                                  }
+                                  <ModuleDialog showButton={globalClient.clientName ? false : true} />
+                                </div>
+                            </React.Fragment>
                           }
                           title="Modules"
                           subheader={globalClient.clientName ? globalClient.clientName : "" }
@@ -109,40 +90,17 @@ const ClientModule = (props) => {
                     </CardContent>
                       <CardActions>
                            {/* go and get the button from the material UI site */}
-                            <AddClModuleDiag showButton={globalClient.clientName ? false : true} />
+                           <AddClModuleDiag showButton={globalClient.clientName ? false : true} />
                       </CardActions>
           </Card>
-        
       </div>
-    );  
-  }
-
-
-  // const ChooseClient = () => {
-  //       return(
-  //         <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-  //             <SelectClient/>
-  //         </Backdrop>
-  //       );
-  // };
-
-
-  // const handleButtonClick = () => {   für die Button 
-  //   if (!loading) {
-  //     setSuccess(false);
-  //     setLoading(true);
-  //     timer.current = setTimeout(() => {
-  //       setSuccess(true);
-  //       setLoading(false);
-  //     }, 2000);
-  //   }
-  // };
-
-  return (
-    //  <React.Fragment>
-    //    { globalClient.id ?  <Content /> : <ChooseClient /> }
-    //  </React.Fragment>
-    <Content />
+          {/* <Content /> */}
+          {/* <Backdrop className={classes.backdrop} open={open} onClick={Deploy}>
+             <CircularProgress color="inherit" />
+                <Typography>{step}</Typography>
+          </Backdrop> */}
+    </React.Fragment>
+   
   );
 };
 

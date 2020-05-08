@@ -63,18 +63,10 @@ const ClientTableCard = (props) => {
     
     switch (decision) {
       case true:
-        if (true) {
-          setTimeout(() => {
-            deleteClient(deleteClientId);
-            setOpenSnackSuccess(true) ;
-
-          }, 50);
-        } else {
-          setTimeout(() => {
-            setOpenSnackError(true) ;
-      }, 50);
-        }
-    
+        deleteClient(deleteClientId)
+        setOpenSnackSuccess(true);
+        // else setOpenSnackError(true) ;
+      // deleteClient(deleteClientId) ? setOpenSnackSuccess(true) : setOpenSnackError(true)
       default:
         setOpen(false);
     } 
@@ -146,8 +138,8 @@ const ClientTableCard = (props) => {
                   {client.port}
                 </TableCell>
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {client.state ? (
-                    client.state === "deployed" ? (
+                  {client.status ? (
+                    client.status === "Deployed" ? (
                       <small className="border-radius-4 bg-green text-white px-8 py-1 ">
                          Deployed
                       </small>

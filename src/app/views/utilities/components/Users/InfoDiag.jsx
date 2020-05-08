@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import  UserExpansionPanels  from "./UserExpansionPanels";
+import  InfoForm  from "./InfoForm";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -73,7 +73,7 @@ export default function InfoDiag() {
         <DialogContent>
           <DialogContentText>
              <SimpleCard title="User Info" >
-                  <UserExpansionPanels  />
+                  <InfoForm type={"edit"}  />
              </SimpleCard>
           </DialogContentText>
           

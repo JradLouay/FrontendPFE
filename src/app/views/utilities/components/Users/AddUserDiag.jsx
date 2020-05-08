@@ -18,7 +18,7 @@ import {
   // IconButton,
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
-import SimpleAddForm from './SimpleAddForm';
+import InfoForm from './InfoForm';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -80,7 +80,7 @@ export default function AddUserDiag() {
         <DialogContent>
           <DialogContentText>
           <SimpleCard title="Add user" >
-                <SimpleAddForm  />
+                <InfoForm type={"add"} />
           </SimpleCard>
           </DialogContentText>
           {/* <form className={classes.form} noValidate>
