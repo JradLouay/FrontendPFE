@@ -107,7 +107,7 @@ class Layout1Sidenav extends Component {
     return (
       <div className="sidenav__user">
         <div className="username-photo">
-         <img src={globalClient.imgUrl} /> 
+         <img src={"http://localhost:9000/"+globalClient.image} /> 
         </div>
         <div className="ml-8">
           <span className="username">

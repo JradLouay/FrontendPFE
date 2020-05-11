@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SimpleBackdrop() {
+  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [completed, setCompleted] = React.useState(0);
@@ -44,16 +45,16 @@ export default function SimpleBackdrop() {
   const timerRef = React.useRef();
 
   React.useEffect(() => {
-        console.log("start Effect");
-        new EventSource(
-          `http://localhost:9000/api/deploy/4589658`
-        ).addEventListener("message", (e)=>{
+        // console.log("start Effect");
+        // new EventSource(
+        //   `http://localhost:9000/api/deploy/4589658`
+        // ).addEventListener("message", (e)=>{
           
-            console.log(e.data)
-            setStep(e.data)
-            // console.log("current step", step);
+        //     console.log(e.data)
+        //     setStep(e.data)
+        //     // console.log("current step", step);
           
-        })
+        // })
     
     function progress() {
 

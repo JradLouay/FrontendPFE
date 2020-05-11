@@ -36,10 +36,9 @@ const EditorYaml = (props) => {
     const[yamlFile, setYamlFile] = React.useState("");
 
     React.useEffect(() => {
-      
+      console.log(" inside editor ");
       axios.get(`http://localhost:9000/${globalClient.file}`).then(res => {
-          console.log("get the file ",res.data);
-          
+          // console.log("get the file ",res.data);
           setYamlFile(res.data);
       });
       return () => {

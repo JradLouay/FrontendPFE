@@ -94,7 +94,9 @@ function ShoppingCart(props) {
               }}
             >
               <div className="mr-5">
+              <div className="username-photo">
                 <img src={"http://localhost:9000/"+client.image} alt={client.clientName} />
+              </div>
               </div>
               <Grid item md={3} xs={4}>
                   <span className="card__roject-name font-weight-500">

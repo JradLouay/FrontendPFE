@@ -125,7 +125,7 @@ const ClientTableCard = (props) => {
                   <div className="flex flex-middle">
                     <img
                       className="circular-image-small"
-                      src="/assets/images/logos/react.png"
+                      src={"http://localhost:9000/"+client.image}
                       alt="client"
                     />
                     <p className="m-0 ml-8">{client.clientName}</p>
