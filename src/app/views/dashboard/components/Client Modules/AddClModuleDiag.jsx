@@ -21,7 +21,7 @@ import {
   getModulesList,
   addModuleToClient,
   getfiltredModulesList
-} from 'app/redux/actions/EcommerceActions'
+} from 'app/redux/actions/ModuleActions'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -134,9 +134,9 @@ const mapStateToProps = state => ({
   getModulesList : PropTypes.func.isRequired,
   addModuleToClient: PropTypes.func.isRequired,
   getfiltredModulesList: PropTypes.func.isRequired,
-  globalClient : state.ecommerce.globalClient,
-  filtredModulesList: state.ecommerce.filtredModulesList,
-  clientModules: state.ecommerce.clientModules,
+  globalClient : state.client.globalClient,
+  filtredModulesList: state.module.filtredModulesList,
+  clientModules: state.module.clientModules,
 });
 export default   connect(
   mapStateToProps,

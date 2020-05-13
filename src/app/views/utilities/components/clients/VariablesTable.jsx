@@ -9,7 +9,7 @@ import {
   deleteVariable,
   updateVariable,
   addVariable
-  } from "app/redux/actions/EcommerceActions";
+  } from "app/redux/actions/VariableActions";
 
 
 
@@ -75,8 +75,8 @@ const [loaded, setLoaded] = React.useState(false);
 
 const mapStateToProps = (state) => ({
  
-  variablesList : state.ecommerce.variablesList,
-  selectedClient : state.ecommerce.selectedClient,
+  variablesList : state.variable.variablesList,
+  selectedClient : state.client.selectedClient,
   getVariablesList: PropTypes.func.isRequired,
   deleteVariable : PropTypes.func.isRequired,
   updateVariable : PropTypes.func.isRequired,

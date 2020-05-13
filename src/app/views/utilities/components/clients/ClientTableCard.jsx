@@ -3,7 +3,7 @@ import {
   getProductList,
   setSelectedClient,
   deleteClient
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ClientActions";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -213,7 +213,7 @@ const mapStateToProps = state => ({
   deleteClient : PropTypes.func.isRequired,
   // cartList: state.ecommerce.cartList,
   // clientList : state.ecommerce.clientList,
-  productList : state.ecommerce.productList,
+  productList : state.client.productList,
   // selectedClient : state.ecommerce.selectedClient
   // user: state.user
 });

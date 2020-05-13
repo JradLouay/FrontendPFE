@@ -52,7 +52,7 @@ const Scheduler = (props) => {
 };
 
 const mapStateToProps = state => ({
-  globalClient : state.ecommerce.globalClient,
+  globalClient : state.client.globalClient,
 });
 export default   connect(
   mapStateToProps,

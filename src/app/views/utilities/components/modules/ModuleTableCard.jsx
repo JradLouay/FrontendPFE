@@ -2,9 +2,8 @@ import React from "react";
 import {
   getModulesList,
   deleteModule,
-  setSelectedModule,
-  deleteClient
-} from "app/redux/actions/EcommerceActions";
+  setSelectedModule
+} from "app/redux/actions/ModuleActions";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -200,8 +199,7 @@ const mapStateToProps = state => ({
   getModulesList : PropTypes.func.isRequired,
   deleteModule : PropTypes.func.isRequired,
   setSelectedModule : PropTypes.func.isRequired,
-  // deleteClient : PropTypes.func.isRequired,
-  modulesList : state.ecommerce.modulesList,
+  modulesList : state.module.modulesList,
   // user: state.user
 });
 export default   connect(
@@ -209,7 +207,6 @@ export default   connect(
   { 
     getModulesList,
     deleteModule,
-    setSelectedModule,
-    // deleteClient 
+    setSelectedModule
   }
 )(ModuleTableCard);

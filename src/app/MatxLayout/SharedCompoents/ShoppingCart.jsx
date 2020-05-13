@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import {
   getProductList,
   setGlobalClient
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ClientActions";
 
 let clientListLoaded = false;
 
@@ -137,8 +137,8 @@ const mapStateToProps = state => ({
   settings: state.layout.settings,
   getProductList:PropTypes.func.isRequired,
   setGlobalClient: PropTypes.func.isRequired,
-  productList : state.ecommerce.productList,
-  globalClient : state.ecommerce.globalClient,
+  productList : state.client.productList,
+  globalClient : state.client.globalClient,
   // user: state.user
 });
 
@@ -146,10 +146,8 @@ export default withStyles({}, { withTheme: true })(
   connect(
     mapStateToProps,
     { 
-      // getCartList, 
-      // deleteProductFromCart, 
-      // updateCartAmount,
       getProductList,
-      setGlobalClient }
+      setGlobalClient 
+    }
   )(ShoppingCart)
 );

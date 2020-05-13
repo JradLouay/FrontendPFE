@@ -210,7 +210,7 @@ const mapStateToProps = state => ({
   setLayoutSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   user: state.user,
-  globalClient: state.ecommerce.globalClient,
+  globalClient: state.client.globalClient,
   settings: state.layout.settings
 });
 

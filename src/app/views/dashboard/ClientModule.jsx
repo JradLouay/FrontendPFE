@@ -4,25 +4,32 @@ import { Breadcrumb } from "matx";
 import { connect } from "react-redux";
 import {
   setGlobalClient
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ClientActions";
 import { PropTypes } from "prop-types";
 import {
   Button,
-  CircularProgress,
+  // CircularProgress,
   Typography,
   Card,
+  // Fade,
   CardActions,
   CardContent,
   CardHeader,
   Dialog,
-  DialogTitle,
+  // DialogTitle,
   DialogActions,
   DialogContent,
   DialogContentText,
-  LinearProgress
+  Snackbar,
+  Slide
+  // LinearProgress
 } from "@material-ui/core";
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 import { makeStyles } from '@material-ui/core/styles';
-import { SimpleCard } from "matx";
+import MuiAlert from '@material-ui/lab/Alert';
+// import { SimpleCard } from "matx";
 import ModuleDialog from './components/Client Modules/ModuleDiag';
 import AddClModuleDiag from './components/Client Modules/AddClModuleDiag';
 import ModuleRowCards from './components/Client Modules/ModuleRowCards';
@@ -36,11 +43,57 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(1),
     },
   },
+  progress: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
+  placeholder: {
+    height: 40,
+  },
+  stepper: {  //root 
+    width: '100%',
+  },
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
 }));
+//transition for the confirmation Diag 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+// SnackBar Alert
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+function getSteps() {
+  return ['Establishing SSH connexion', 'File Transfer', 'Starting Services'];
+}
+function getStopSteps() {
+  return ['Establishing SSH connexion', 'Stopping Services'];
+}
+
+// function getStepContent(stepIndex) {
+//   switch (stepIndex) {
+//     case 0:
+//       return 'Select campaign settings...';
+//     case 1:
+//       return 'What is an ad group anyways?';
+//     case 2:
+//       return 'This is the bit I really care about!';
+//     default:
+//       return 'Unknown stepIndex';
+//   }
+// }
 
 
 
@@ -52,36 +105,89 @@ const ClientModule = (props) => {
   } = props;
 
   const [open, setOpen] = React.useState(false);
-  const [completed, setCompleted] = React.useState(0);
   const [step, setStep] = React.useState(null);
-  const [feedback, setFeedback] = React.useState([]);
+  const [feedback, setFeedback] = React.useState();
   const descriptionElementRef = React.useRef(null);
+  const [loading, setLoading] = React.useState(false);
+  // const [error, setError] = React.useState(false);
+  // const [query, setQuery] = React.useState('idle');
+  const [activeStep, setActiveStep] = React.useState(-1);
+  const [steps, setSteps] = React.useState([]);
+  const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
+  const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
+  
 
   const classes = useStyles();
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
+
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
+  // -----------------------snack-------------------
+
+  const handleCloseSnackSuccess = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackSuccess(false);
+  };
+  const handleCloseSnackError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackError(false);
+  };
   //----- dialog----------------------------------
   const handleClose = () => {
     setOpen(false);
-    setFeedback([]);
-    setStep(null);
+    if(!loading){
+      setFeedback([]);
+      setStep(null);
+      setActiveStep(-1);
+    }
   };
   const handleToggle = (type) => {
 
     if (type === "deploy") {
+          setSteps(getSteps());
+          setLoading(true);
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/deploy/${globalClient.id}`
           )
           es.addEventListener("step", (e) => {
-            setStep(e.data)
+            // setLoading(true)
+            // setQuery('progress')
+            // setError(false);
+            handleNext();
+            setStep(e.data);
           });
           es.addEventListener("feedback", (e) => {
-            console.log(e.data);
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
+            // console.log(e.data);
+            // setFeedback(prevFeed => [...prevFeed, e.data ]);
+            setFeedback(e.data);
+          });
+          es.addEventListener("error", (e) => {
+            // console.log(e.data);
+            // setError(true);
+            setFeedback(e.data);
+            es.close();
+            setOpenSnackError(true)
           });
           es.addEventListener('success', (e) => {
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
+            setFeedback(e.data);
             es.close();
+            handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
+            setOpenSnackSuccess(true);
+            setLoading(false);
+            
           });
     }
     if (type === "update") {
@@ -93,29 +199,41 @@ const ClientModule = (props) => {
             setStep(e.data)
           });
           es.addEventListener("feedback", (e) => {
-            setFeedback(prevFeed => [...prevFeed, e.data + "\n"]);
+            setFeedback(e.data);
           });
           es.addEventListener('close', (e) => {
-            setFeedback(prevFeed => [...prevFeed, e.data + "\n"]);
+            setFeedback(e.data);
             es.close();
           });
     }
     if (type === "stop") {
+          setSteps(getStopSteps())
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/stop/${globalClient.id}`
           )
           es.addEventListener("step", (e) => {
             setStep(e.data)
+            handleNext();
           });
           es.addEventListener("feedback", (e) => {
             console.log(e.data);
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
+            setFeedback(e.data);
+          });
+          es.addEventListener("error", (e) => {
+            // console.log(e.data);
+            // setError(true);
+            setFeedback(e.data);
+            es.close();
+            setOpenSnackError(true);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
-            es.close();
+            setFeedback(e.data);
+            handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Not deployed"}));
+            es.close();
+            setOpenSnackSuccess(true);
+            
           });
     }
     if (type === "rollback") {
@@ -128,10 +246,10 @@ const ClientModule = (props) => {
           });
           es.addEventListener("feedback", (e) => {
             console.log(e.data);
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
+            setFeedback(e.data);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(prevFeed => [...prevFeed, e.data ]);
+            setFeedback(e.data);
             es.close();
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
           });
@@ -218,21 +336,50 @@ const ClientModule = (props) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        {/* <DialogTitle id="scroll-dialog-title">{step}</DialogTitle>
-        <LinearProgress color="secondary" /> */}
+        {/* <DialogTitle id="scroll-dialog-title">{step}</DialogTitle> */}
         <DialogContent >
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-              <SimpleCard title={step}
-                subtitle={feedback
-                  .map(
-                    (feed) => feed,
-                  )}>
-                <LinearProgress  />
-              </SimpleCard>
+                <div className={classes.stepper}>
+                  <Stepper activeStep={activeStep} alternativeLabel>
+                    {steps.map((label) => {
+                        const stepProps = {};
+                        const labelProps = {};
+                        return (
+                          <Step key={label} {...stepProps}>
+                            <StepLabel {...labelProps}>{label}</StepLabel>
+                          </Step>
+                        );
+                      })}
+                  </Stepper>
+                  <div>
+                    {activeStep === steps.length ? (
+                      <div>
+                        <Typography className={classes.instructions}>Services Deployed</Typography>
+                        {/* <Button onClick={handleReset}>Reset</Button> */}
+                      </div>
+                    ) : (
+                      <div>
+                        <Typography className={classes.instructions}>{feedback}</Typography>
+                        {/* <div>
+                          <Button
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            className={classes.backButton}
+                          >
+                            Back
+                          </Button>
+                          <Button variant="contained" color="primary" onClick={handleNext}>
+                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                          </Button>
+                        </div> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -244,13 +391,23 @@ const ClientModule = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={openSnackSuccess} autoHideDuration={3000} onClose={handleCloseSnackSuccess}>
+        <Alert onClose={handleCloseSnackSuccess} severity="success">
+          Success!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnackError}>
+        <Alert onClose={handleCloseSnackError} severity="Error">
+          An Error has been occurred!
+        </Alert>
+      </Snackbar>
     </React.Fragment>
 
   );
 };
 
 const mapStateToProps = state => ({
-  globalClient: state.ecommerce.globalClient,
+  globalClient: state.client.globalClient,
   setGlobalClient: PropTypes.func.isRequired
 });
 export default connect(

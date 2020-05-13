@@ -1,9 +1,11 @@
 import React from "react";
+import axios from "axios";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
+  testConnexion,
   addClient
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ClientActions";
 // import { makeStyles } from "@material-ui/core/styles";
 import { LinearProgress } from "@material-ui/core";
 import { Breadcrumb, SimpleCard } from "matx";
@@ -20,8 +22,10 @@ import { Breadcrumb, SimpleCard } from "matx";
 const TestProgress = (props) => {
 
   const {
+    // testConnexion,
     clientToAdd,
-    addClient
+    addClient,
+    infoTest
   } = props;
   // const classes = useStyles();
   const [completed, setCompleted] = React.useState(0);
@@ -39,8 +43,14 @@ const TestProgress = (props) => {
 
           }, 500);
           setTimeout(() => {
-            props.next();
-            addClient(clientToAdd);
+
+            axios.post("http://localhost:9000/api/deploys/test", { host: clientToAdd.host, port: clientToAdd.port, username: clientToAdd.userName, password: clientToAdd.password}).then(res => {
+              addClient(clientToAdd);
+              props.next();
+            }).catch(()=>{
+              props.prev()
+            })
+            
           }, 1500);
           return 100;
         }
@@ -77,13 +87,16 @@ const TestProgress = (props) => {
 
 const mapStateToProps = state => ({
   addClient: PropTypes.func.isRequired,
-  clientToAdd: state.ecommerce.clientToAdd,
+  // testConnexion: PropTypes.func.isRequired,
+  clientToAdd: state.client.clientToAdd,
+  infoTest: state.client.InfoTest
   // user: state.user
 });
 
 export default connect(
   mapStateToProps,
   {
+    // testConnexion,
     addClient
   }
 )(TestProgress);

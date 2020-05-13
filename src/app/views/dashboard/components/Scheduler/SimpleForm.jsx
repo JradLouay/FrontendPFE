@@ -20,7 +20,7 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { 
   addScheduler
- } from "app/redux/actions/EcommerceActions";
+ } from "app/redux/actions/SchedulerActions";
 
 class SimpleForm extends Component {
 
@@ -196,7 +196,7 @@ class SimpleForm extends Component {
 
 const mapStateToProps = state => ({
   addScheduler : PropTypes.func.isRequired,
-  globalClient : state.ecommerce.globalClient,
+  globalClient : state.client.globalClient,
   // user: state.user
 });
 export default   connect(

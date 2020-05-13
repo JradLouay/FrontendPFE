@@ -19,7 +19,7 @@ import {
   getSchedulerList,
   deleteScheduler
 
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/SchedulerActions";
 import MuiAlert from '@material-ui/lab/Alert';
 import  ModuleInfoDiag  from "../shared/ModuleInfoDiag";
 
@@ -197,8 +197,8 @@ const RowCards = (props) => {
 
 
 const mapStateToProps = state => ({
-  schedulerList: state.ecommerce.schedulerList,
-  globalClient: state.ecommerce.globalClient,
+  schedulerList: state.scheduler.schedulerList,
+  globalClient: state.client.globalClient,
   getSchedulerList : PropTypes.func.isRequired,
   deleteScheduler : PropTypes.func.isRequired
   // user: state.user

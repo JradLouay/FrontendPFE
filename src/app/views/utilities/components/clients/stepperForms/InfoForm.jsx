@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import {
   setClientToAdd,
   updateClient
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ClientActions";
 import {
   Button,
   Icon,
@@ -241,7 +241,7 @@ class InfoForm extends Component {
 }
 const mapStateToProps = state => ({
   setClientToAdd : PropTypes.func.isRequired,
-  selectedClient : state.ecommerce.selectedClient,
+  selectedClient : state.client.selectedClient,
   updateClient : PropTypes.func.isRequired,
   // clientToAdd : state.ecommerce.clientToAdd,
   // user: state.user

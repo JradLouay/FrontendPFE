@@ -9,7 +9,7 @@ import {
 import SaveIcon from '@material-ui/icons/Save';
 import {
       updateClient
-      } from "app/redux/actions/EcommerceActions";
+      } from "app/redux/actions/ClientActions";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -133,7 +133,7 @@ const EditorYaml = (props) => {
 };
 
 const mapStateToProps = state => ({
-  globalClient : state.ecommerce.globalClient,
+  globalClient : state.client.globalClient,
   updateClient : PropTypes.func.isRequired,
 });
 export default   connect(

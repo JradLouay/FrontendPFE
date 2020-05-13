@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
   addModule,
   updateModule
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ModuleActions";
 import {
   Button,
   Icon,
@@ -149,7 +149,7 @@ class InfoForm extends Component {
 }
 const mapStateToProps = state => ({
   addModule : PropTypes.func.isRequired,
-  selectedModule : state.ecommerce.selectedModule,
+  selectedModule : state.module.selectedModule,
   updateModule : PropTypes.func.isRequired,
   // user: state.user
 });

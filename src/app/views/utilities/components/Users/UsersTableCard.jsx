@@ -6,7 +6,7 @@ import {
   getUsersList,
   deleteUser,
   setSelectedUser
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/UsersActions";
 import {
   Card,
   Button,
@@ -225,12 +225,10 @@ const UsersTableCard = (props) => {
   );
 };
 const mapStateToProps = state => ({
-  // getProductList : PropTypes.func.isRequired,
   getUsersList : PropTypes.func.isRequired,
   deleteUser : PropTypes.func.isRequired,
   setSelectedUser : PropTypes.func.isRequired,
-  // deleteClient : PropTypes.func.isRequired,
-  usersList : state.ecommerce.usersList,
+  usersList : state.users.usersList,
   // user: state.user
 });
 export default   connect(
@@ -238,7 +236,6 @@ export default   connect(
   { 
     getUsersList,
     deleteUser,
-    setSelectedUser,
-    // deleteClient 
+    setSelectedUser
   }
 )(UsersTableCard);

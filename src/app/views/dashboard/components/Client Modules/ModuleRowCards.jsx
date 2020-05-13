@@ -19,7 +19,7 @@ import {
   getClientModulesList,
   deleteClientModule
   
-} from "app/redux/actions/EcommerceActions";
+} from "app/redux/actions/ModuleActions";
 import MuiAlert from '@material-ui/lab/Alert';
 import  ModuleInfoDiag  from "../shared/ModuleInfoDiag";
 
@@ -192,11 +192,11 @@ const ModuleRowCards = (props) => {
 
 
 const mapStateToProps = state => ({
-  globalClient : state.ecommerce.globalClient,
-  clientModules : state.ecommerce.clientModules,
+  globalClient : state.client.globalClient,
+  clientModules : state.module.clientModules,
   getClientModulesList : PropTypes.func.isRequired,
   deleteClientModule : PropTypes.func.isRequired,
-  modulesList: state.ecommerce.modulesList,
+  modulesList: state.module.modulesList,
   // user: state.user
 });
 export default   connect(
