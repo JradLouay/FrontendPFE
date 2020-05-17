@@ -67,9 +67,9 @@ export default function ModuleInfoDiag(props) {
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
-                    <Icon color="primary" >info</Icon>
-                  </IconButton>
+              <IconButton onClick={handleClickOpen}>
+                <Icon color="primary" >info</Icon>
+              </IconButton>
       <Dialog 
       fullWidth={true}
       maxWidth={"sm"}
@@ -80,7 +80,7 @@ export default function ModuleInfoDiag(props) {
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         {props.title}
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent>
           <Typography gutterBottom>
             {props.desc}
           </Typography>

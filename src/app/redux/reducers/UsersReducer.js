@@ -4,11 +4,17 @@ import {
     GET_USERS_LIST,
     UPDATE_USER,
     SET_SELECTED_USER,
+    OPEN_SNACK_SUCCESS,
+    OPEN_SNACK_ERROR,
+    SET_OPERATION 
     } from "../actions/UsersActions";
   
   const initialState = {
     selectedUser: {},
     usersList: [],
+    operation:"",
+    openSnackSuccess: false,
+    openSnackError: false
   };
   
   const UsersReducer = function(state = initialState, action) {
@@ -36,6 +42,24 @@ import {
         return {
           ...state,
           usersList: [...action.payload]
+        };
+      }
+      case SET_OPERATION: {   
+        return {
+          ...state,
+          operation: action.payload
+        };
+      }
+      case OPEN_SNACK_SUCCESS: {   
+        return {
+          ...state,
+          openSnackSuccess: action.payload
+        };
+      }
+      case OPEN_SNACK_ERROR: {   
+        return {
+          ...state,
+          openSnackError: action.payload
         };
       }
       default: {

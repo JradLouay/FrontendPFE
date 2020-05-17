@@ -21,11 +21,9 @@ import {
   DialogContent ,
   DialogContentText ,
   DialogTitle ,
-  Slide,
-  Snackbar
+  Slide
 } from "@material-ui/core";
 import ModuleInfoDiag from "./ModuleInfoDiag";
-import MuiAlert from '@material-ui/lab/Alert';
 import EditDiag from "./editDiag";
 
 let tableIsLoaded = false ;
@@ -34,10 +32,6 @@ let tableIsLoaded = false ;
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-// SnackBar Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const ModuleTableCard = (props) => {
   const {
@@ -48,8 +42,6 @@ const ModuleTableCard = (props) => {
   } = props;
   
   const [open, setOpen] = React.useState(false); // dialog
-  const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
-  const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
   const [deleteModuleId, setDeleteModuleId] = React.useState(null);
 
   // ----------------------DialogConfirmation--------
@@ -63,37 +55,10 @@ const ModuleTableCard = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.2) {
-          setTimeout(() => {
             deleteModule(deleteModuleId);
-            setOpenSnackSuccess(true) ;
-
-          }, 50);
-        } else {
-          setTimeout(() => {
-            setOpenSnackError(true) ;
-      }, 50);
-        }
-    
       default:
         setOpen(false);
     } 
-  };
-  // -----------------------snack-------------------
-
-  const handleCloseSnackSuccess = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackSuccess(false);
-  };
-  const handleCloseSnackError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackError(false);
   };
 
   if (!tableIsLoaded) {
@@ -119,9 +84,6 @@ const ModuleTableCard = (props) => {
               <TableCell className="px-0" colSpan={1}>
                 LastUpdate
               </TableCell>
-              {/* <TableCell className="px-0" colSpan={1}>
-                State
-              </TableCell> */}
               <TableCell className="px-0" colSpan={1}>
                 Action
               </TableCell>
@@ -143,12 +105,11 @@ const ModuleTableCard = (props) => {
                 </TableCell>
 
                 <TableCell className="px-0" colSpan={1}>
-                  
-                   <IconButton onClick={()=> handleClickOpen(m.id)}>
-                    <Icon color="default">delete</Icon>
-                  </IconButton>
-                  <EditDiag clicked={()=> ()=> setSelectedModule(m)} />
-                  <ModuleInfoDiag title={"Module Description"} desc={m.description} />
+                    <ModuleInfoDiag title={"Module Description"} desc={m.description} />
+                    <EditDiag clicked={()=> ()=> setSelectedModule(m)} />
+                    <IconButton onClick={()=> handleClickOpen(m.id)}>
+                      <Icon color="default">delete</Icon>
+                    </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -180,16 +141,6 @@ const ModuleTableCard = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnackSuccess}>
-        <Alert onClose={handleCloseSnackSuccess} severity="success">
-          Module Deleted successfully!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnackError}>
-        <Alert onClose={handleCloseSnackError} severity="Error">
-          An Error has been occurred!
-        </Alert>
-      </Snackbar>
       </React.Fragment>
   );
 };

@@ -1,5 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 import {
   Button,
   Dialog,
@@ -10,8 +12,14 @@ import {
   Icon,
   IconButton,
 } from "@material-ui/core";
+import { 
+  addList
+  } from "app/redux/actions/VariableActions";
 import { SimpleCard } from "matx";
 import VariablesTable from './VariablesTable';
+const dotenv = require('dotenv')
+
+
 const useStyles = makeStyles(theme => ({
   form: {
     display: "flex",
@@ -28,12 +36,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function VariablesDiag(props) {
+function VariablesDiag(props) {
+    const {
+          addList,
+          selectedClient
+            }=props;
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("md");
+
+  let fileReader ; 
+
+    const handleFileRead = (event) =>{
+      const content = fileReader.result;
+    const envConfig = dotenv.parse(content)
+    addList(selectedClient.id, envConfig)
+    
+    }
+
+    const handelChosenFile= (file)=> {
+      fileReader = new FileReader();
+      fileReader.onloadend= handleFileRead ;
+      fileReader.readAsText(file);
+    }
 
   function handleClickOpen() {
     setOpen(true);
@@ -71,6 +98,19 @@ export default function VariablesDiag(props) {
 
         </DialogContent>
         <DialogActions>
+        <input
+                              accept=".env"
+                              style={{ display: 'none' }}
+                              id="raised-button-file"
+                              // multiple
+                              type="file"
+                              onChange={e=> handelChosenFile(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file">
+                              <Button color="primary" component="span">
+                                Add List 
+                              </Button>
+                            </label>
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
@@ -80,4 +120,14 @@ export default function VariablesDiag(props) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  selectedClient : state.client.selectedClient,
+  addList : PropTypes.func.isRequired 
+});
 
+export default   connect(
+  mapStateToProps,
+  { 
+    addList
+    }
+)(VariablesDiag);

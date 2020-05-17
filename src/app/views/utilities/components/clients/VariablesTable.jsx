@@ -1,21 +1,16 @@
 import React from 'react';
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-
-import shortId from "shortid"; // just for the Mock server otherwise this will not be used 
 import MaterialTable from 'material-table';
 import { 
   getVariablesList,
   deleteVariable,
   updateVariable,
-  addVariable
+  addVariable,
+  cleanVariablesList
   } from "app/redux/actions/VariableActions";
 
-
-
-
  function VariablesTable(props) {
-
 
   const {
         variablesList,
@@ -23,20 +18,26 @@ import {
         getVariablesList,
         addVariable,
         deleteVariable,
-        updateVariable
+        updateVariable,
+        cleanVariablesList
         
           }=props;
           
 const [loaded, setLoaded] = React.useState(false);
+  // if (!loaded){
+  //   console.log('running to load ');
+  //   getVariablesList(selectedClient.id);
+  //   setLoaded(true)
 
-  if (!loaded){
-    console.log('running to load ');
-    
+  // }
+  React.useEffect(() => {
     getVariablesList(selectedClient.id);
-    setLoaded(true)
-
-  }
-
+    // return cleanVariablesList()
+    return function cleanup() {
+      console.log("cleanup executed");
+      cleanVariablesList()
+    };
+  }, [selectedClient]);
 
   return (
     <MaterialTable
@@ -80,7 +81,8 @@ const mapStateToProps = (state) => ({
   getVariablesList: PropTypes.func.isRequired,
   deleteVariable : PropTypes.func.isRequired,
   updateVariable : PropTypes.func.isRequired,
-  addVariable : PropTypes.func.isRequired
+  addVariable : PropTypes.func.isRequired,
+  cleanVariablesList : PropTypes.func.isRequired
   
   
 });
@@ -92,5 +94,6 @@ export default   connect(
     deleteVariable,
     updateVariable,
     addVariable,
+    cleanVariablesList
     }
 )(VariablesTable);

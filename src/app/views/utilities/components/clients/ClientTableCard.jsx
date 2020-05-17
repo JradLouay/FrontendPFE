@@ -34,10 +34,6 @@ let tableIsLoaded = false ;
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-// SnackBar Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const ClientTableCard = (props) => {
   const {
@@ -48,8 +44,6 @@ const ClientTableCard = (props) => {
   } = props;
   
   const [open, setOpen] = React.useState(false); // dialog
-  const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
-  const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
   const [deleteClientId, setDeleteClientId] = React.useState(null);
 
   // ----------------------DialogConfirmation--------
@@ -64,28 +58,9 @@ const ClientTableCard = (props) => {
     switch (decision) {
       case true:
         deleteClient(deleteClientId)
-        setOpenSnackSuccess(true);
-        // else setOpenSnackError(true) ;
-      // deleteClient(deleteClientId) ? setOpenSnackSuccess(true) : setOpenSnackError(true)
       default:
         setOpen(false);
     } 
-  };
-  // -----------------------snack-------------------
-
-  const handleCloseSnackSuccess = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackSuccess(false);
-  };
-  const handleCloseSnackError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackError(false);
   };
 
   if (!tableIsLoaded) {
@@ -155,8 +130,6 @@ const ClientTableCard = (props) => {
                   )}
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
-                  
-                  
                   <InfoDiag clicked={()=> ()=> setSelectedClient(client)} />
                   <IconButton onClick={()=> handleClickOpen(client.id)}>
                     <Icon color="default">delete</Icon>
@@ -193,16 +166,6 @@ const ClientTableCard = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnackSuccess}>
-        <Alert onClose={handleCloseSnackSuccess} severity="success">
-          Client Deleted successfully!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnackError}>
-        <Alert onClose={handleCloseSnackError} severity="Error">
-          An Error has been occurred!
-        </Alert>
-      </Snackbar>
       </React.Fragment>
   );
 };

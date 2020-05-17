@@ -99,7 +99,7 @@ const EditorYaml = (props) => {
                               onChange={e=> handelChosenFile(e.target.files[0])}
                             />
                             <label htmlFor="raised-button-file">
-                              <IconButton variant="outlined" component="span"  >
+                              <IconButton variant="outlined" component="span">
                                 <Icon>file_upload</Icon>
                             </IconButton>
                             </label> 

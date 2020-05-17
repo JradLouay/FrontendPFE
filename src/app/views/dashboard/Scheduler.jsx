@@ -1,26 +1,57 @@
 import React from "react";
 import { Breadcrumb, SimpleCard } from "matx";
-import Highlight from "react-highlight";
-import RowCards from './components/Scheduler/RowCards';
-import ScheduleDialog from './components/Scheduler/ScheduleDialog';
+import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
-  Icon,
-  Button,
-  CircularProgress,
-  IconButton,
-  Fab,
+  setOpenSnackSuccess,
+  setOpenSnackError
+} from "app/redux/actions/SchedulerActions";
+// import Highlight from "react-highlight";
+import RowCards from './components/Scheduler/RowCards';
+import ScheduleDialog from './components/Scheduler/ScheduleDialog';
+import {
+  // Icon,
+  // Button,
+  // CircularProgress,
+  // IconButton,
+  // Fab,
   Card,
   CardActions,
-  CardContent
+  CardContent,
+  Snackbar
 } from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
+
+// SnackBar Alert
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
-const Scheduler = (props) => {
+const Scheduler  = (props) => {
 
   const {
-    globalClient
-  }= props ;
+    globalClient,
+    operation,
+    openSnackSuccess,
+    openSnackError,  
+    setOpenSnackSuccess,
+    setOpenSnackError,
+  } = props;
+
+  const handleCloseSnackSuccess = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackSuccess(false); // ijiw mel actions 
+  };
+  const handleCloseSnackError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackError(false);
+  };
 
   return (
     <div className="m-sm-30">
@@ -47,14 +78,32 @@ const Scheduler = (props) => {
 
 
       </Card>
+      <Snackbar open={openSnackSuccess} autoHideDuration={2000} onClose={handleCloseSnackSuccess}>
+              <Alert onClose={handleCloseSnackSuccess} severity="success">
+                Scheduler {operation} successfully!
+              </Alert>
+            </Snackbar>
+            <Snackbar open={openSnackError} autoHideDuration={2000} onClose={handleCloseSnackError}>
+              <Alert onClose={openSnackError} severity="Error">
+                An Error has been occurred!
+              </Alert>
+            </Snackbar>
     </div>
   );
 };
 
 const mapStateToProps = state => ({
   globalClient : state.client.globalClient,
+  setOpenSnackSuccess : PropTypes.func.isRequired,
+  setOpenSnackError : PropTypes.func.isRequired,
+  operation : state.scheduler.operation,
+  openSnackSuccess : state.scheduler.openSnackSuccess,
+  openSnackError : state.scheduler.openSnackError
 });
 export default   connect(
   mapStateToProps,
- {}
+ {
+  setOpenSnackSuccess,
+  setOpenSnackError
+ }
 )(Scheduler);

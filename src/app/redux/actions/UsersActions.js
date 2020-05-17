@@ -5,9 +5,26 @@ export const DELETE_USER = "DELETE_USER"
 export const SET_SELECTED_USER = "SET_SELECTED_USER"
 export const ADD_USER = "ADD_USER";
 export const UPDATE_USER = "UPDATE_USER";
-
+export const SET_OPERATION = "SET_OPERATION";  
+export const OPEN_SNACK_SUCCESS = "OPEN_SNACK_SUCCESS"; 
+export const OPEN_SNACK_ERROR = "OPEN_SNACK_ERROR"; 
 // -----------------------------------------STARTCLIENT------Finished--------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+export const setOpenSnackSuccess = (val) => {
+
+  return {
+    type: OPEN_SNACK_SUCCESS,
+    payload: val
+  };
+}
+export const setOpenSnackError = (val) => {
+
+  return {
+    type: OPEN_SNACK_ERROR,
+    payload: val
+  };
+}
 
 export const getUsersList = () => dispatch => { // get all modules 
   
@@ -42,8 +59,21 @@ export const deleteUser = userId => dispatch =>  { // deleting a module
             type: DELETE_USER,
             payload: res2.data
           });
-        }).catch(res2 => {
+          dispatch({
+            type:SET_OPERATION ,
+            payload: "Deleted"
+          });
+          dispatch({
+            type:OPEN_SNACK_SUCCESS ,
+            payload: true
+          });
+        }).catch(error => {
               // etwas für Error
+        });
+      }).catch((error)=>{
+        dispatch({
+          type:OPEN_SNACK_ERROR ,
+          payload: true
         });
       });
   };
@@ -60,10 +90,23 @@ export const addUser = user => dispatch =>  { // adding a user
             type: ADD_USER,
             payload: res2.data
           });
+          dispatch({
+            type:SET_OPERATION ,
+            payload: "Added"
+          });
+          dispatch({
+            type:OPEN_SNACK_SUCCESS ,
+            payload: true
+          });
         }).catch(res2 => {
               // etwas für Error
         });
-      });
+      }).catch((error=>{
+        dispatch({
+          type:OPEN_SNACK_ERROR ,
+          payload: true
+        });
+      }));
   };
 
 export const updateUser = (modId, modToAdd) => dispatch =>  { // adding a module
@@ -78,8 +121,21 @@ export const updateUser = (modId, modToAdd) => dispatch =>  { // adding a module
             type: ADD_USER,
             payload: res2.data
           });
-        }).catch(res2 => {
+          dispatch({
+            type:SET_OPERATION ,
+            payload: "Updated"
+          });
+          dispatch({
+            type:OPEN_SNACK_SUCCESS ,
+            payload: true
+          });
+        }).catch(err => {
               // etwas für Error
+        });
+      }).catch(err=>{
+        dispatch({
+          type:OPEN_SNACK_ERROR ,
+          payload: true
         });
       });
   };

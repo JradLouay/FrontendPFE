@@ -22,6 +22,14 @@ export const getVariablesList = cid => dispatch => { // get list of vars mit die
     });
   });
 };
+
+export const cleanVariablesList = () =>  { 
+  return {
+    type: GET_VARIABLES_LIST,
+    payload: []
+  };
+};
+
 export const deleteVariable = (varId, cid ) => dispatch => { //delete variable 
   
   // console.log('[DeleteVariables] ', varId, cid);
@@ -66,6 +74,18 @@ export const addVariable = (cid, newData) => dispatch => { //delete variable
   // console.log('[addVariable] ',cid, newData);
   axios
     .post(`http://localhost:9000/api/variables/${cid}`, { ...newData })
+    .then(res => {
+      dispatch({
+        type: ADD_VARIABLE,
+        payload: res.data.variables
+      });
+    });
+};
+
+export const addList = (cid, varList) => dispatch => { //delete variable 
+  
+  axios
+    .post(`http://localhost:9000/api/variables/addList/${cid}`, { ...varList })
     .then(res => {
       dispatch({
         type: ADD_VARIABLE,

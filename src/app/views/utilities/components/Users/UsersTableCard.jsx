@@ -22,10 +22,8 @@ import {
   DialogContent ,
   DialogContentText ,
   DialogTitle ,
-  Slide,
-  Snackbar
+  Slide
 } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
 
 let tableIsLoaded = false ;
 
@@ -33,10 +31,6 @@ let tableIsLoaded = false ;
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-// SnackBar Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const UsersTableCard = (props) => {
   const {
@@ -47,8 +41,6 @@ const UsersTableCard = (props) => {
   } = props;
   
   const [open, setOpen] = React.useState(false); // dialog
-  const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
-  const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
   const [DeleteUserId, setDeleteUserId] = React.useState(null);
 
   // ----------------------DialogConfirmation--------
@@ -63,37 +55,10 @@ const UsersTableCard = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.2) {
-          setTimeout(() => {
             deleteUser(DeleteUserId);
-            setOpenSnackSuccess(true) ;
-
-          }, 50);
-        } else {
-          setTimeout(() => {
-            setOpenSnackError(true) ;
-      }, 50);
-        }
-    
       default:
         setOpen(false);
     } 
-  };
-  // -----------------------snack-------------------
-
-  const handleCloseSnackSuccess = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackSuccess(false);
-  };
-  const handleCloseSnackError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackError(false);
   };
   
   if (!tableIsLoaded) {
@@ -108,7 +73,6 @@ const UsersTableCard = (props) => {
   return (
     <React.Fragment> 
     <Card elevation={3} className="pt-20 mb-24">
-      {/* <div className="card-title px-24 mb-12">Users</div> */}
       <div className="overflow-auto">
         <Table className="product-table">
           <TableHead>
@@ -119,9 +83,6 @@ const UsersTableCard = (props) => {
               <TableCell className="px-0" colSpan={1}>
                 Email
               </TableCell>
-              {/* <TableCell className="px-0" colSpan={1}>
-                LastUpdate
-              </TableCell> */}
               <TableCell className="px-0" colSpan={1}>
                 State
               </TableCell>
@@ -167,18 +128,10 @@ const UsersTableCard = (props) => {
                   )}
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
-                  {/* <InfoDiag />
-                  <IconButton onClick={handleClickOpen}>
-                    <Icon color="error">delete</Icon>
-                  </IconButton>
-                  <IconButton>
-                    <Icon color="warning">block</Icon>
-                  </IconButton> */}
                   <IconButton onClick={()=> handleClickOpen(user.id)}>
                     <Icon color="default">delete</Icon>
                   </IconButton>
                   <InfoDiag clicked={()=> ()=> setSelectedUser(user)} />
-                  {/* <ModuleInfoDiag title={"Module Description"} desc={m.description} /> */}
                 </TableCell>
               </TableRow>
             ))}
@@ -210,16 +163,6 @@ const UsersTableCard = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnackSuccess}>
-        <Alert onClose={handleCloseSnackSuccess} severity="success">
-          User Deleted successfully!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnackError}>
-        <Alert onClose={handleCloseSnackError} severity="Error">
-          An Error has been occurred!
-        </Alert>
-      </Snackbar>
       
     </React.Fragment>
   );

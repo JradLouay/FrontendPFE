@@ -7,7 +7,9 @@ import {
     GET_FILTRED_MODULES,
     ADD_MODULE_TO_CLIENT,
     DELETE_CLIENT_MODULE,
-    
+    OPEN_ADD_SNACK_SUCCESS,
+    OPEN_ADD_SNACK_ERROR,
+    SET_OPERATION 
   } from "../actions/ModuleActions";
   
   const initialState = {
@@ -15,6 +17,9 @@ import {
     selectedModule: {},
     clientModules:[],
     filtredModulesList:[],
+    operation:"",
+    openSnackSuccessAdd: false,
+    openSnackErrorAdd: false,
   };
   
   const ModuleReducer = function(state = initialState, action) {
@@ -42,6 +47,24 @@ import {
         return {
           ...state,
           modulesList: [...action.payload]
+        };
+      }
+      case SET_OPERATION: {   
+        return {
+          ...state,
+          operation: action.payload
+        };
+      }
+      case OPEN_ADD_SNACK_SUCCESS: {   
+        return {
+          ...state,
+          openSnackSuccessAdd: action.payload
+        };
+      }
+      case OPEN_ADD_SNACK_ERROR: {   
+        return {
+          ...state,
+          openSnackErrorAdd: action.payload
         };
       }
       case GET_CLIENT_MODULES: {  // get client modules list 

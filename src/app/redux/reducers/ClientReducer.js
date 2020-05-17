@@ -5,7 +5,10 @@ import {
     DELETE_CLIENT,
     SET_CLIENT_TO_ADD,
     ADD_CLIENT,
-    TEST_CLIENT_TO_ADD
+    TEST_CLIENT_TO_ADD,
+    OPEN_SNACK_SUCCESS,
+    OPEN_SNACK_ERROR,
+    SET_OPERATION 
   } from "../actions/ClientActions";
   
   const initialState = {
@@ -13,7 +16,10 @@ import {
     selectedClient : {},
     clientToAdd : {},
     globalClient:{},
-    infoTest: null
+    infoTest: null,// fiha ena hedhi 
+    operation:"",
+    openSnackSuccess: false,
+    openSnackError: false
     
   };
   
@@ -60,6 +66,24 @@ import {
         return {
           ...state,
           infoTest: action.payload,
+        };
+      }
+      case SET_OPERATION: {   
+        return {
+          ...state,
+          operation: action.payload
+        };
+      }
+      case OPEN_SNACK_SUCCESS: {   
+        return {
+          ...state,
+          openSnackSuccess: action.payload
+        };
+      }
+      case OPEN_SNACK_ERROR: {   
+        return {
+          ...state,
+          openSnackError: action.payload
         };
       }
       case ADD_CLIENT: {  // delete client REDUCER 

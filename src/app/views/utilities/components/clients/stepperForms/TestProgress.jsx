@@ -44,12 +44,14 @@ const TestProgress = (props) => {
           }, 500);
           setTimeout(() => {
 
-            axios.post("http://localhost:9000/api/deploys/test", { host: clientToAdd.host, port: clientToAdd.port, username: clientToAdd.userName, password: clientToAdd.password}).then(res => {
-              addClient(clientToAdd);
+            // axios.post("http://localhost:9000/api/deploys/test", { host: clientToAdd.host, port: clientToAdd.port, username: clientToAdd.userName, password: clientToAdd.password}).then(res => {
+            //   addClient(clientToAdd);
+            //   props.next();
+            // }).catch(()=>{
+            //   props.prev()
+            // })
+            addClient(clientToAdd);
               props.next();
-            }).catch(()=>{
-              props.prev()
-            })
             
           }, 1500);
           return 100;

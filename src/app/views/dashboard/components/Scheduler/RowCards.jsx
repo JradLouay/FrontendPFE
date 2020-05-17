@@ -11,26 +11,19 @@ import {
   DialogContentText ,
   DialogTitle ,
   Slide,
-  Snackbar
 } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
   getSchedulerList,
   deleteScheduler
-
 } from "app/redux/actions/SchedulerActions";
-import MuiAlert from '@material-ui/lab/Alert';
 import  ModuleInfoDiag  from "../shared/ModuleInfoDiag";
 
 //transition for the confirmation Diag 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-// SnackBar Alert
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const RowCards = (props) => {
 
@@ -43,8 +36,6 @@ const RowCards = (props) => {
   } = props;
 
   const [open, setOpen] = React.useState(false); // dialog
-  const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
-  const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
   const [schedulerId, setSchedulerId] = React.useState(null);
 
 
@@ -66,37 +57,10 @@ const RowCards = (props) => {
     
     switch (decision) {
       case true:
-        if (Math.random() >= 0.1) {
-          setTimeout(() => {
             deleteScheduler(schedulerId, globalClient.id );
-            setOpenSnackSuccess(true) ;
-
-          }, 50);
-        } else {
-          setTimeout(() => {
-            setOpenSnackError(true) ;
-      }, 50);
-        }
-    
       default:
-        setOpen(false);
+            setOpen(false);
     } 
-  };
-  // -----------------------snack-------------------
-
-  const handleCloseSnackSuccess = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackSuccess(false);
-  };
-  const handleCloseSnackError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackError(false);
   };
 
   return  (
@@ -181,16 +145,6 @@ const RowCards = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={openSnackSuccess} autoHideDuration={2000} onClose={handleCloseSnackSuccess}>
-        <Alert onClose={handleCloseSnackSuccess} severity="success">
-          Update Deleted successfully!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSnackError} autoHideDuration={2000} onClose={handleCloseSnackError}>
-        <Alert onClose={handleCloseSnackError} severity="Error">
-          An Error has been occurred!
-        </Alert>
-      </Snackbar>
     </Fragment>
   )
 };
