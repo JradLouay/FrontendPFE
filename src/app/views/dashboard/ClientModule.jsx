@@ -164,6 +164,7 @@ const ClientModule = (props) => {
             setFeedback(e.data);
             es.close();
             setOpenSnackError(true)
+            setLoading(false);
           });
           es.addEventListener('success', (e) => {
             setFeedback(e.data);
@@ -192,7 +193,8 @@ const ClientModule = (props) => {
           });
     }
     if (type === "stop") {
-          setSteps(getStopSteps())
+          setSteps(getStopSteps());
+          setLoading(true);
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/stop/${globalClient.id}`
@@ -211,6 +213,7 @@ const ClientModule = (props) => {
             setFeedback(e.data);
             es.close();
             setOpenSnackError(true);
+            setLoading(false);
           });
           es.addEventListener('success', (e) => {
             setFeedback(e.data);
@@ -218,6 +221,7 @@ const ClientModule = (props) => {
             setGlobalClient(Object.assign(globalClient, {status : "Not deployed"}));
             es.close();
             setOpenSnackSuccess(true);
+            setLoading(false);
             
           });
     }
