@@ -1,33 +1,28 @@
 import axios from "axios";
 
-export const GET_PRODUCT_LIST = "GET_PRODUCT_LIST"; // getclients 
-export const SET_SELECTED_CLIENT = "SET_SELECTED_CLIENT"; // set client for the InfoDiag
-export const SET_GLOBAL_CLIENT = "SET_GLOBAL_CLIENT"; // set global  client for the common part of the app 
-export const DELETE_CLIENT ="DELETE_CLIENT";  // delete client
-export const SET_CLIENT_TO_ADD ="SET_CLIENT_TO_ADD";  // set client to add
-export const ADD_CLIENT ="ADD_CLIENT";  // add client
-export const UPDATE_CLIENT ="UPDATE_CLIENT";  // add client
+export const GET_CLIENT_LIST = "GET_CLIENT_LIST"; 
+export const SET_SELECTED_CLIENT = "SET_SELECTED_CLIENT";
+export const SET_GLOBAL_CLIENT = "SET_GLOBAL_CLIENT"; 
+export const DELETE_CLIENT ="DELETE_CLIENT";  
+export const SET_CLIENT_TO_ADD ="SET_CLIENT_TO_ADD";  
+export const ADD_CLIENT ="ADD_CLIENT";
+export const UPDATE_CLIENT ="UPDATE_CLIENT";  
 export const TEST_CLIENT_TO_ADD = "TEST_CLIENT_TO_ADD";
 export const SET_OPERATION = "SET_OPERATION";  
 export const OPEN_SNACK_SUCCESS = "OPEN_SNACK_SUCCESS"; 
 export const OPEN_SNACK_ERROR = "OPEN_SNACK_ERROR"; 
-// -----------------------------------------STARTCLIENT------Finished--------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------
-export const getProductList = () => dispatch => {
 
+export const getProductList = () => dispatch => {
   console.log('[getClients]');
-  
-  // axios.get("/api/ecommerce/get-product-list").then(res => {
-  axios.get("http://localhost:9000/api/clients").then(res => {
+  return axios.get("http://localhost:9000/api/clients").then(res => {
     dispatch({
-      type: GET_PRODUCT_LIST,
+      type: GET_CLIENT_LIST,
       payload: res.data
     });
   });
 };
 
 export const setOpenSnackSuccess = (val) => {
-
   return {
     type: OPEN_SNACK_SUCCESS,
     payload: val
@@ -35,7 +30,6 @@ export const setOpenSnackSuccess = (val) => {
 }
 
 export const setOpenSnackError = (val) => {
-
   return {
     type: OPEN_SNACK_ERROR,
     payload: val
@@ -43,24 +37,18 @@ export const setOpenSnackError = (val) => {
 }
 
 export const setSelectedClient = (selectedClient) => {
-      console.log('[setSelectedClient] ', selectedClient);
-      
       return {
         type: SET_SELECTED_CLIENT,
         payload: selectedClient
       };
 };
 export const setGlobalClient = (globalClient) => {
-      console.log('[setGlobalClient] ', globalClient);
-      
       return {
         type: SET_GLOBAL_CLIENT,
         payload: globalClient
       };
 };
 export const setClientToAdd = (client) => {
-      console.log('[setSelectedClient] ', client);
-      
       return {
         type: SET_CLIENT_TO_ADD,
         payload: client
@@ -68,9 +56,7 @@ export const setClientToAdd = (client) => {
 };
 
 export const deleteClient = (clientId) => dispatch => {
-
-  console.log('[deleteClient] ', clientId);
-  axios
+ return axios
     .delete(`http://localhost:9000/api/clients/${clientId}`)
     .then(res1 => {
           axios.get("http://localhost:9000/api/clients").then(res2 => {
@@ -101,17 +87,15 @@ export const deleteClient = (clientId) => dispatch => {
 };
 
 export const addClient = (client) => dispatch => {
+
   let form_data = new FormData();
-  // form_data.append("fileName", shortId.generate());
     for ( var key in client ) {
       form_data.append(key, client[key]);
-      
   }
-  axios({
+  return axios({
     method: 'post',
     url: 'http://localhost:9000/api/clients',
-    data: form_data,
-    // headers: {'Content-Type': 'multipart/form-data' }
+    data: form_data
     })
     .then(res1 => {
       axios.get("http://localhost:9000/api/clients").then(res2 => {
@@ -146,7 +130,7 @@ export const updateClient = (cid, client) => dispatch => {
     for ( var key in client ) {
       form_data.append(key, client[key]);
   }
-  axios({
+ return axios({
     method: 'put',
     url: `http://localhost:9000/api/clients/${cid}`,
     data: form_data
@@ -177,6 +161,4 @@ export const updateClient = (cid, client) => dispatch => {
         });
     });
 };
-// ---------------------------------------------END----------------------------------------------------------
-// -------------------------------------------------------------------------------------------------------
 

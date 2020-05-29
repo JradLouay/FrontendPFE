@@ -2,6 +2,7 @@ import React from 'react';
 import { 
     Card,
     CardHeader,
+    CardActions,
     Icon,
     IconButton,
     Button
@@ -10,51 +11,43 @@ import SaveIcon from '@material-ui/icons/Save';
 import {
       updateClient
       } from "app/redux/actions/ClientActions";
+import {
+      getFile,
+      setFile
+      } from "app/redux/actions/ModuleActions";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import axios from "axios";
 // ace editor 
 import AceEditor from "react-ace";
 import 'brace/mode/yaml';
 import 'brace/theme/monokai';
 
 
-
-
-
 const EditorYaml = (props) => {
 
   const {
     globalClient,
+    getFile,
+    setFile,
     updateClient,
-    title, 
-    subtitle 
-
+    yaml
   }= props;
 
-
-    const[yamlFile, setYamlFile] = React.useState("");
-
     React.useEffect(() => {
-      console.log(" inside editor ");
-      axios.get(`http://localhost:9000/${globalClient.file}`).then(res => {
-          // console.log("get the file ",res.data);
-          setYamlFile(res.data);
-      });
+      getFile(globalClient.file);
       return () => {
-      
       };
     }, [globalClient]);
 
     const onChange = (value) =>{
-        setYamlFile(value);
+      setFile(value);
         };
 
     let fileReader ; 
 
     const handleFileRead = (event) =>{
       const content = fileReader.result;
-      setYamlFile(content);
+      setFile(content);
     }
 
     const handelChosenFile= (file)=> {
@@ -65,7 +58,7 @@ const EditorYaml = (props) => {
 
     const saveFile=() => {
       console.log("saving file");
-      let blob = new Blob([yamlFile], { type: "text/yaml"});
+      let blob = new Blob([yaml], { type: "text/yaml"});
       updateClient(globalClient.id, {
           fileName : globalClient.fileName,
           file : blob
@@ -76,11 +69,13 @@ const EditorYaml = (props) => {
   return (
     
     <Card elevation={6} className="px-24 py-20 h-100">
-      <div className="card-title">{globalClient.clientName}</div>
-      <div className="card-subtitle mb-24">docker-compose.yml</div>
+      {/* <div className="card-title">{globalClient.clientName}</div> */}
+      {/* <div className="card-subtitle mb-24">docker-compose.yml</div> */}
                  <CardHeader
                       action={
                         <React.Fragment>
+                        {/* <AddClModuleDiag showButton={globalClient.clientName ? false : true} /> */}
+          
                             <Button
                               variant="contained"
                               color="primary"
@@ -117,7 +112,7 @@ const EditorYaml = (props) => {
                           name="template_file"
                         //   ref="editorInput"
                           onChange={onChange}
-                          value={yamlFile}
+                          value={yaml}
                           fontSize={12}
                           showPrintMargin
                           showGutter={true}
@@ -128,17 +123,25 @@ const EditorYaml = (props) => {
                           }}
                           editorProps={{ $blockScrolling: true }}
                         />
+                        {/* <CardActions>
+                          <AddClModuleDiag showButton={globalClient.clientName ? false : true} />
+                        </CardActions> */}
     </Card>
   );
 };
 
 const mapStateToProps = state => ({
   globalClient : state.client.globalClient,
+  yaml : state.module.yaml,
   updateClient : PropTypes.func.isRequired,
+  getFile : PropTypes.func.isRequired,
+  setFile : PropTypes.func.isRequired
 });
 export default   connect(
   mapStateToProps,
   { 
-    updateClient
+    updateClient,
+    getFile,
+    setFile
     }
 )(EditorYaml);

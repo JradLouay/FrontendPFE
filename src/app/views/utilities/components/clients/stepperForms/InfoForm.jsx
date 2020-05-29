@@ -27,15 +27,14 @@ class InfoForm extends Component {
   
 
   state = {                                                                     
-    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : "NewClient",
-    host: this.props.type==="edit"? this.props.selectedClient.host : "163.258.6.9",
-    port: this.props.type==="edit"? this.props.selectedClient.port : "2310",
-    userName: this.props.type==="edit"? this.props.selectedClient.userName : "newuser",
-    password: this.props.type==="edit"? this.props.selectedClient.password : "password",
+    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : undefined,
+    host: this.props.type==="edit"? this.props.selectedClient.host : undefined,
+    port: this.props.type==="edit"? this.props.selectedClient.port : undefined,
+    userName: this.props.type==="edit"? this.props.selectedClient.userName : undefined,
+    password: this.props.type==="edit"? this.props.selectedClient.password : undefined,
     fileName: this.props.type==="edit"? this.props.selectedClient.fileName : shortId.generate(),
-    status : "Not Deployed",
     // lastUpdate: "",
-    version: this.props.type==="edit"? this.props.selectedClient.version : "1.0",
+    version: this.props.type==="edit"? this.props.selectedClient.version : undefined,
     // confirmPassword: "password",
     // file: null,
     // image: null
@@ -69,7 +68,7 @@ class InfoForm extends Component {
       
 
     }else if(this.props.type ==="add"){
-        // console.log(this.state)
+       console.log(this.state)
       this.props.setClientToAdd(this.state);
       this.props.next()//this actually will not have any error weil er hat kein side effect 
     }
@@ -129,7 +128,6 @@ class InfoForm extends Component {
                 name="version"
                 value={version}
                 validators={[
-                  "required",
                 ]}
                 errorMessages={["this field is required"]}
               />
@@ -189,8 +187,6 @@ class InfoForm extends Component {
                 name="port"
                 value={port}
                 validators={[
-                  "required",
-                  "minStringLength:4",
                   "maxStringLength: 4"
                 ]}
                 errorMessages={["this field is required"]}

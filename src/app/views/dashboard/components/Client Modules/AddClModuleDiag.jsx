@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import YAML from "yaml";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -19,9 +20,8 @@ import { connect } from "react-redux";
 
 import {
   getModulesList,
-  addModuleToClient,
-  getfiltredModulesList
-} from 'app/redux/actions/ModuleActions'
+  setFile
+} from 'app/redux/actions/ModuleActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,21 +36,16 @@ const useStyles = makeStyles(theme => ({
 
   const {
     showButton,
-    globalClient,
-    getfiltredModulesList,
-    addModuleToClient,
-    filtredModulesList,
-    clientModules
+    modulesList=[],
+    getModulesList,
+    yaml,
+    setFile
   }= props ;
 
   React.useEffect(() => {
-    if(globalClient.id)
-    getfiltredModulesList(globalClient.id)
     return () => {
-    
     };
-  }, [clientModules]);
-
+  }, []);
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -58,16 +53,19 @@ const useStyles = makeStyles(theme => ({
   function handleClickOpen() {
     setOpen(true);
   }
-  function handleModuleClick(modId) {
-    addModuleToClient(globalClient.id, modId);
-  }
+  function handleModuleClick(modId, desc) {
+      let file = YAML.parse(yaml);
+      file = file || {"version":"3.4","services":null,"volumes":{}}; // you cun customize what ever you like in here 
+      file.services = file.services || {};
+      const description = JSON.parse(desc);
+      file.services[Object.keys(description)[0]]= Object.values(description)[0];
+      console.log(YAML.stringify(file));
+      setFile(YAML.stringify(file));
+     }
 
   function handleClose() {
     setOpen(false);
   }
-
- 
-
   return (
     <Fragment>
 
@@ -78,25 +76,12 @@ const useStyles = makeStyles(theme => ({
           className={classes.button}
           disabled={showButton}
           onClick={ ()=>{   
-                    getfiltredModulesList(globalClient.id);
                     handleClickOpen();
+                    getModulesList();
                     }  }
         >
           <Icon>add</Icon>
         </Fab>
-              {/* <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              disabled={showButton}
-              onClick={ ()=>{   
-                        getfiltredModulesList(globalClient.id);
-                        handleClickOpen();
-                        }  }
-              startIcon={<AddIcon />}
-            >
-            </Button> */}
-      
       <Dialog
         fullWidth={true}
         maxWidth={"xs"}
@@ -111,8 +96,8 @@ const useStyles = makeStyles(theme => ({
                 Choose a module to add to the client .
               </DialogContentText>
               <List className={classes.root}>
-                    {filtredModulesList.map(mod => (
-                    <ListItem key={mod.id} button onClick={() => handleModuleClick(mod.id)} >
+                    {modulesList.map(mod => (
+                    <ListItem key={mod.id} button onClick={() => handleModuleClick(mod.id, mod.description)} >
                         <ListItemText primary={"Name"} secondary={mod.moduleName} />
                         <ListItemText primary={"version"} secondary={mod.version} />
                     </ListItem>
@@ -132,17 +117,14 @@ const useStyles = makeStyles(theme => ({
 
 const mapStateToProps = state => ({
   getModulesList : PropTypes.func.isRequired,
-  addModuleToClient: PropTypes.func.isRequired,
-  getfiltredModulesList: PropTypes.func.isRequired,
-  globalClient : state.client.globalClient,
-  filtredModulesList: state.module.filtredModulesList,
-  clientModules: state.module.clientModules,
+  setFile: PropTypes.func.isRequired,
+  modulesList : state.module.modulesList,
+  yaml: state.module.yaml
 });
 export default   connect(
   mapStateToProps,
   { 
     getModulesList,
-    addModuleToClient,
-    getfiltredModulesList
+    setFile
     }
 )(AddClModuleDiag);

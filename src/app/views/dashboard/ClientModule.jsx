@@ -29,10 +29,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/Alert';
-// import { SimpleCard } from "matx";
-import ModuleDialog from './components/Client Modules/ModuleDiag';
 import AddClModuleDiag from './components/Client Modules/AddClModuleDiag';
-import ModuleRowCards from './components/Client Modules/ModuleRowCards';
+import EditorYaml from './components/Client Modules/EditorYaml';
 
 const useStyles = makeStyles(theme => ({
 
@@ -94,8 +92,6 @@ const ClientModule = (props) => {
   const [feedback, setFeedback] = React.useState();
   const descriptionElementRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
-  // const [error, setError] = React.useState(false);
-  // const [query, setQuery] = React.useState('idle');
   const [activeStep, setActiveStep] = React.useState(-1);
   const [steps, setSteps] = React.useState([]);
   const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
@@ -106,16 +102,7 @@ const ClientModule = (props) => {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
   // -----------------------snack-------------------
-
   const handleCloseSnackSuccess = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -173,24 +160,44 @@ const ClientModule = (props) => {
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
             setOpenSnackSuccess(true);
             setLoading(false);
-            
           });
     }
     if (type === "update") {
-          setOpen(!open);
-          const es = new EventSource(
-            `http://localhost:9000/api/deploys/update/${globalClient.id}`
-          )
-          es.addEventListener("step", (e) => {
-            setStep(e.data)
-          });
-          es.addEventListener("feedback", (e) => {
-            setFeedback(e.data);
-          });
-          es.addEventListener('close', (e) => {
-            setFeedback(e.data);
-            es.close();
-          });
+      setSteps(getSteps());
+      setLoading(true);
+      setOpen(!open);
+      const es = new EventSource(
+        `http://localhost:9000/api/deploys/update/${globalClient.id}`
+      )
+      es.addEventListener("step", (e) => {
+        // setLoading(true)
+        // setQuery('progress')
+        // setError(false);
+        handleNext();
+        setStep(e.data);
+      });
+      es.addEventListener("feedback", (e) => {
+        // console.log(e.data);
+        // setFeedback(prevFeed => [...prevFeed, e.data ]);
+        setFeedback(e.data);
+      });
+      es.addEventListener("error", (e) => {
+        // console.log(e.data);
+        // setError(true);
+        setFeedback(e.data);
+        es.close();
+        setOpenSnackError(true)
+        setLoading(false);
+      });
+      es.addEventListener('success', (e) => {
+        setFeedback(e.data);
+        es.close();
+        handleNext();
+        setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
+        setOpenSnackSuccess(true);
+        setLoading(false);
+        
+      });
     }
     if (type === "stop") {
           setSteps(getStopSteps());
@@ -298,20 +305,17 @@ const ClientModule = (props) => {
                           Stop
                         </Button>
                       </React.Fragment>
-
                   }
-                  <ModuleDialog showButton={globalClient.clientName ? false : true} />
                 </div>
               </React.Fragment>
             }
-            title="Modules"
+            title="docker-compose.yml"
             subheader={globalClient.clientName ? globalClient.clientName : ""}
           />
           <CardContent>
-            <ModuleRowCards />
+            {globalClient.clientName ? <EditorYaml />: null}
           </CardContent>
           <CardActions>
-            {/* go and get the button from the material UI site */}
             <AddClModuleDiag showButton={globalClient.clientName ? false : true} />
           </CardActions>
         </Card>
@@ -353,18 +357,6 @@ const ClientModule = (props) => {
                     ) : (
                       <div>
                         <Typography className={classes.instructions}>{feedback}</Typography>
-                        {/* <div>
-                          <Button
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            className={classes.backButton}
-                          >
-                            Back
-                          </Button>
-                          <Button variant="contained" color="primary" onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                          </Button>
-                        </div> */}
                       </div>
                     )}
                   </div>

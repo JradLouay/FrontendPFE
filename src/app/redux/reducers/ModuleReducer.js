@@ -1,12 +1,14 @@
 import {
     GET_MODULES_LIST,/////////START_MODULES
+    GET_FILE,
+    SET_FILE,
     SET_SELECTED_MODULE,
     DELETE_MODULE,
     ADD_MODULE,
-    GET_CLIENT_MODULES,
-    GET_FILTRED_MODULES,
-    ADD_MODULE_TO_CLIENT,
-    DELETE_CLIENT_MODULE,
+    // GET_CLIENT_MODULES,
+    // GET_FILTRED_MODULES,
+    // ADD_MODULE_TO_CLIENT,
+    // DELETE_CLIENT_MODULE,
     OPEN_ADD_SNACK_SUCCESS,
     OPEN_ADD_SNACK_ERROR,
     SET_OPERATION 
@@ -15,6 +17,7 @@ import {
   const initialState = {
     modulesList : [],
     selectedModule: {},
+    yaml : "",
     clientModules:[],
     filtredModulesList:[],
     operation:"",
@@ -29,6 +32,18 @@ import {
         return {
           ...state,
           modulesList: [...action.payload]
+        };
+      }
+      case GET_FILE: {  // get modules list 
+        return {
+          ...state,
+          yaml: action.payload
+        };
+      }
+      case SET_FILE: {  // get modules list 
+        return {
+          ...state,
+          yaml: action.payload
         };
       }
       case SET_SELECTED_MODULE: {  // get modules list 
@@ -67,32 +82,32 @@ import {
           openSnackErrorAdd: action.payload
         };
       }
-      case GET_CLIENT_MODULES: {  // get client modules list 
-        return {
-          ...state,
-          clientModules: [...action.payload]
-        };
-      }
-      case GET_FILTRED_MODULES: {  // get modules list 
-        return {
-          ...state,
-          filtredModulesList: [...action.payload]
-        };
-      }
-      case ADD_MODULE_TO_CLIENT: {  // Add module to a client  
+      // case GET_CLIENT_MODULES: {  // get client modules list 
+      //   return {
+      //     ...state,
+      //     clientModules: [...action.payload]
+      //   };
+      // }
+      // case GET_FILTRED_MODULES: {  // get modules list 
+      //   return {
+      //     ...state,
+      //     filtredModulesList: [...action.payload]
+      //   };
+      // }
+      // case ADD_MODULE_TO_CLIENT: {  // Add module to a client  
         
-        return {
-          ...state,
-          clientModules: [...action.payload]
-        };
-      }
-      case DELETE_CLIENT_MODULE: {  // Add module to a client  
+      //   return {
+      //     ...state,
+      //     clientModules: [...action.payload]
+      //   };
+      // }
+      // case DELETE_CLIENT_MODULE: {  // Add module to a client  
         
-        return {
-          ...state,
-          clientModules: [...action.payload]
-        };
-      }
+      //   return {
+      //     ...state,
+      //     clientModules: [...action.payload]
+      //   };
+      // }
       default: {
         return {
           ...state

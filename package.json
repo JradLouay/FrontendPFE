@@ -18,6 +18,7 @@
     "clsx": "^1.0.4",
     "css-vars-ponyfill": "^2.1.2",
     "date-fns": "^2.0.0-alpha.34",
+    "dotenv": "^8.2.0",
     "downshift": "^3.2.10",
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
@@ -57,7 +58,8 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.14",
     "swiper": "^4.5.0",
-    "victory": "^32.3.3"
+    "victory": "^32.3.3",
+    "yaml": "^1.10.0"
   },
   "scripts": {
     "start": "react-scripts start",

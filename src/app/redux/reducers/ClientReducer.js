@@ -1,5 +1,5 @@
 import {
-    GET_PRODUCT_LIST,///START_CLIENT/////////
+    GET_CLIENT_LIST,
     SET_SELECTED_CLIENT,
     SET_GLOBAL_CLIENT,
     DELETE_CLIENT,
@@ -27,7 +27,7 @@ import {
 
     switch (action.type) { 
   
-      case GET_PRODUCT_LIST: {  // get client list 
+      case GET_CLIENT_LIST: {  // get client list 
         return {
           ...state,
           productList: [...action.payload]

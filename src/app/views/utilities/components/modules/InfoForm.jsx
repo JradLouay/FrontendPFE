@@ -10,7 +10,7 @@ import {
   Button,
   Icon,
   Grid,
-  TextField
+  // TextField
   // Radio,
   // RadioGroup,
   // FormControlLabel,
@@ -30,46 +30,23 @@ class InfoForm extends Component {
     lastUpdate : this.props.type==="edit" ? this.props.selectedModule.lastUpdate :  null,
     description : this.props.type==="edit" ? this.props.selectedModule.description :  null
   };
-  componentDidMount() {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule("isPasswordMatch", value => {
-      if (value !== this.state.password) {
-        return false;
-      }
-      return true;
-    });
-  }
-
-  componentWillUnmount() {
-    // remove rule when it is not needed
-    ValidatorForm.removeValidationRule("isPasswordMatch");
-  }
 
   handleSubmit = event => {
-    console.log("submitted");
     const copy = {
       ...this.state
-    };
-    if (this.props.type ==="edit") {
-      console.log("edit", copy);  
+    }
+    if (this.props.type ==="edit") {  
       this.props.updateModule(this.props.selectedModule.id, copy);
+      
     }else if(this.props.type ==="add"){
       this.props.addModule(copy);
-      console.log("add", copy);
-      
     }
-    
   };
 
   handleChange = event => {
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
   };
-
-  // handleDateChange = date => {
-  //   console.log(date);         this is for whatever you want to add a date input 
-  //   this.setState({ date });
-  // };
 
   render() {
     let {
@@ -90,7 +67,7 @@ class InfoForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextValidator
                 className="mb-16 w-100"
-                label="Module Name(Min length 4, Max length 9)"
+                label="Module Name"
                 onChange={this.handleChange}
                 type="text"
                 name="moduleName"
@@ -105,17 +82,17 @@ class InfoForm extends Component {
                 type="text"
                 name="version"
                 value={version}
-                validators={["required"]}
+                validators={[]}
                 errorMessages={["this field is required"]}
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="Last Update (Min length 4, Max length 9)"
+                label="Last Update"
                 onChange={this.handleChange}
                 type="text"
                 name="lastUpdate"
                 value={lastUpdate}
-                validators={["required"]}
+                validators={[]}
                 errorMessages={["this field is required"]}
               />
 
@@ -124,7 +101,7 @@ class InfoForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <TextValidator
                 className="mb-16 w-100"
-                label="Description"
+                label="Yaml Description"
                 onChange={this.handleChange}
                 type="TextField"
                 name="description"

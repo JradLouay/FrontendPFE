@@ -4,7 +4,6 @@ import UserReducer from "./UserReducer";
 import LayoutReducer from "./LayoutReducer";
 import ScrumBoardReducer from "./ScrumBoardReducer";
 import NotificationReducer from "./NotificationReducer";
-import EcommerceReducer from "./EcommerceReducer";
 import ClientReducer from "./ClientReducer";
 import VariableReducer from "./VariableReducer";
 import ModuleReducer from "./ModuleReducer";
@@ -16,8 +15,7 @@ const RootReducer = combineReducers({
   user: UserReducer,
   layout: LayoutReducer,
   scrumboard: ScrumBoardReducer, // bech yetna7aw
-  notification: NotificationReducer, //
-  ecommerce: EcommerceReducer,
+  notification: NotificationReducer, 
   client: ClientReducer,
   variable: VariableReducer,
   module: ModuleReducer,
