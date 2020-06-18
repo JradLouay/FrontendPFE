@@ -1,4 +1,5 @@
 import React from "react";
+// import axios from "axios"
 // import clsx from 'clsx';
 import { Breadcrumb } from "matx";
 import { connect } from "react-redux";
@@ -21,8 +22,8 @@ import {
   DialogContent,
   DialogContentText,
   Snackbar,
-  Slide
-  // LinearProgress
+  Slide,
+  LinearProgress
 } from "@material-ui/core";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -89,7 +90,7 @@ const ClientModule = (props) => {
 
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState(null);
-  const [feedback, setFeedback] = React.useState();
+  const [feedback, setFeedback] = React.useState([]);
   const descriptionElementRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(-1);
@@ -132,29 +133,22 @@ const ClientModule = (props) => {
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/deploy/${globalClient.id}`
-          )
+          );
           es.addEventListener("step", (e) => {
-            // setLoading(true)
-            // setQuery('progress')
-            // setError(false);
             handleNext();
             setStep(e.data);
           });
-          es.addEventListener("feedback", (e) => {
-            // console.log(e.data);
-            // setFeedback(prevFeed => [...prevFeed, e.data ]);
-            setFeedback(e.data);
+          es.addEventListener('feedback', (e) => {
+            setFeedback(prevState=> [...prevState, e.data]);
           });
-          es.addEventListener("error", (e) => {
-            // console.log(e.data);
-            // setError(true);
-            setFeedback(e.data);
+          es.addEventListener('error', (e) => {
+            setFeedback(prevState=> [...prevState, e.data]);
             es.close();
-            setOpenSnackError(true)
+            setOpenSnackError(true);
             setLoading(false);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(e.data);
+            setFeedback(prevState=> [...prevState, e.data]);
             es.close();
             handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
@@ -168,29 +162,24 @@ const ClientModule = (props) => {
       setOpen(!open);
       const es = new EventSource(
         `http://localhost:9000/api/deploys/update/${globalClient.id}`
-      )
-      es.addEventListener("step", (e) => {
-        // setLoading(true)
-        // setQuery('progress')
-        // setError(false);
+      );
+      es.addEventListener('step', (e) => {
         handleNext();
         setStep(e.data);
       });
-      es.addEventListener("feedback", (e) => {
-        // console.log(e.data);
-        // setFeedback(prevFeed => [...prevFeed, e.data ]);
-        setFeedback(e.data);
+      es.addEventListener('feedback', (e) => {
+        setFeedback(prevState=> [...prevState, e.data]);
+        console.log(feedback);
+        
       });
-      es.addEventListener("error", (e) => {
-        // console.log(e.data);
-        // setError(true);
-        setFeedback(e.data);
+      es.addEventListener('error', (e) => {
+        setFeedback(prevState=> [...prevState, e.data]);
         es.close();
         setOpenSnackError(true)
         setLoading(false);
       });
       es.addEventListener('success', (e) => {
-        setFeedback(e.data);
+        setFeedback(prevState=> [...prevState, e.data]);
         es.close();
         handleNext();
         setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
@@ -199,31 +188,29 @@ const ClientModule = (props) => {
         
       });
     }
-    if (type === "stop") {
+    if (type === 'stop') {
           setSteps(getStopSteps());
           setLoading(true);
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/stop/${globalClient.id}`
-          )
-          es.addEventListener("step", (e) => {
+          );
+          es.addEventListener('step', (e) => {
             setStep(e.data)
             handleNext();
           });
-          es.addEventListener("feedback", (e) => {
+          es.addEventListener('feedback', (e) => {
             console.log(e.data);
-            setFeedback(e.data);
+            setFeedback(prevState=> [...prevState, e.data]);
           });
-          es.addEventListener("error", (e) => {
-            // console.log(e.data);
-            // setError(true);
-            setFeedback(e.data);
+          es.addEventListener('error', (e) => {
+            setFeedback(prevState=> [...prevState, e.data]);
             es.close();
             setOpenSnackError(true);
             setLoading(false);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(e.data);
+            setFeedback(prevState=> [...prevState, e.data]);
             handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Not deployed"}));
             es.close();
@@ -233,25 +220,34 @@ const ClientModule = (props) => {
           });
     }
     if (type === "rollback") {
+          setSteps(getSteps());
+          setLoading(true);
           setOpen(!open);
           const es = new EventSource(
             `http://localhost:9000/api/deploys/rollback/${globalClient.id}`
-          )
+          );
           es.addEventListener("step", (e) => {
-            setStep(e.data)
+            handleNext();
+            setStep(e.data);
           });
-          es.addEventListener("feedback", (e) => {
-            console.log(e.data);
-            setFeedback(e.data);
+          es.addEventListener('feedback', (e) => {
+            setFeedback(prevState=> [...prevState, e.data]);
+          });
+          es.addEventListener('error', (e) => {
+            setFeedback(prevState=> [...prevState, e.data]);
+            es.close();
+            setOpenSnackError(true);
+            setLoading(false);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(e.data);
+            setFeedback(prevState=> [...prevState, e.data]);
             es.close();
+            handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
+            setOpenSnackSuccess(true);
+            setLoading(false);
           });
     }
-
-
   };
   React.useEffect(() => {
     if (open) {
@@ -280,30 +276,59 @@ const ClientModule = (props) => {
               <React.Fragment>
                 <div className={classes.root}>
                   {
-                    globalClient.status !== "Deployed" ?
+                    globalClient.status !== "Deployed"  ?
                       <Button
                         variant="contained"
                         size="small"
-                        disabled={globalClient.clientName ? false : true}
+                        disabled={globalClient.clientName && globalClient.file ? false : true}
                         onClick={()=>handleToggle("deploy")}
                       >
                         Deploy
                       </Button> :
                       <React.Fragment>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          onClick={()=>handleToggle("update")}
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          onClick={()=>handleToggle("stop")}
-                        >
-                          Stop
-                        </Button>
+                       {
+                         globalClient.prevVersion ? 
+                        <React.Fragment>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                onClick={()=>handleToggle("rollback")}
+                              >
+                                Rollback
+                              </Button>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                onClick={()=>handleToggle("update")}
+                              >
+                                Update
+                              </Button>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                onClick={()=>handleToggle("stop")}
+                              >
+                                Stop
+                              </Button>
+                        </React.Fragment>
+                        :   
+                        <React.Fragment>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={()=>handleToggle("update")}
+                              >
+                                Update
+                              </Button>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                onClick={()=>handleToggle("stop")}
+                              >
+                                Stop
+                              </Button>
+                        </React.Fragment>
+                       }
                       </React.Fragment>
                   }
                 </div>
@@ -349,16 +374,12 @@ const ClientModule = (props) => {
                       })}
                   </Stepper>
                   <div>
-                    {activeStep === steps.length ? (
-                      <div>
-                        <Typography className={classes.instructions}>Services Deployed</Typography>
-                        {/* <Button onClick={handleReset}>Reset</Button> */}
-                      </div>
+                    {/* {activeStep === steps.length ? (
+                      null
                     ) : (
-                      <div>
-                        <Typography className={classes.instructions}>{feedback}</Typography>
-                      </div>
-                    )}
+                      <LinearProgress/>
+                    )} */}
+                     <Typography className={classes.instructions} variant="body1" gutterBottom>{feedback.map((feed) => <div>{feed}</div>)}</Typography>
                   </div>
                 </div>
           </DialogContentText>

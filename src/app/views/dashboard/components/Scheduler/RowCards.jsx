@@ -112,7 +112,14 @@ const RowCards = (props) => {
                     <IconButton onClick={() => { handleClickOpen(scheduler.id)}}>
                       <Icon color="default">delete</Icon>
                     </IconButton> : ""}
-                    <ModuleInfoDiag title={"Scheduler Description"} desc={scheduler.description} />
+                    
+                    { scheduler.feedBack ?
+                       <React.Fragment> 
+                        <ModuleInfoDiag title={"Scheduler Description"} desc={scheduler.description} /> 
+                        <ModuleInfoDiag title={"Scheduler Error"} desc={scheduler.feedBack} />
+                        </React.Fragment>  : 
+                        <ModuleInfoDiag title={"Scheduler Description"} desc={scheduler.description} /> 
+                    }
                   </div>
 
                 </Grid>

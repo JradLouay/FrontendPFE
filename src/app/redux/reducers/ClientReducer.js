@@ -8,7 +8,8 @@ import {
     TEST_CLIENT_TO_ADD,
     OPEN_SNACK_SUCCESS,
     OPEN_SNACK_ERROR,
-    SET_OPERATION 
+    SET_OPERATION,
+    SET_LOADING 
   } from "../actions/ClientActions";
   
   const initialState = {
@@ -19,7 +20,8 @@ import {
     infoTest: null,// fiha ena hedhi 
     operation:"",
     openSnackSuccess: false,
-    openSnackError: false
+    openSnackError: false,
+    loading: false
     
   };
   
@@ -72,6 +74,12 @@ import {
         return {
           ...state,
           operation: action.payload
+        };
+      }
+      case SET_LOADING: {   
+        return {
+          ...state,
+          loading: action.payload
         };
       }
       case OPEN_SNACK_SUCCESS: {   
