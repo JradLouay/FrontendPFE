@@ -42,6 +42,7 @@ const UsersTableCard = (props) => {
   
   const [open, setOpen] = React.useState(false); // dialog
   const [DeleteUserId, setDeleteUserId] = React.useState(null);
+ 
 
   // ----------------------DialogConfirmation--------
 
@@ -50,6 +51,7 @@ const UsersTableCard = (props) => {
     setDeleteUserId(userId);
     setOpen(true);
   };
+  
 
   const handleClose = (decision = null) => {
     
@@ -111,8 +113,9 @@ const UsersTableCard = (props) => {
                 
 
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {user.state ? (
-                    user.state === "blocked" ? (
+                  {
+                  // user.state ? (
+                    user.blocked ? (
                       <small className="border-radius-4 bg-error text-white px-8 py-1 ">
                          Blocked
                       </small>
@@ -121,11 +124,7 @@ const UsersTableCard = (props) => {
                         Unblocked 
                       </small>
                     )
-                  ) : (
-                    <small className="border-radius-4 bg-secondary text-white px-8 py-1 ">
-                      Blocked
-                    </small>
-                  )}
+                  }
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
                   <IconButton onClick={()=> handleClickOpen(user.id)}>

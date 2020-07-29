@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 import {
   Card,
   Icon,
@@ -9,63 +11,70 @@ import {
   TableCell,
   TableBody
 } from "@material-ui/core";
+import {
+  getModulesStats,
+  cleanModuleStats
+} from "app/redux/actions/ModuleActions";
 
-const TableCard = () => {
-  const Modules = [
-    {
-      
-      name: "earphone",
-      version: 1.2,
-      lastUpdate: 15,
-      state: "deployed"
-      
-    },
-    {
-      name: "earphone",
-      version: 1.5,
-      lastUpdate: 30,
-      state: "deployed"
-    },
-    {
-      name: "iPhone x",
-      version: 2.0,
-      lastUpdate: 35,
-      state: "deployed"
-    },
-    {
-      name: "iPhone x",
-      version: 1.3,
-      lastUpdate: 0,
-      
-    }
-  ];
+const TableCard = (props) => {
+  
+  const {
+    globalClient,
+    modulesStats,
+    getModulesStats,
+    cleanModuleStats
+          }=props;
 
+  // const [states, setStates] = React.useState([]);
+ 
+  React.useEffect(() => {
+  //   axios.get(`http://localhost:9000/api/deploys/stats/${globalClient.id}`).then(res => {
+  //     setStates(res.data);
+  //     console.log("result stats", res.data);
+  //     return function cleanup() {
+  //       console.log("cleanup");
+  //       setStates([]);
+  //     };
+  // });
+  getModulesStats(globalClient.id);
+  return function cleanup() {
+          console.log("cleanup");
+          cleanModuleStats();
+        };
+  
+  }, [globalClient]);
+  
   return (
     <Card elevation={3} className="pt-20 mb-24">
       <div className="card-title px-24 mb-12">deployed Modules</div>
       <div className="overflow-auto">
-        <Table className="product-table">
+       {
+        modulesStats.length <= 1 ? ( 
+          // spinner for loading stats of services  
+          ""
+        ):
+        (<Table className="product-table">
           <TableHead>
             <TableRow>
               <TableCell className="px-24" colSpan={1}>
                 Name
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                Version
+                Created At
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                LastUpdate
+                Ports
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                State
+                Running For
               </TableCell>
               <TableCell className="px-0" colSpan={1}>
-                Action
+                Status
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Modules.map((product, index) => (
+            {modulesStats.map((product, index) => (
               <TableRow key={index}>
                 <TableCell className="px-0 capitalize" colSpan={1} align="left">
                   <div className="flex flex-middle">
@@ -74,54 +83,43 @@ const TableCard = () => {
                       src={product.imgUrl}
                       alt="user"
                     /> */}
-                    <p className="m-0 ml-8">{product.name}</p>
+                    <p className="m-0 ml-8">{product.Names}</p>
                   </div>
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  $
-                  {product.version > 999
-                    ? (product.version / 1000).toFixed(1) + "k"
-                    : product.version}
+                  
+                  {product.CreatedAt }
                 </TableCell>
                 <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  {product.lastUpdate}
+                  {product.Ports}
                 </TableCell>
 
                 <TableCell className="px-0" align="left" colSpan={1}>
-                  {product.state ? (
-                    product.state === "deployed" ? (
-                      <small className="border-radius-4 bg-green text-white px-8 py-1 ">
-                         Deployed
-                      </small>
-                    ) : (
-                      <small className="border-radius-4 bg-error text-white px-8 py-1 ">
-                        Not Deployed
-                      </small>
-                    )
-                  ) : (
-                    <small className="border-radius-4 bg-secondary text-white px-8 py-1 ">
-                      Unknown
-                    </small>
-                  )}
+                  {product.RunningFor }
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
-                  {/* <IconButton>
-                    <Icon color="primary">edit</Icon>
-                  </IconButton> */}
-                  <IconButton>
-                    <Icon color="error">stop</Icon>
-                  </IconButton>
-                  <IconButton>
-                    <Icon color="green">play_arrow</Icon>
-                  </IconButton>
+                  {product.Status}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table>)
+        }
       </div>
     </Card>
   );
 };
+const mapStateToProps = (state) => ({
+  globalClient : state.client.globalClient,
+  modulesStats : state.module.modulesStats,
+  getModulesStats : PropTypes.func.isRequired, 
+  cleanModuleStats : PropTypes.func.isRequired, 
+});
 
-export default TableCard;
+export default   connect(
+  mapStateToProps,
+  {
+    getModulesStats,
+    cleanModuleStats
+  }
+)(TableCard);

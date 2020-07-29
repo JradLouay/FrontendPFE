@@ -39,8 +39,7 @@ export const getUsersList = () => dispatch => { // get all modules
 };
 
 export const setSelectedUser = (selectedUser) => {
-  // console.log('[setSelectedModule] ', selectedModule);
-  
+  console.log('[setSelectedModule] ', selectedUser);
   return {
     type: SET_SELECTED_USER,
     payload: selectedUser
@@ -109,14 +108,13 @@ export const addUser = user => dispatch =>  { // adding a user
       }));
   };
 
-export const updateUser = (modId, modToAdd) => dispatch =>  { // adding a module
+export const updateUser = (uid, usrToAdd) => dispatch =>  { // adding a module
 
-  
-    console.log('[UpdateModule] ', modToAdd);
+    console.log('[UpdateModule] ', usrToAdd);
     axios
-      .put(`http://localhost:9000/api/modules/${modId}`, { ...modToAdd })  
+      .put(`http://localhost:9000/api/users/${uid}`, { ...usrToAdd })  
       .then(res => {
-        axios.get(`http://localhost:9000/api/modules`).then(res2 => {
+        axios.get(`http://localhost:9000/api/users`).then(res2 => {
           dispatch({
             type: ADD_USER,
             payload: res2.data
@@ -133,6 +131,32 @@ export const updateUser = (modId, modToAdd) => dispatch =>  { // adding a module
               // etwas für Error
         });
       }).catch(err=>{
+        dispatch({
+          type:OPEN_SNACK_ERROR ,
+          payload: true
+        });
+      });
+  };
+export const updateState = (uid, usrToUpdate) => dispatch =>  { // adding a module
+
+    console.log('[UpdateState] ', usrToUpdate);
+    axios
+      .put(`http://localhost:9000/api/users/${uid}`, usrToUpdate )  
+      .then(res => {
+        dispatch({
+          type: SET_SELECTED_USER,
+          payload: res.data
+        });
+        dispatch({
+          type:SET_OPERATION ,
+          payload: "Updated"
+        });
+        dispatch({
+          type:OPEN_SNACK_SUCCESS ,
+          payload: true
+        });
+      }).catch(err=>{
+        console.log(err);
         dispatch({
           type:OPEN_SNACK_ERROR ,
           payload: true

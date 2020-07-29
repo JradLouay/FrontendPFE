@@ -4,13 +4,15 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import {
   addUser,
-  updateUser
+  updateUser,
+  updateState
 } from "app/redux/actions/UsersActions";
 import {
   Button,
   Icon,
   Grid,
-  TextField,
+  // TextField,
+  Switch,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -30,8 +32,10 @@ class InfoForm extends Component {
     password : this.props.type==="edit" ? this.props.selectedUser.password :  null,
     role : this.props.type==="edit" ? this.props.selectedUser.role :  null
   };
+
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
+    console.log(this.props.selectedUser)
     ValidatorForm.addValidationRule("isPasswordMatch", value => {
       if (value !== this.state.password) {
         return false;
@@ -46,26 +50,27 @@ class InfoForm extends Component {
   }
 
   handleSubmit = event => {
-    console.log("submitted");
-
     const copy = {
       ...this.state
     };
-    delete copy.confirmPassword;
+    // delete copy.confirmPassword;
     if (this.props.type ==="edit") {
       console.log("edit", copy);  
-      // this.props.updateUser(this.props.selectedModule.id, copy);
+      this.props.updateUser(this.props.selectedModule.id, copy);
     }else if(this.props.type ==="add"){
       this.props.addUser(copy);
       console.log("add", copy);
-      
     }
-    
   };
 
   handleChange = event => {
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleChangeBlocked = event => {
+    this.props.updateState(this.props.selectedUser.id, { ...this.props.selectedUser,
+                                                        blocked : !this.props.selectedUser.blocked})
   };
 
   // handleDateChange = date => {
@@ -80,7 +85,6 @@ class InfoForm extends Component {
       password,
       confirmPassword,
       role
-  
     } = this.state;
     return (
       <div>
@@ -116,40 +120,50 @@ class InfoForm extends Component {
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
-            {/* <TextValidator
-                className="mb-16 w-100"
-                label="Version (Eg: 1.0)"
-                onChange={this.handleChange}
-                type="text"
-                name="version"
-                value={version}
-                validators={["required"]}
-                errorMessages={["this field is required"]}
-              /> */}
-              <TextValidator
-                className="mb-16 w-100"
-                label="Password"
-                onChange={this.handleChange}
-                name="password"
-                type="password"
-                value={password}
-                validators={["required",
-                             "minStringLength: 6"]}
-                errorMessages={["this field is required"]}
-              />
-              <TextValidator
-                className="mb-16 w-100"
-                label="Confirm Password"
-                onChange={this.handleChange}
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                validators={["required", "isPasswordMatch"]}
-                errorMessages={[
-                  "this field is required",
-                  "password didn't match"
-                ]}
-              />
+              {
+                  
+                  this.props.type ==="add" ? (
+                    <React.Fragment>
+                      <TextValidator
+                      className="mb-16 w-100"
+                      label="Password"
+                      onChange={this.handleChange}
+                      name="password"
+                      type="password"
+                      value={password}
+                      validators={["required",
+                                  "minStringLength: 6"]}
+                      errorMessages={["this field is required"]}
+                    />
+                    <TextValidator
+                      className="mb-16 w-100"
+                      label="Confirm Password"
+                      onChange={this.handleChange}
+                      name="confirmPassword"
+                      type="password"
+                      value={confirmPassword}
+                      validators={["required", "isPasswordMatch"]}
+                      errorMessages={[
+                        "this field is required",
+                        "password didn't match"
+                      ]}
+                    />
+                  </React.Fragment>
+                    ) : (
+                    <FormControlLabel
+                      value="blocked"
+                      control={<Switch 
+                        checked={this.props.selectedUser.blocked}
+                        onChange={this.handleChangeBlocked}
+                        color="secondary"
+                        name="blocked"
+                        />}
+                      label="Block"
+                      labelPlacement="left"
+                    />
+                    )
+                  }
+          
               <RadioGroup
                 className="mb-16"
                 value={role}
@@ -190,14 +204,16 @@ class InfoForm extends Component {
 }
 const mapStateToProps = state => ({
   addUser : PropTypes.func.isRequired,
-  selectedUser : state.users.selectedModule,
+  selectedUser : state.users.selectedUser,
   updateUser : PropTypes.func.isRequired,
+  updateState : PropTypes.func.isRequired,
   // user: state.user
 });
 export default   connect(
   mapStateToProps,
   {  
     addUser,
-    updateUser
+    updateUser,
+    updateState
     }
 )(InfoForm);

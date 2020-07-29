@@ -17,6 +17,8 @@ export function loginWithEmailAndPassword({ email, password }) {
     jwtAuthService
       .loginWithEmailAndPassword(email, password)
       .then(user => {
+        console.log('user from action ', user);
+        
         dispatch(setUserData(user));
 
         history.push({

@@ -31,19 +31,21 @@ const styles = theme => ({
 
 class SignIn extends Component {
   state = {
-    email: "watson@example.com",
-    password: "testpass",
-    agreement: ""
+    email: "louay@gmail.com",
+    password: "louayjrad"
   };
+
   handleChange = event => {
     event.persist();
     this.setState({
       [event.target.name]: event.target.value
     });
   };
+
   handleFormSubmit = event => {
     this.props.loginWithEmailAndPassword({ ...this.state });
   };
+  
   render() {
     let { email, password } = this.state;
     let { classes } = this.props;

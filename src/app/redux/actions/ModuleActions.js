@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const GET_MODULES_LIST = "GET_MODULES_LIST";
+export const GET_MODULES_STATS = "GET_MODULES_STATS";
 export const GET_FILE = "GET_FILE"; 
 export const SET_FILE = "SET_FILE"; 
 export const SET_SELECTED_MODULE = "SET_SELECTED_MODULE";  
@@ -21,6 +22,17 @@ export const getModulesList = () => dispatch => {
     
     dispatch({
       type: GET_MODULES_LIST,
+      payload: res.data
+    });
+  });
+};
+
+export const getModulesStats = (cid) => dispatch => { 
+  
+ return axios.get(`http://localhost:9000/api/deploys/stats/${cid}`).then(res => {
+    
+    dispatch({
+      type: GET_MODULES_STATS,
       payload: res.data
     });
   });
@@ -59,6 +71,12 @@ export const setFile = (newFile) => {
 // });
 // }; 
 
+export const cleanModuleStats = (selectedModule) => {
+  return {
+    type: GET_MODULES_STATS,
+    payload: []
+  };
+}
 export const setSelectedModule = (selectedModule) => {
   return {
     type: SET_SELECTED_MODULE,

@@ -1,5 +1,6 @@
 import {
     GET_MODULES_LIST,/////////START_MODULES
+    GET_MODULES_STATS,
     GET_FILE,
     SET_FILE,
     SET_SELECTED_MODULE,
@@ -16,6 +17,7 @@ import {
   
   const initialState = {
     modulesList : [],
+    modulesStats : [],
     selectedModule: {},
     yaml : "",
     clientModules:[],
@@ -32,6 +34,12 @@ import {
         return {
           ...state,
           modulesList: [...action.payload]
+        };
+      }
+      case GET_MODULES_STATS: {  // get modules list 
+        return {
+          ...state,
+          modulesStats: [...action.payload]
         };
       }
       case GET_FILE: {  // get modules list 

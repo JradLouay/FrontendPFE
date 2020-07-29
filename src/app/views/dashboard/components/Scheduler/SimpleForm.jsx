@@ -30,12 +30,12 @@ class SimpleForm extends Component {
   }
   
   state = {
-    schedulerName: "update_2",
-    description: "Bitte, füge hier etwas hinzu Brüder.... ",
+    schedulerName: "first deployment",
+    description: "first deployment after adding demo client ",
     date: new Date(),
     time: new Date(),
     version: "2.0",
-    type: "Bug Fix",
+    type: "Deployment",
   };
   
 
@@ -120,7 +120,7 @@ class SimpleForm extends Component {
                 type="text"
                 name="version"
                 value={version}
-                validators={["required"]}
+                validators={[]}
                 errorMessages={["this field is required"]}
               />
               <TextValidator

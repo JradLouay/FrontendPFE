@@ -6,7 +6,7 @@ class JwtAuthService {
   // Dummy user object just for the demo
   user = {
     userId: "1",
-    role: 'ADMIN',
+    role: 'admin',
     displayName: "Jason Alexander",
     email: "jasonalexander@gmail.com",
     photoURL: "/assets/images/face-6.jpg",
@@ -19,18 +19,27 @@ class JwtAuthService {
   // User should have role property
   // You can define roles in app/auth/authRoles.js
   loginWithEmailAndPassword = (email, password) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.user);
-      }, 1000);
-    }).then(data => {
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve(this.user);
+    //   }, 2000);
+    return axios.post('http://localhost:9000/api/auth', {}, {
+      auth: {
+        username: email,
+        password: password
+      }
+    }).then(resp => {
+      const token = resp.data.token ;
+      const data = { ...resp.data.user, token } ;
       // Login successful
       // Save token
+      console.log(data);
+      
       this.setSession(data.token);
       // Set user
       this.setUser(data);
       return data;
-    });
+    })
   };
 
   // You need to send http requst with existing token to your server to check token is valid

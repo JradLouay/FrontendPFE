@@ -25,20 +25,14 @@ class InfoForm extends Component {
     super(props);
   }
   
-
   state = {                                                                     
-    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : undefined,
-    host: this.props.type==="edit"? this.props.selectedClient.host : undefined,
+    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : "demo",
+    host: this.props.type==="edit"? this.props.selectedClient.host : "192.168.1.6",
     port: this.props.type==="edit"? this.props.selectedClient.port : undefined,
-    userName: this.props.type==="edit"? this.props.selectedClient.userName : undefined,
-    password: this.props.type==="edit"? this.props.selectedClient.password : undefined,
-    fileName: this.props.type==="edit"? this.props.selectedClient.fileName : shortId.generate(),
-    // lastUpdate: "",
-    version: this.props.type==="edit"? this.props.selectedClient.version : undefined,
-    // confirmPassword: "password",
-    // file: null,
-    // image: null
-    
+    userName: this.props.type==="edit"? this.props.selectedClient.userName : "louay",
+    password: this.props.type==="edit"? this.props.selectedClient.password : "louayjrad",
+    fileName: this.props.type==="edit"? this.props.selectedClient.fileName : shortId.generate(), // required
+    version: this.props.type==="edit"? this.props.selectedClient.version : null,
   };
   componentDidMount() {
     // custom rule will have name 'isPasswordMatch'
@@ -57,22 +51,14 @@ class InfoForm extends Component {
 
   handleSubmit = event => {
     console.log("submitted");
-    // delete copy.confirmPassword;
-    // const copy = {
-    //   ...this.state
-    // };
     if (this.props.type ==="edit") {
       // this.state.fileName = this.props.selectedClient.fileName
       this.props.updateClient(this.props.selectedClient.id, this.state);
-      // console.log(this.state);
-      
-
     }else if(this.props.type ==="add"){
        console.log(this.state)
       this.props.setClientToAdd(this.state);
       this.props.next()//this actually will not have any error weil er hat kein side effect 
     }
-   
   };
 
   handleChange = event => {
@@ -108,15 +94,13 @@ class InfoForm extends Component {
             <Grid item lg={6} md={6} sm={12} xs={12}>
             <TextValidator
                 className="mb-16 w-100"
-                label="Client Name (Min length 4, Max length 9)"
+                label="Client Name "
                 onChange={this.handleChange}
                 type="text"
                 name="clientName"
                 value={clientName}
                 validators={[
-                  "required",
-                  "minStringLength: 4",
-                  "maxStringLength: 9"
+                  "required"
                 ]}
                 errorMessages={["this field is required"]}
               />
@@ -127,35 +111,21 @@ class InfoForm extends Component {
                 type="text"
                 name="version"
                 value={version}
-                validators={[
-                ]}
-                errorMessages={["this field is required"]}
+                validators={[]}
+                errorMessages={[]}
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="Username (Min length 4, Max length 9)"
+                label="Username"
                 onChange={this.handleChange}
                 type="text"
                 name="userName"
                 value={userName}
                 validators={[
-                  "required",
-                  "minStringLength: 4",
-                  "maxStringLength: 9"
+                  "required"
                 ]}
                 errorMessages={["this field is required"]}
               />
-              
-              {/* <TextValidator
-                className="mb-16 w-100"
-                label="Email"
-                onChange={this.handleChange}
-                type="email"
-                name="email"
-                value={email}
-                validators={["required", "isEmail"]}
-                errorMessages={["this field is required", "email is not valid"]}
-              /> */}
               <label for="file">Choose an Image :</label>
               
               <TextValidator
@@ -181,22 +151,22 @@ class InfoForm extends Component {
               />
               <TextValidator
                 className="mb-16 w-100"
-                label="Port (4 Numbers)"
+                label="Port (Max 4 numbers)"
                 onChange={this.handleChange}
                 type="number"
                 name="port"
                 value={port}
                 validators={[
-                  "maxStringLength: 4"
+                  // "maxStringLength: 4"
                 ]}
-                errorMessages={["this field is required"]}
+                errorMessages={[]}
               />
               <TextValidator
                 className="mb-16 w-100"
                 label="Password"
                 onChange={this.handleChange}
                 name="password"
-                // type="password"
+                type="password"
                 value={password}
                 validators={["required"]}
                 errorMessages={["this field is required"]}

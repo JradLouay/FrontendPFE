@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function InfoDiag() {
+export default function InfoDiag(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -50,7 +50,10 @@ export default function InfoDiag() {
       {/* <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
                 <Icon>more_vert</Icon>
       </IconButton> */}
-                  <IconButton onClick={handleClickOpen}>
+                  <IconButton onClick={()=> {
+                      props.clicked()();
+                      handleClickOpen();
+                                    }}>
                     <Icon color="primary" >info</Icon>
                   </IconButton>
       {/* <Fab

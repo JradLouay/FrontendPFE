@@ -32,6 +32,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/Alert';
 import AddClModuleDiag from './components/Client Modules/AddClModuleDiag';
 import EditorYaml from './components/Client Modules/EditorYaml';
+import EventSource from 'eventsource'
 
 const useStyles = makeStyles(theme => ({
 
@@ -97,6 +98,7 @@ const ClientModule = (props) => {
   const [steps, setSteps] = React.useState([]);
   const [openSnackSuccess, setOpenSnackSuccess] = React.useState(false); // snackbarSuccess
   const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
+  const eventSourceInitDict = {headers: {'Authorization':'Bearer'+  localStorage.getItem("jwt_token")}};
   
 
   const classes = useStyles();
@@ -132,7 +134,7 @@ const ClientModule = (props) => {
           setLoading(true);
           setOpen(!open);
           const es = new EventSource(
-            `http://localhost:9000/api/deploys/deploy/${globalClient.id}`
+            `http://localhost:9000/api/deploys/deploy/${globalClient.id}`, eventSourceInitDict 
           );
           es.addEventListener("step", (e) => {
             handleNext();
@@ -161,7 +163,7 @@ const ClientModule = (props) => {
       setLoading(true);
       setOpen(!open);
       const es = new EventSource(
-        `http://localhost:9000/api/deploys/update/${globalClient.id}`
+        `http://localhost:9000/api/deploys/update/${globalClient.id}`, eventSourceInitDict
       );
       es.addEventListener('step', (e) => {
         handleNext();
@@ -182,7 +184,7 @@ const ClientModule = (props) => {
         setFeedback(prevState=> [...prevState, e.data]);
         es.close();
         handleNext();
-        setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
+        setGlobalClient(Object.assign(globalClient, {prevVersion : globalClient.version}));
         setOpenSnackSuccess(true);
         setLoading(false);
         
@@ -193,7 +195,7 @@ const ClientModule = (props) => {
           setLoading(true);
           setOpen(!open);
           const es = new EventSource(
-            `http://localhost:9000/api/deploys/stop/${globalClient.id}`
+            `http://localhost:9000/api/deploys/stop/${globalClient.id}`, eventSourceInitDict
           );
           es.addEventListener('step', (e) => {
             setStep(e.data)
@@ -224,7 +226,7 @@ const ClientModule = (props) => {
           setLoading(true);
           setOpen(!open);
           const es = new EventSource(
-            `http://localhost:9000/api/deploys/rollback/${globalClient.id}`
+            `http://localhost:9000/api/deploys/rollback/${globalClient.id}`, eventSourceInitDict
           );
           es.addEventListener("step", (e) => {
             handleNext();
@@ -243,7 +245,7 @@ const ClientModule = (props) => {
             setFeedback(prevState=> [...prevState, e.data]);
             es.close();
             handleNext();
-            setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
+            setGlobalClient(Object.assign(globalClient, delete globalClient.prevVersion ));
             setOpenSnackSuccess(true);
             setLoading(false);
           });
@@ -257,7 +259,6 @@ const ClientModule = (props) => {
       }
     }
   }, [open]);
-
 
   return (
     <React.Fragment>
