@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Icon,
   IconButton,
+  Tooltip
 } from "@material-ui/core";
 import { SimpleCard } from "matx";
 import  InfoForm  from "./stepperForms/InfoForm";
@@ -47,14 +48,14 @@ export default function InfoDiag(props) {
 
   return (
     <Fragment>
-      
+      <Tooltip title={"Client information"}>
                   <IconButton onClick={()=> {
                       props.clicked()();
                       handleClickOpen();
                                     }}>
                       <Icon color="primary" >edit</Icon>
                   </IconButton>
-      
+        </Tooltip>
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}

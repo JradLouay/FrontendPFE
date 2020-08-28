@@ -1,14 +1,13 @@
 import React from 'react';
-// import clsx from 'clsx';
 import { 
     Card,
     CardHeader,
-    // CardActions,
     Icon,
     IconButton,
     Button,
     Snackbar,
     CircularProgress,
+    Tooltip
   } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 import SaveIcon from '@material-ui/icons/Save';
@@ -17,7 +16,11 @@ import {
       setOpenSnackSuccess,
       setOpenSnackError
       } from "app/redux/actions/ClientActions";
-     
+import {
+  setSelectedClient
+} from "app/redux/actions/ClientActions";
+
+import VariablesDiag from "../../../utilities/components/clients/VariablesDiag"
 import {
       getFile,
       setFile
@@ -58,16 +61,10 @@ const useStyles = makeStyles((theme) => ({
 const EditorYaml = (props) => {
 
   const classes = useStyles();
-  // const [loading, setLoading] = React.useState(false);
-  // const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
-
-  // const buttonClassname = clsx({
-  //   [classes.buttonSuccess]: success,
-  // });
-
   const {
     globalClient,
+    setSelectedClient,
     getFile,
     setFile,
     updateClient,
@@ -137,46 +134,25 @@ const EditorYaml = (props) => {
                  <CardHeader
                       action={
                         <React.Fragment>
-                        {/* <Button
-                              variant="contained"
-                              color="primary"
-                              size="small"
-                              // className={buttonClassname}
-                              // disabled={loading}
-                              onClick={saveFile}
-                              startIcon={<SaveIcon />}
-                            >
-                              Save
-                            </Button>
-                            <input
-                              accept=".yml"
-                              style={{ display: 'none' }}
-                              id="raised-button-file"
-                              multiple
-                              type="file"
-                              onChange={e=> handelChosenFile(e.target.files[0])}
-                            />
-                            <label htmlFor="raised-button-file">
-                              <IconButton variant="outlined" component="span">
-                                <Icon>file_upload</Icon>
-                            </IconButton>
-                            </label>  */}
                             
                             <div className={classes.root}>
+                            <VariablesDiag clicked={()=> ()=> setSelectedClient(globalClient)} display={2} />
                             <div className={classes.wrapper}>
+                            <Tooltip title="Save file">
                             <Button
                               variant="contained"
                               color="primary"
                               size="small"
-                              // className={buttonClassname}
                               disabled={loading}
                               onClick={saveFile}
                               startIcon={<SaveIcon />}
                             >
                               Save
                             </Button>
+                            </Tooltip>
                             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </div>
+
                             <input
                               accept=".yml"
                               style={{ display: 'none' }}
@@ -186,9 +162,11 @@ const EditorYaml = (props) => {
                               onChange={e=> handelChosenFile(e.target.files[0])}
                             />
                             <label htmlFor="raised-button-file">
+                            <Tooltip title="Upload file">
                               <IconButton variant="outlined" component="span">
                                 <Icon>file_upload</Icon>
                             </IconButton>
+                            </Tooltip>
                             </label> 
                           </div>
                             
@@ -240,6 +218,7 @@ const mapStateToProps = state => ({
   globalClient : state.client.globalClient,
   yaml : state.module.yaml,
   updateClient : PropTypes.func.isRequired,
+  setSelectedClient : PropTypes.func.isRequired,
   getFile : PropTypes.func.isRequired,
   setFile : PropTypes.func.isRequired,
   setOpenSnackSuccess : PropTypes.func.isRequired,
@@ -252,6 +231,7 @@ export default   connect(
   mapStateToProps,
   { 
     updateClient,
+    setSelectedClient,
     getFile,
     setFile,
     setOpenSnackSuccess,

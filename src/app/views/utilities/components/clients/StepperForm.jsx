@@ -76,22 +76,6 @@ export default function StepperForm() {
           <div>
             <Typography>{getStepContent(activeStep, handleNext, handleBack)}</Typography>
             <div className="pt-16">
-              {/* <Button
-                variant="contained"
-                color="secondary"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-              >
-                Back
-              </Button> */}
-              {/* <Button
-                className="ml-16"
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button> */}
             </div>
           </div>
         )}

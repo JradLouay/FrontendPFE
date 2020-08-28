@@ -183,12 +183,6 @@ class InfoForm extends Component {
                   label="User"
                   labelPlacement="end"
                 />
-                {/* <FormControlLabel
-                  value="Stagaire"
-                  control={<Radio color="secondary" />}
-                  label="Stagaire"
-                  labelPlacement="end"
-                /> */}
               </RadioGroup>
               
             </Grid>

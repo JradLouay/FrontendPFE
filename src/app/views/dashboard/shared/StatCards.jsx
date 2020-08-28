@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 import {
   Grid,
   Card,
@@ -7,7 +9,12 @@ import {
   Tooltip,
 } from "@material-ui/core";
 
-const StatCards = ({theme}) => {
+const StatCards = (props) => {
+  const {
+    globalClient,
+    theme
+  } = props;
+
   return (
     <Grid container spacing={3} className="mb-24">
       <Grid item xs={12} md={6}>
@@ -24,7 +31,7 @@ const StatCards = ({theme}) => {
             </Icon>
             <div className="ml-12">
               <small className="text-muted">Client Name</small>
-              <h6 className="m-0 mt-4 text-primary font-weight-500">1 Node </h6>
+              <h6 className="m-0 mt-4 text-primary font-weight-500">{globalClient.clientName}</h6>
             </div>
           </div>
           <Tooltip title="View Details" placement="top">
@@ -114,4 +121,11 @@ const StatCards = ({theme}) => {
   );
 };
 
-export default StatCards;
+const mapStateToProps = (state) => ({
+  globalClient: state.client.globalClient
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(StatCards);

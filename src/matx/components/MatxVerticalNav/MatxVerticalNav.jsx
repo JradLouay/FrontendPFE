@@ -4,10 +4,6 @@ import { Icon } from "@material-ui/core";
 import TouchRipple from "@material-ui/core/ButtonBase";
 import MatxVerticalNavExpansionPanel from "./MatxVerticalNavExpansionPanel";
 import { withStyles } from "@material-ui/styles";
-// import {
-
-//     }from "app/redux/actions/EcommerceActions" ;
-
 const styles = theme => ({
   expandIcon: {
     transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",

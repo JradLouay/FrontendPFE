@@ -9,13 +9,11 @@ import {
 import {
   Button,
   Icon,
-  Grid,
-  // TextField
-  // Radio,
-  // RadioGroup,
-  // FormControlLabel,
-  // Checkbox
+  Grid
 } from "@material-ui/core";
+import AceEditor from "react-ace";
+import 'brace/mode/yaml';
+import 'brace/theme/monokai';
 import "date-fns";
 
 class InfoForm extends Component {
@@ -28,25 +26,26 @@ class InfoForm extends Component {
     moduleName: this.props.type==="edit" ? this.props.selectedModule.moduleName :  null,
     version : this.props.type==="edit" ? this.props.selectedModule.version :  null,
     lastUpdate : this.props.type==="edit" ? this.props.selectedModule.lastUpdate :  null,
-    description : this.props.type==="edit" ? this.props.selectedModule.description :  null
+    description : this.props.type==="edit" ? this.props.selectedModule.description :  ""
   };
 
   handleSubmit = event => {
-    const copy = {
-      ...this.state
-    }
     if (this.props.type ==="edit") {  
-      this.props.updateModule(this.props.selectedModule.id, copy);
-      
+      this.props.updateModule(this.props.selectedModule.id, this.state);
+      console.log(this.state);
     }else if(this.props.type ==="add"){
-      this.props.addModule(copy);
+      this.props.addModule(this.state);
     }
   };
 
   handleChange = event => {
     event.persist();
     this.setState({ [event.target.name]: event.target.value });
-  };
+  }
+
+   onChange = value =>{
+    this.state.description = value ;
+      }
 
   render() {
     let {
@@ -99,7 +98,7 @@ class InfoForm extends Component {
             </Grid>
 
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <TextValidator
+              {/* <TextValidator
                 className="mb-16 w-100"
                 label="Yaml Description"
                 onChange={this.handleChange}
@@ -111,7 +110,25 @@ class InfoForm extends Component {
                 value={description}
                 validators={["required"]}
                 errorMessages={["this field is required"]}
-              />
+              /> */}
+               <AceEditor
+                          style={{ width: "100%",
+                        height: "100%" }}
+                          mode="yaml"
+                          theme="monokai"
+                          name="description"
+                          onChange={this.onChange}
+                          value={description}
+                          fontSize={12}
+                          showPrintMargin
+                          showGutter={true}
+                          highlightActiveLine
+                          setOptions={{
+                            showLineNumbers: true,
+                            tabSize: 2
+                          }}
+                          editorProps={{ $blockScrolling: true }}
+                        />
               
             </Grid>
           </Grid>

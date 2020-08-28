@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -67,9 +68,11 @@ export default function ModuleInfoDiag(props) {
 
   return (
     <div>
+      <Tooltip title={"Details"}>
       <IconButton onClick={handleClickOpen}>
                     <Icon color="primary" >info</Icon>
                   </IconButton>
+      </Tooltip>
       <Dialog 
       fullWidth={true}
       maxWidth={"sm"}

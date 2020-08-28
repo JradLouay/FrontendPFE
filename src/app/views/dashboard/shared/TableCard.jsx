@@ -1,125 +1,159 @@
 import React from "react";
+import axios from "axios";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import {
-  Card,
-  Icon,
-  IconButton,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody
+  Card
 } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import MaterialTable from 'material-table';
+import Terminal from '../components/Client Modules/Terminal'
 import {
   getModulesStats,
-  cleanModuleStats
+  cleanModuleStats,
+  getModulesLogs,
+  cleanLogs
 } from "app/redux/actions/ModuleActions";
 
 const TableCard = (props) => {
-  
+  const tableRef = React.createRef();
   const {
     globalClient,
-    modulesStats,
-    getModulesStats,
-    cleanModuleStats
-          }=props;
+    containerLogs,
+    getModulesLogs,
+    cleanLogs
+  } = props;
 
-  // const [states, setStates] = React.useState([]);
- 
+  const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState('paper');
+
+
+  const handleClose = () => {
+    setOpen(false);
+
+  };
+
+  const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
-  //   axios.get(`http://localhost:9000/api/deploys/stats/${globalClient.id}`).then(res => {
-  //     setStates(res.data);
-  //     console.log("result stats", res.data);
-  //     return function cleanup() {
-  //       console.log("cleanup");
-  //       setStates([]);
-  //     };
-  // });
-  getModulesStats(globalClient.id);
-  return function cleanup() {
-          console.log("cleanup");
-          cleanModuleStats();
-        };
-  
-  }, [globalClient]);
-  
+    if (globalClient.id) {
+      tableRef.current.onQueryChange();
+    }
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+        
+      }
+    }
+    return () => {
+      cleanLogs()
+    };
+  }, [globalClient.id]);
+
   return (
     <Card elevation={3} className="pt-20 mb-24">
-      <div className="card-title px-24 mb-12">deployed Modules</div>
       <div className="overflow-auto">
-       {
-        modulesStats.length <= 1 ? ( 
-          // spinner for loading stats of services  
-          ""
-        ):
-        (<Table className="product-table">
-          <TableHead>
-            <TableRow>
-              <TableCell className="px-24" colSpan={1}>
-                Name
-              </TableCell>
-              <TableCell className="px-0" colSpan={1}>
-                Created At
-              </TableCell>
-              <TableCell className="px-0" colSpan={1}>
-                Ports
-              </TableCell>
-              <TableCell className="px-0" colSpan={1}>
-                Running For
-              </TableCell>
-              <TableCell className="px-0" colSpan={1}>
-                Status
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {modulesStats.map((product, index) => (
-              <TableRow key={index}>
-                <TableCell className="px-0 capitalize" colSpan={1} align="left">
-                  <div className="flex flex-middle">
-                    {/* <img
-                      className="circular-image-small"
-                      src={product.imgUrl}
-                      alt="user"
-                    /> */}
-                    <p className="m-0 ml-8">{product.Names}</p>
-                  </div>
-                </TableCell>
-                <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  
-                  {product.CreatedAt }
-                </TableCell>
-                <TableCell className="px-0 capitalize" align="left" colSpan={1}>
-                  {product.Ports}
-                </TableCell>
+        <MaterialTable
+          title="Deployed Modules"
+          tableRef={tableRef}
+          columns={[
+            { title: 'Name', field: 'Names' },
+            { title: 'Created at', field: 'CreatedAt' },
+            { title: 'Ports', field: 'Ports' },
+            { title: 'Running for', field: 'RunningFor' },
+            { title: 'Status', field: 'Status' }
+          ]}
+          data={
+            query =>
+            new Promise((resolve, reject) => {
+              if (globalClient.id) {
+                console.log("getStats from table");
+                axios.get(`http://localhost:9000/api/deploys/stats/${globalClient.id}`)
+                  .then(res => {
+                    console.log("data", res.data);
+                    resolve({
+                      data: res.data
+                    })
+                  }).catch((err)=> resolve({
+                    data : []
+                  }) )
+              }
+            })
+          }
+          actions={[
+            {
+              icon: 'list',
+              tooltip: 'Logs',
+              onClick: (event, rowData) => {
+                  setOpen(true);
+                  getModulesLogs(globalClient.id, rowData.Names);
+                }
+            }]}
+          options={{
+            filtering: false,
+            search: false,
+            paging: false,
+            actionsColumnIndex: -1,
+            // showTitle: false
+          }}
+          localization={{
+            body:{
+              emptyDataSourceMessage : "No Services are Deployed"
+            }
+          }}
+        />
 
-                <TableCell className="px-0" align="left" colSpan={1}>
-                  {product.RunningFor }
-                </TableCell>
-                <TableCell className="px-0" colSpan={1}>
-                  {product.Status}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>)
-        }
+
+      </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll={scroll}
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+        >
+          <DialogTitle id="scroll-dialog-title">Container Logs</DialogTitle>
+          <DialogContent dividers={scroll === 'paper'}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              <Terminal feedback={containerLogs} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+          </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </Card>
   );
 };
 const mapStateToProps = (state) => ({
-  globalClient : state.client.globalClient,
-  modulesStats : state.module.modulesStats,
-  getModulesStats : PropTypes.func.isRequired, 
-  cleanModuleStats : PropTypes.func.isRequired, 
+  globalClient: state.client.globalClient,
+  modulesStats: state.module.modulesStats,
+  containerLogs: state.module.containerLogs,
+  getModulesStats: PropTypes.func.isRequired,
+  getModulesLogs: PropTypes.func.isRequired,
+  cleanLogs: PropTypes.func.isRequired,
+  cleanModuleStats: PropTypes.func.isRequired
 });
 
-export default   connect(
+export default connect(
   mapStateToProps,
   {
     getModulesStats,
-    cleanModuleStats
+    cleanModuleStats,
+    getModulesLogs,
+    cleanLogs
   }
 )(TableCard);

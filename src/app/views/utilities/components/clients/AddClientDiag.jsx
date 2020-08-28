@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  // FormControl,
+  Tooltip,
   // FormControlLabel,
   // InputLabel,
   // MenuItem,
@@ -60,15 +60,17 @@ export default function AddClientDiag() {
 
   return (
     <React.Fragment>
-      <Fab
-          size="medium"
-          color="secondary"
-          aria-label="Add"
-          className={classes.button}
-          onClick={handleClickOpen}
-        >
-          <Icon>add</Icon>
-        </Fab>
+      <Tooltip title={"Add Client"}>
+          <Fab
+              size="medium"
+              color="secondary"
+              aria-label="Add"
+              className={classes.button}
+              onClick={handleClickOpen}
+            >
+              <Icon>add</Icon>
+            </Fab>
+        </Tooltip>
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}

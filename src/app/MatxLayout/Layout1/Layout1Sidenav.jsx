@@ -17,7 +17,7 @@ import {
 } from "app/redux/actions/LayoutActions";
 import { logoutUser } from "app/redux/actions/UserActions";
 import { withRouter } from "react-router-dom";
-import { MatxMenu } from "matx";
+// import { MatxMenu } from "matx";
 import Sidenav from "../SharedCompoents/Sidenav";
 import Brand from "../SharedCompoents/Brand";
 import SidenavTheme from "../MatxTheme/SidenavTheme";
@@ -107,7 +107,7 @@ class Layout1Sidenav extends Component {
     return (
       <div className="sidenav__user">
         <div className="username-photo">
-         <img src={"http://localhost:9000/"+globalClient.image} /> 
+         <img src={globalClient.image} /> 
         </div>
         <div className="ml-8">
           <span className="username">

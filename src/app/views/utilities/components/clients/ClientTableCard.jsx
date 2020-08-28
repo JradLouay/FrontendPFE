@@ -22,7 +22,7 @@ import {
   DialogContentText ,
   DialogTitle ,
   Slide,
-  Snackbar
+  Tooltip
 } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 import VariablesDiag from "./VariablesDiag";
@@ -100,7 +100,7 @@ const ClientTableCard = (props) => {
                   <div className="flex flex-middle">
                     <img
                       className="circular-image-small"
-                      src={"http://localhost:9000/"+client.image}
+                      src={client.image}
                       alt="client"
                     />
                     <p className="m-0 ml-8">{client.clientName}</p>
@@ -131,10 +131,12 @@ const ClientTableCard = (props) => {
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
                   <InfoDiag clicked={()=> ()=> setSelectedClient(client)} />
-                  <IconButton onClick={()=> handleClickOpen(client.id)}>
-                    <Icon color="default">delete</Icon>
-                  </IconButton>
-                  <VariablesDiag clicked={()=> ()=> setSelectedClient(client)} />
+                  <Tooltip title={"Delete client"}>
+                    <IconButton onClick={()=> handleClickOpen(client.id)}>
+                      <Icon color="default">delete</Icon>
+                    </IconButton>
+                  </Tooltip>
+                  <VariablesDiag clicked={()=> ()=> setSelectedClient(client)} display={1}/>
                 </TableCell>
               </TableRow>
             ))}

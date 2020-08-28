@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_MODULES_LIST = "GET_MODULES_LIST";
 export const GET_MODULES_STATS = "GET_MODULES_STATS";
+export const GET_CONTAINER_LOGS = "GET_CONTAINER_LOGS";
 export const GET_FILE = "GET_FILE"; 
 export const SET_FILE = "SET_FILE"; 
 export const SET_SELECTED_MODULE = "SET_SELECTED_MODULE";  
@@ -30,13 +31,25 @@ export const getModulesList = () => dispatch => {
 export const getModulesStats = (cid) => dispatch => { 
   
  return axios.get(`http://localhost:9000/api/deploys/stats/${cid}`).then(res => {
-    
     dispatch({
       type: GET_MODULES_STATS,
       payload: res.data
     });
   });
 };
+
+export const getModulesLogs = (cid, containerName) => dispatch => { 
+  
+ return axios.get(`http://localhost:9000/api/deploys/logs/${cid}/${containerName}`).then(res => {
+    console.log("res", res.data);
+    dispatch({
+      type: GET_CONTAINER_LOGS,
+      payload: res.data
+    });
+  });
+};
+
+
 export const getFile = (file) => dispatch => { 
 
   if (file) {
@@ -74,6 +87,13 @@ export const setFile = (newFile) => {
 export const cleanModuleStats = (selectedModule) => {
   return {
     type: GET_MODULES_STATS,
+    payload: []
+  };
+}
+
+export const cleanLogs = () => {
+  return {
+    type: GET_CONTAINER_LOGS,
     payload: []
   };
 }
@@ -182,59 +202,3 @@ export const updateModule = (modId, modToAdd) => dispatch =>  { // adding a modu
       });
   };
 
-// export const getClientModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
-  
-//   // console.log('[getClientModulesList] ', cid);
-
-//   axios.get(`http://localhost:9000/api/clients/${cid}`)
-//   .then(res => {
-//     dispatch({
-//       type: GET_CLIENT_MODULES,
-//       payload: res.data.deployedModules
-//     });
-//   });
-// };
-
-// export const getfiltredModulesList = cid => dispatch => { // get list of vars mit die cid auf ein client
-  
-//   // console.log('[getfiltredModulesList] ', cid);
-
-//   axios.get(`http://localhost:9000/api/modules/${cid}`, { data: cid }).then(res => {
-//     dispatch({
-//       type: GET_FILTRED_MODULES,
-//       payload: res.data
-//     });
-//   });
-// };
-
-// export const addModuleToClient = (cid, modId) => dispatch => { //delete variable 
-  
-//   //  console.log('[addModuleToClient] ',cid, modId);
-//   axios
-//     .post(`http://localhost:9000/api/modules/${cid}/${modId}`)
-//     .then(res => {
-//       axios.get(`http://localhost:9000/api/clients/${cid}`)
-//       .then(res => {
-//         dispatch({
-//           type: ADD_MODULE_TO_CLIENT,
-//           payload: res.data.deployedModules
-//         });
-//       });
-      
-//     });
-// };
-
-// export const deleteClientModule = (modId, cid ) => dispatch => { //delete module from a client 
-  
-//   // console.log('[deleteClientModule] ', modId, cid);
-//   axios
-//     .delete(`http://localhost:9000/api/modules/${cid}/${modId}`)
-//     .then(res => {
-//       dispatch({
-//         type: DELETE_CLIENT_MODULE,
-//         payload: res.data.deployedModules
-//       });
-//     });
-// };
-// -----------------------------------------------END--------------------------------------------------------
-// ----------------------------------------------------------------------------------------------------------

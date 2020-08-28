@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  // FormControl,
+  Tooltip,
   // FormControlLabel,
   // InputLabel,
   // MenuItem,
@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
 export default function ScheduleDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState("md");
 
   function handleClickOpen() {
     setOpen(true);
@@ -50,16 +48,9 @@ export default function ScheduleDialog(props) {
     setOpen(false);
   }
 
-  // function handleMaxWidthChange(event) {
-  //   setMaxWidth(event.target.value);
-  // }
-
-  // function handleFullWidthChange(event) {
-  //   setFullWidth(event.target.checked);
-  // }
-
   return (
     <React.Fragment>
+      <Tooltip title={"Add a scheduler"}>
       <Fab
           size="medium"
           color="secondary"
@@ -70,9 +61,10 @@ export default function ScheduleDialog(props) {
         >
           <Icon>add</Icon>
         </Fab>
+        </Tooltip>
       <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        fullWidth={true}
+        maxWidth={"md"}
         open={open}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"

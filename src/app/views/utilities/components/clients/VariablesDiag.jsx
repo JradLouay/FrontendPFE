@@ -11,7 +11,9 @@ import {
   DialogTitle,
   Icon,
   IconButton,
+  Tooltip 
 } from "@material-ui/core";
+import ListIcon from '@material-ui/icons/List';
 import { 
   addList
   } from "app/redux/actions/VariableActions";
@@ -39,7 +41,8 @@ const useStyles = makeStyles(theme => ({
 function VariablesDiag(props) {
     const {
           addList,
-          selectedClient
+          selectedClient,
+          display
             }=props;
 
   const classes = useStyles();
@@ -72,14 +75,27 @@ function VariablesDiag(props) {
 
   return (
     <React.Fragment>
-
-      <IconButton onClick={() => {
+        <Tooltip title="Environement variables">
+      {
+       display === 1 ?( <IconButton onClick={() => {
           props.clicked()();
           handleClickOpen();
         }}> 
         <Icon color="green" >library_books</Icon>
-      </IconButton>
-      
+      </IconButton>):(<Button
+                              variant="contained"
+                              color="secondary"
+                              size="small"
+                              onClick={() => {
+                                props.clicked()();
+                                handleClickOpen();
+                              }}
+                              startIcon={<ListIcon />}
+                            >
+                              .env
+                            </Button>)
+      }
+      </Tooltip>
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}

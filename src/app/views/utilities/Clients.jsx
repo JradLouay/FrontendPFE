@@ -64,7 +64,7 @@ const Clients = (props) => {
                 <AddClientDiag />
               </CardActions>
             </Card>
-            <Snackbar open={openSnackSuccess} autoHideDuration={2000} onClose={handleCloseSnackSuccess}>
+            <Snackbar open={openSnackSuccess} autoHideDuration={10000} onClose={handleCloseSnackSuccess}>
               <Alert onClose={handleCloseSnackSuccess} severity="success">
                 Client {operation} successfully!
               </Alert>

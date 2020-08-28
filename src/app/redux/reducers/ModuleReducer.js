@@ -1,6 +1,7 @@
 import {
     GET_MODULES_LIST,/////////START_MODULES
     GET_MODULES_STATS,
+    GET_CONTAINER_LOGS,
     GET_FILE,
     SET_FILE,
     SET_SELECTED_MODULE,
@@ -18,6 +19,7 @@ import {
   const initialState = {
     modulesList : [],
     modulesStats : [],
+    containerLogs : "",
     selectedModule: {},
     yaml : "",
     clientModules:[],
@@ -40,6 +42,12 @@ import {
         return {
           ...state,
           modulesStats: [...action.payload]
+        };
+      }
+      case GET_CONTAINER_LOGS: {  // get container logs 
+        return {
+          ...state,
+          containerLogs: action.payload
         };
       }
       case GET_FILE: {  // get modules list 

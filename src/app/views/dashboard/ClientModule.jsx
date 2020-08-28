@@ -10,7 +10,7 @@ import { PropTypes } from "prop-types";
 import {
   Button,
   // CircularProgress,
-  Typography,
+  Tooltip,
   Card,
   // Fade,
   CardActions,
@@ -21,10 +21,11 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  Snackbar,
+  Snackbar, 
   Slide,
   LinearProgress
 } from "@material-ui/core";
+import { SimpleCard } from "matx";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -32,7 +33,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/Alert';
 import AddClModuleDiag from './components/Client Modules/AddClModuleDiag';
 import EditorYaml from './components/Client Modules/EditorYaml';
-import EventSource from 'eventsource'
+import Terminal from './components/Client Modules/Terminal';
+import EventSource from 'eventsource';
+// import { XTerm } from 'xterm-for-react'
 
 const useStyles = makeStyles(theme => ({
 
@@ -89,9 +92,10 @@ const ClientModule = (props) => {
     setGlobalClient
   } = props;
 
+
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState(null);
-  const [feedback, setFeedback] = React.useState([]);
+  const [feedback, setFeedback] = React.useState(null);
   const descriptionElementRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(-1);
@@ -100,6 +104,8 @@ const ClientModule = (props) => {
   const [openSnackError, setOpenSnackError] = React.useState(false); // snackbarError
   const eventSourceInitDict = {headers: {'Authorization':'Bearer'+  localStorage.getItem("jwt_token")}};
   
+
+
 
   const classes = useStyles();
   const handleNext = () => {
@@ -133,6 +139,7 @@ const ClientModule = (props) => {
           setSteps(getSteps());
           setLoading(true);
           setOpen(!open);
+          
           const es = new EventSource(
             `http://localhost:9000/api/deploys/deploy/${globalClient.id}`, eventSourceInitDict 
           );
@@ -141,16 +148,18 @@ const ClientModule = (props) => {
             setStep(e.data);
           });
           es.addEventListener('feedback', (e) => {
-            setFeedback(prevState=> [...prevState, e.data]);
+            
+            setFeedback(e.data.replace(/"/g, ''));
           });
           es.addEventListener('error', (e) => {
-            setFeedback(prevState=> [...prevState, e.data]);
+            const str=e.data.replace(/"/g, '')
+            setFeedback(str);
             es.close();
             setOpenSnackError(true);
             setLoading(false);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(prevState=> [...prevState, e.data]);
+            setFeedback(e.data.replace(/"/g, ''));
             es.close();
             handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Deployed"}));
@@ -203,16 +212,17 @@ const ClientModule = (props) => {
           });
           es.addEventListener('feedback', (e) => {
             console.log(e.data);
-            setFeedback(prevState=> [...prevState, e.data]);
+            // setFeedback(prevState=> [...prevState, e.data]);
+            setFeedback(e.data);
           });
           es.addEventListener('error', (e) => {
-            setFeedback(prevState=> [...prevState, e.data]);
+            setFeedback(e.data);
             es.close();
             setOpenSnackError(true);
             setLoading(false);
           });
           es.addEventListener('success', (e) => {
-            setFeedback(prevState=> [...prevState, e.data]);
+            setFeedback(e.data);
             handleNext();
             setGlobalClient(Object.assign(globalClient, {status : "Not deployed"}));
             es.close();
@@ -251,14 +261,18 @@ const ClientModule = (props) => {
           });
     }
   };
+
   React.useEffect(() => {
+
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
         descriptionElement.focus();
+        
       }
     }
-  }, [open]);
+   
+  }, [open,step]);
 
   return (
     <React.Fragment>
@@ -278,6 +292,7 @@ const ClientModule = (props) => {
                 <div className={classes.root}>
                   {
                     globalClient.status !== "Deployed"  ?
+                    <Tooltip title="Deploy application">
                       <Button
                         variant="contained"
                         size="small"
@@ -285,11 +300,14 @@ const ClientModule = (props) => {
                         onClick={()=>handleToggle("deploy")}
                       >
                         Deploy
-                      </Button> :
+                      </Button> 
+                      </Tooltip>
+                      :
                       <React.Fragment>
                        {
                          globalClient.prevVersion ? 
                         <React.Fragment>
+                          <Tooltip title={"Old Version"}>
                               <Button
                                 variant="contained"
                                 size="small"
@@ -297,6 +315,8 @@ const ClientModule = (props) => {
                               >
                                 Rollback
                               </Button>
+                              </Tooltip>
+                              <Tooltip title={"Update application"}>
                               <Button
                                 variant="contained"
                                 size="small"
@@ -304,6 +324,8 @@ const ClientModule = (props) => {
                               >
                                 Update
                               </Button>
+                              </Tooltip>
+                              <Tooltip title={"Stop the application"}>
                               <Button
                                 variant="contained"
                                 size="small"
@@ -311,9 +333,11 @@ const ClientModule = (props) => {
                               >
                                 Stop
                               </Button>
+                              </Tooltip>
                         </React.Fragment>
                         :   
                         <React.Fragment>
+                          <Tooltip title={"Update the application"}>
                             <Button
                                 variant="contained"
                                 size="small"
@@ -321,6 +345,8 @@ const ClientModule = (props) => {
                               >
                                 Update
                               </Button>
+                              </Tooltip>
+                              <Tooltip title={"Stop the application"}>
                               <Button
                                 variant="contained"
                                 size="small"
@@ -328,6 +354,7 @@ const ClientModule = (props) => {
                               >
                                 Stop
                               </Button>
+                              </Tooltip>
                         </React.Fragment>
                        }
                       </React.Fragment>
@@ -374,13 +401,11 @@ const ClientModule = (props) => {
                         );
                       })}
                   </Stepper>
-                  <div>
-                    {/* {activeStep === steps.length ? (
-                      null
-                    ) : (
-                      <LinearProgress/>
-                    )} */}
-                     <Typography className={classes.instructions} variant="body1" gutterBottom>{feedback.map((feed) => <div>{feed}</div>)}</Typography>
+                  <div style={{ height: '10%', width: '100%' }}>
+                <SimpleCard title="Feedback" >
+                 <Terminal feedback={feedback}/>
+                </SimpleCard>
+                  
                   </div>
                 </div>
           </DialogContentText>

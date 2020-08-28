@@ -40,16 +40,8 @@ const TestProgress = (props) => {
           clearInterval(timer);
           setTimeout(() => {
             setTest(() => "saving Data ");
-
           }, 500);
           setTimeout(() => {
-
-            // axios.post("http://localhost:9000/api/deploys/test", { host: clientToAdd.host, port: clientToAdd.port, username: clientToAdd.userName, password: clientToAdd.password}).then(res => {
-            //   addClient(clientToAdd);
-            //   props.next();
-            // }).catch(()=>{
-            //   props.prev()
-            // })
             addClient(clientToAdd);
               props.next();
             
@@ -69,7 +61,6 @@ const TestProgress = (props) => {
         setTest(() => "Attempting to Connect...");
         return Math.min(oldCompleted + diff, 100);
       });
-
     }
     const timer = setInterval(progress, 500);
     return () => {

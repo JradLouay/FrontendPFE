@@ -105,7 +105,7 @@ const ModuleTableCard = (props) => {
                 </TableCell>
 
                 <TableCell className="px-0" colSpan={1}>
-                    <ModuleInfoDiag title={"Module Description"} desc={m.description} />
+                    {/* <ModuleInfoDiag title={"Module Description"} desc={m.description} /> */}
                     <EditDiag clicked={()=> ()=> setSelectedModule(m)} />
                     <IconButton onClick={()=> handleClickOpen(m.id)}>
                       <Icon color="default">delete</Icon>

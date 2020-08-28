@@ -12,7 +12,8 @@ import {
   ListItem,
   ListItemText,
   Icon,
-  Fab
+  Fab,
+  Tooltip
 } from "@material-ui/core";
 // import AddIcon from '@material-ui/icons/Add';
 import { PropTypes } from "prop-types";
@@ -68,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   }
   return (
     <Fragment>
-
+    <Tooltip title="Add Service">
         <Fab
           size="small"
           color="secondary"
@@ -82,6 +83,7 @@ const useStyles = makeStyles(theme => ({
         >
           <Icon>add</Icon>
         </Fab>
+        </Tooltip>
       <Dialog
         fullWidth={true}
         maxWidth={"xs"}

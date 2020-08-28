@@ -11,7 +11,8 @@ import {
   Button,
   Icon,
   Grid,
-  // IconButton
+  Tooltip,
+  IconButton
   // Radio,
   // RadioGroup,
   // FormControlLabel,
@@ -126,14 +127,40 @@ class InfoForm extends Component {
                 ]}
                 errorMessages={["this field is required"]}
               />
-              <label for="file">Choose an Image :</label>
+              {/* <label for="file">Choose an Image :</label>
               
               <TextValidator
                   accept=".yml"
                   // style={{ display: 'none' }}
                   id="file"
                   type="file"
-                  onChange={e=> this.handelChosenImage(e.target.files[0])} />
+                  onChange={e=> this.handelChosenImage(e.target.files[0])} /> */}
+                  {/* <Button
+                    // style={{ display: 'none' }}
+                    id="file"
+                    variant="contained"
+                    color="default"
+                    // className={classes.button}
+                    onChange={e=> this.handelChosenImage(e.target.files[0])} 
+                    // startIcon={<CloudUploadIcon />}
+                  >
+                    Upload Image
+                  </Button> */}
+                            <input
+                              style={{ display: 'none' }}
+                              id="raised-button-file"
+                              multiple
+                              type="file"
+                              onChange={e=>this.handelChosenImage(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file">
+                            <Tooltip title="Upload . yml file">
+                              <Button variant="outlined" component="span">
+                                <Icon>file_upload</Icon>
+                                Upload Image 
+                            </Button>
+                            </Tooltip>
+                            </label> 
                                        
 
             </Grid>
@@ -171,32 +198,43 @@ class InfoForm extends Component {
                 validators={["required"]}
                 errorMessages={["this field is required"]}
               />
-              <label for="file">Choose a file :</label>
-              
+      {/*          <label for="file">Choose a file :</label>
+             
               <TextValidator
                   accept=".yml"
                   // style={{ display: 'none' }}
                   id="file"
                   type="file"
-                  onChange={e=> this.handelChosenFile(e.target.files[0])} />
-                              
-              {/* <TextValidator
-                className="mb-16 w-100"
-                label="Confirm Password"
-                onChange={this.handleChange}
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                validators={["required", "isPasswordMatch"]}
-                errorMessages={[
-                  "this field is required",
-                  "password didn't match"
-                ]}
-              /> */}
+                  onChange={e=> this.handelChosenFile(e.target.files[0])} /> */}
+                  {/* <input type="file"  onChange={e=> this.handelChosenFile(e.target.files[0])}  /> 
+                    <Button
+                    accept=".yml"
+                    id="file"
+                    variant="contained"
+                    color="default"
+                  >
+                    Upload .yml file
+                  </Button> */}
+                     <input
+                              accept=".yml"
+                              style={{ display: 'none' }}
+                              id="raised-button-file"
+                              multiple
+                              type="file"
+                              onChange={e=>this.handelChosenFile(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file">
+                            <Tooltip title="Upload . yml file">
+                              <Button variant="outlined" component="span">
+                                <Icon>file_upload</Icon>
+                                Upload .yml file
+                            </Button>
+                            </Tooltip>
+                            </label> 
             </Grid>
           </Grid>
           <Button color="primary" variant="contained" type="submit">
-            <Icon>send</Icon>
+            {/* <Icon>send</Icon> */}
             <span className="pl-8 capitalize">{this.props.type==="edit" ? "Edit" : "Add" }</span>
           </Button>
           
