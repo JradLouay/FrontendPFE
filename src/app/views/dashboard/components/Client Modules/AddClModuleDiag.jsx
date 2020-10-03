@@ -55,12 +55,13 @@ const useStyles = makeStyles(theme => ({
     setOpen(true);
   }
   function handleModuleClick(modId, desc) {
+      console.log("desc" ,desc)
       let file = YAML.parse(yaml);
       file = file || {"version":"3.4","services":null,"volumes":{}}; // you cun customize what ever you like in here 
       file.services = file.services || {};
       const description = JSON.parse(desc);
       file.services[Object.keys(description)[0]]= Object.values(description)[0];
-      console.log(YAML.stringify(file));
+      console.log('file', YAML.stringify(file));
       setFile(YAML.stringify(file));
      }
 

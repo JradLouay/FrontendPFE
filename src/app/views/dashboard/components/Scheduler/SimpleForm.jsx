@@ -30,11 +30,11 @@ class SimpleForm extends Component {
   }
   
   state = {
-    schedulerName: "first deployment",
+    schedulerName: "First deployment",
     description: "first deployment after adding demo client ",
     date: new Date(),
     time: new Date(),
-    version: "2.0",
+    version: "1.0",
     type: "Deployment",
   };
   

@@ -27,8 +27,8 @@ class InfoForm extends Component {
   }
   
   state = {                                                                     
-    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : "demo",
-    host: this.props.type==="edit"? this.props.selectedClient.host : "192.168.1.6",
+    clientName: this.props.type==="edit"? this.props.selectedClient.clientName : "demotest__1.8",
+    host: this.props.type==="edit"? this.props.selectedClient.host : "192.168.1.8",
     port: this.props.type==="edit"? this.props.selectedClient.port : undefined,
     userName: this.props.type==="edit"? this.props.selectedClient.userName : "louay",
     password: this.props.type==="edit"? this.props.selectedClient.password : "louayjrad",

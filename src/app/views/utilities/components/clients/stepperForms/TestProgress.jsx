@@ -57,7 +57,7 @@ const TestProgress = (props) => {
           }, 1000);
           return oldCompleted;
         }
-        const diff = Math.random() * 30;
+        const diff = Math.random() * 40;
         setTest(() => "Attempting to Connect...");
         return Math.min(oldCompleted + diff, 100);
       });

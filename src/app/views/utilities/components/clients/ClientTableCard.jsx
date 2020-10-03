@@ -130,7 +130,7 @@ const ClientTableCard = (props) => {
                   )}
                 </TableCell>
                 <TableCell className="px-0" colSpan={1}>
-                  <InfoDiag clicked={()=> ()=> setSelectedClient(client)} />
+                  <InfoDiag clicked={()=> setSelectedClient(client)} />
                   <Tooltip title={"Delete client"}>
                     <IconButton onClick={()=> handleClickOpen(client.id)}>
                       <Icon color="default">delete</Icon>

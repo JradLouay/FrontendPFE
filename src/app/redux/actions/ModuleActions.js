@@ -66,23 +66,15 @@ export const getFile = (file) => dispatch => {
     });
   }
 };
-export const setFile = (newFile) => { 
+export const setFile = (newFile) => {
+  console.log('set file');
   return {
     type: SET_FILE,
     payload: newFile
   };
 
 };
-// export const saveFile = (newFile)  => dispatch => { // get all modules 
-  
-//   axios.get(`http://localhost:9000/${file}`).then(res => {
-//     // console.log("get the file ",res.data);
-//     dispatch({
-//       type: GET_FILE,
-//       payload: res.data
-//     });
-// });
-// }; 
+ 
 
 export const cleanModuleStats = (selectedModule) => {
   return {

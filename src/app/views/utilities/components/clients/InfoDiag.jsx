@@ -49,10 +49,12 @@ export default function InfoDiag(props) {
   return (
     <Fragment>
       <Tooltip title={"Client information"}>
-                  <IconButton onClick={()=> {
-                      props.clicked()();
-                      handleClickOpen();
-                                    }}>
+                  <IconButton onClick={()=>
+                    {
+                    props.clicked();
+                    handleClickOpen()
+                    }
+                                    }>
                       <Icon color="primary" >edit</Icon>
                   </IconButton>
         </Tooltip>
